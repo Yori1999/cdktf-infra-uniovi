@@ -1,0 +1,218 @@
+import { DataAwsSubnet } from "@cdktf/provider-aws/lib/data-aws-subnet";
+import { DataAwsSubnets } from "@cdktf/provider-aws/lib/data-aws-subnets";
+import { DataAwsVpc } from "@cdktf/provider-aws/lib/data-aws-vpc";
+import { EbsVolume } from "@cdktf/provider-aws/lib/ebs-volume";
+import { Instance } from "@cdktf/provider-aws/lib/instance";
+import {
+  SecurityGroup,
+  SecurityGroupIngress,
+} from "@cdktf/provider-aws/lib/security-group";
+import { VolumeAttachment } from "@cdktf/provider-aws/lib/volume-attachment";
+import { TerraformOutput, Token } from "cdktf";
+import { Construct } from "constructs";
+import { IDeployStrategy } from "./deployStrategy";
+import {
+  BasicAWSMachineComponentProps,
+  BasicMachineComponentPropsInterface,
+  InternalAWSMachineComponentProps,
+  InternalMachineComponentPropsInterface,
+} from "../../props/props";
+import { generateUserData } from "../../utils/aws/userDataUtils";
+import { normalizeId } from "../../utils/stringUtils";
+
+export class AwsDeployStrategy implements IDeployStrategy {
+  deployBasicMachine(
+    scope: Construct,
+    id: string,
+    props: BasicMachineComponentPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): Construct {
+    /* VALIDATE AND GET PROPERTIES */
+    // Validate properties for AWS machine deployment exist
+    if (!props.awsProps) {
+      throw new Error(
+        "AWS properties are required for deploying a basic machine.",
+      );
+    }
+    const awsProps: BasicAWSMachineComponentProps = props.awsProps;
+    // They should come as this is an internal property we set
+    const internalAWSProps: InternalAWSMachineComponentProps =
+      internalMachineComponentProps.awsProps as InternalAWSMachineComponentProps;
+
+    /* NORMALIZE THE ID FOR USING IT  */
+    // Normalize the ID to ensure it is valid for AWS resources
+    const normalizedId = normalizeId(id);
+
+    /* GET THE VPC PASSED BY THE USER OR GET THE DEFAULT ONE FOR THE USER'S REGION */
+    // VPC and subnet
+    const vpcId: string = this.getOrDefaultVPCId(
+      scope,
+      normalizedId,
+      awsProps.vpcId,
+    );
+    // Subnet ID + get the corresponding availability zone
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    const availabilityZone = subnetData.availabilityZone;
+
+    /* GET THE SECURITY GROUP PASSED BY THE USER OR CREATE ONE FOR THE USER'S VPC */
+    // Security group
+    const sgId =
+      awsProps.securityGroupId ??
+      new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: [
+          // allow SSH from anywhere for simplicity, but we need to allow SSH at least because otherwise it's impossible to access it even from AWS console
+          this.getDefaultSSHSecurityGroup(),
+        ],
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    const instance = new Instance(scope, `${normalizedId}-basic-machine`, {
+      ami: internalAWSProps.ami,
+      instanceType: "t2.micro", // keep it as t2.micro for simplicity and cost-effectiveness
+      subnetId,
+      vpcSecurityGroupIds: [sgId],
+      associatePublicIpAddress: true, // keeps it easy to SSH
+      userData: generateUserData({
+        enablePersistence: awsProps.usePersistence ?? false,
+        userProvidedUserData: `
+          #!/bin/bash
+          apt-get update && apt-get install -y openssh-server
+          systemctl enable ssh
+          systemctl start ssh
+          `,
+      }),
+    });
+
+    if (awsProps.usePersistence) {
+      // If persistence is enabled, create an EBS volume and attach it to the instance
+      this.createBasicVolumeAndAttachment(
+        scope,
+        normalizedId,
+        instance,
+        availabilityZone,
+      );
+    }
+
+    // Register the public IP as a Terraform output
+    this.getInstancePublicIp(scope, normalizedId, instance);
+
+    return instance;
+  }
+
+  // REGION UTILITY METHODS FOR CREATING AND WORKING WITH AWS RESOURCES //
+
+  /**
+   * Returns the VPC ID, either from the provided vpcId or the default VPC for the user's region.
+   * If vpcId is not provided, it fetches the default VPC.
+   * @param scope The construct scope where the resources will be defined
+   * @param normalizedId The normalized ID for the resources
+   * @param vpcId Optional VPC ID provided by the user
+   * @returns The VPC ID to be used
+   */
+  private getOrDefaultVPCId(
+    scope: Construct,
+    normalizedId: string,
+    vpcId?: string,
+  ): string {
+    return (
+      vpcId ??
+      new DataAwsVpc(scope, `${normalizedId}-default-vpc`, { default: true }).id
+    );
+  }
+
+  /**
+   * Returns the subnet ID, either from the provided subnetId or the first subnet in the VPC.
+   * If subnetId is not provided, it fetches the first subnet in the VPC.
+   * @param scope The construct scope where the resources will be defined
+   * @param normalizedId The normalized ID for the resources
+   * @param vpcId The VPC ID to which the subnet belongs
+   * @param subnetId The subnet ID provided by the user, if any
+   * @returns The subnet ID to be used, either the provided one or the first subnet in the VPC
+   */
+  private getOrDefaultSubnetId(
+    scope: Construct,
+    normalizedId: string,
+    vpcId: string,
+    subnetId?: string,
+  ): string {
+    return (
+      subnetId ??
+      Token.asString(
+        new DataAwsSubnets(scope, `${normalizedId}-subnets`, {
+          filter: [{ name: "vpc-id", values: [vpcId] }],
+        }).ids[0],
+      )
+    );
+  }
+
+  /**
+   * Creates a basic EBS volume and attaches it to the given instance.
+   * @param scope The construct scope where the resources will be defined
+   * @param normalizedId The normalized ID for the resources
+   * @param instance The AWS Instance resource to which the volume will be attached
+   * @param availabilityZone The availability zone where the volume will be created
+   * @returns
+   */
+  private createBasicVolumeAndAttachment(
+    scope: Construct,
+    normalizedId: string,
+    instance: Instance,
+    availabilityZone: string,
+  ): VolumeAttachment {
+    const volume = new EbsVolume(scope, `${normalizedId}-ebs-volume`, {
+      availabilityZone: availabilityZone,
+      size: 10,
+      type: "gp3",
+      tags: {
+        Name: `${normalizedId}-volume`,
+      },
+    });
+    return new VolumeAttachment(scope, `${normalizedId}-volume-attachment`, {
+      deviceName: "/dev/sdf",
+      instanceId: instance.id,
+      volumeId: volume.id,
+    });
+  }
+
+  /**
+   * Registers a Terraform output for the public IP of the instance.
+   * This is useful for accessing the instance after deployment.
+   * @param scope Construct scope where the output will be defined
+   * @param normId The normalized ID
+   * @param instance The AWS Instance resource
+   */
+  private getInstancePublicIp(
+    scope: Construct,
+    normalizedId: string,
+    instance: Instance,
+  ): void {
+    new TerraformOutput(scope, `${normalizedId}-public-ip`, {
+      value: instance.publicIp,
+    });
+  }
+
+  /**
+   * Returns the default security group ingress rule for SSH access.
+   * This rule allows SSH access on port 22 from any IP address.
+   * @returns A SecurityGroupIngress object for SSH access
+   */
+  private getDefaultSSHSecurityGroup(): SecurityGroupIngress {
+    return {
+      protocol: "tcp",
+      fromPort: 22,
+      toPort: 22,
+      cidrBlocks: ["0.0.0.0/0"],
+    };
+  }
+}
