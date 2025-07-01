@@ -6,6 +6,7 @@ import {
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
 import { ProviderDeployStrategyFactory } from "../../../providers/providerDeployStrategy/providerDeployStrategyFactory";
+import { ProviderType } from "../../../providers/providerType";
 import { SingletonProviderFactory } from "../../../providers/singletonProviderFactory";
 import {
   AlpineVersion,
@@ -51,7 +52,7 @@ export class AlpineBasic extends Construct {
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface {
     switch (providerType) {
-      case ProviderType.Docker:
+      case ProviderType.DOCKER:
         return {
           dockerProps: {
             imageName: imageIdentifier,

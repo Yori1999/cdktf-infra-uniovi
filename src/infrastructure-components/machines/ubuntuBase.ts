@@ -6,6 +6,7 @@ import {
 } from "../../props/props";
 import { IDeployStrategy } from "../../providers/providerDeployStrategy/deployStrategy";
 import { ProviderDeployStrategyFactory } from "../../providers/providerDeployStrategy/providerDeployStrategyFactory";
+import { ProviderType } from "../../providers/providerType";
 import { SingletonProviderFactory } from "../../providers/singletonProviderFactory";
 import {
   supportedUbuntuImages,
@@ -60,7 +61,7 @@ export abstract class UbuntuBase extends Construct {
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface {
     switch (providerType) {
-      case ProviderType.Docker:
+      case ProviderType.DOCKER:
         return this.getDockerProps(imageIdentifier);
       case ProviderType.AWS:
         return this.getAwsProps(imageIdentifier);

@@ -1,8 +1,10 @@
+import { ProviderType } from "../providers/providerType";
+
 export enum AlpineVersion {
   LATEST = "latest",
 }
 export const supportedAlpineImages = Object.freeze({
-  [ProviderType.Docker]: {
+  [ProviderType.DOCKER]: {
     [AlpineVersion.LATEST]: "alpine:latest",
   },
   [ProviderType.AWS]: {
@@ -16,7 +18,7 @@ export enum DebianVersion {
   DEBIAN_11 = "debian11",
 }
 export const supportedDebianImages = Object.freeze({
-  [ProviderType.Docker]: {
+  [ProviderType.DOCKER]: {
     [DebianVersion.LATEST]: "debian:latest",
     [DebianVersion.DEBIAN_12]: "debian:bookworm",
     [DebianVersion.DEBIAN_11]: "debian:bullseye",
@@ -36,7 +38,7 @@ export enum UbuntuVersion {
   UBUNTU_24 = "ubuntu24",
 }
 export const supportedUbuntuImages = Object.freeze({
-  [ProviderType.Docker]: {
+  [ProviderType.DOCKER]: {
     [UbuntuVersion.LATEST]: "ubuntu:latest",
     [UbuntuVersion.UBUNTU_18]: "ubuntu:18.04",
     [UbuntuVersion.UBUNTU_20]: "ubuntu:20.04",

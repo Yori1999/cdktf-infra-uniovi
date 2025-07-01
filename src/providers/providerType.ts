@@ -1,4 +1,4 @@
-enum ProviderType {
-  Docker = "docker",
+export enum ProviderType {
+  DOCKER = "docker",
   AWS = "aws",
 }

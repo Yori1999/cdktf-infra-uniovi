@@ -2,6 +2,7 @@ import { AwsProvider } from "@cdktf/provider-aws/lib/provider";
 import { DockerProvider } from "@cdktf/provider-docker/lib/provider";
 import { TerraformProvider } from "cdktf";
 import { Construct } from "constructs";
+import { ProviderType } from "./providerType";
 
 export class SingletonProviderFactory {
   // We could've chosen not to return anything but... we might need it
@@ -39,7 +40,7 @@ export class SingletonProviderFactory {
     scope: Construct,
   ): TerraformProvider {
     switch (providerType) {
-      case ProviderType.Docker:
+      case ProviderType.DOCKER:
         return new DockerProvider(scope, "docker", {});
       case ProviderType.AWS:
         return new AwsProvider(scope, "aws", {

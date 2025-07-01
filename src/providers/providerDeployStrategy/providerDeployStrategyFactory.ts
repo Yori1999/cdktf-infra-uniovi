@@ -1,3 +1,4 @@
+import { ProviderType } from "../providerType";
 import { AwsDeployStrategy } from "./awsDeployStrategy";
 import { IDeployStrategy } from "./deployStrategy";
 import { DockerDeployStrategy } from "./dockerDeployStrategy";
@@ -9,7 +10,7 @@ export class ProviderDeployStrategyFactory {
     providerType: ProviderType,
   ): IDeployStrategy {
     switch (providerType) {
-      case ProviderType.Docker:
+      case ProviderType.DOCKER:
         return this.getDockerDeployStrategy();
       case ProviderType.AWS:
         return this.getAWSDeployStrategy();

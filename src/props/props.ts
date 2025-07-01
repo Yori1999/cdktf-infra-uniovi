@@ -4,6 +4,7 @@ import {
   ContainerPorts,
   ContainerVolumes,
 } from "@cdktf/provider-docker/lib/container";
+import { ProviderType } from "../providers/providerType";
 
 export interface BaseInfrastructureComponentProps {
   /**
