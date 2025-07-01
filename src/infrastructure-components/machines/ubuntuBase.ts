@@ -3,15 +3,15 @@ import { Construct } from "constructs";
 import {
   BasicMachineComponentPropsInterface,
   InternalMachineComponentPropsInterface,
-} from "../../../props/props";
-import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { ProviderDeployStrategyFactory } from "../../../providers/providerDeployStrategy/providerDeployStrategyFactory";
-import { SingletonProviderFactory } from "../../../providers/singletonProviderFactory";
+} from "../../props/props";
+import { IDeployStrategy } from "../../providers/providerDeployStrategy/deployStrategy";
+import { ProviderDeployStrategyFactory } from "../../providers/providerDeployStrategy/providerDeployStrategyFactory";
+import { SingletonProviderFactory } from "../../providers/singletonProviderFactory";
 import {
   supportedUbuntuImages,
   UbuntuVersion,
-} from "../../../supported-images/supportedMachineImages";
-import { checkIsValidId } from "../../../utils/stringUtils";
+} from "../../supported-images/supportedMachineImages";
+import { checkIsValidId } from "../../utils/stringUtils";
 
 export abstract class UbuntuBase extends Construct {
   protected createdUbuntuConstruct?: Construct;
