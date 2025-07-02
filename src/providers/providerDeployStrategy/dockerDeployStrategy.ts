@@ -10,8 +10,10 @@ import { IDeployStrategy } from "./deployStrategy";
 import {
   BasicDockerMachineComponentProps,
   BasicMachineComponentPropsInterface,
+  DockerServerProps,
   InternalDockerMachineComponentProps,
   InternalMachineComponentPropsInterface,
+  ServerPropsInterface,
 } from "../../props/props";
 import { normalizeId } from "../../utils/stringUtils";
 
@@ -71,13 +73,71 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return new Container(scope, `${normalizedId}-container`, containerConf);
   }
 
+  deployBasicServer(
+    scope: Construct,
+    id: string,
+    serverProps: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!serverProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific props.",
+      );
+    }
+    const dockerServerConfig: DockerServerProps = serverProps.dockerProps;
+    // We know the properties are going to come, they are internal
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps as InternalDockerMachineComponentProps;
+
+    const normalizedId = normalizeId(id);
+
+    const imageConf: ImageConfig = this.getDefaultImageConfig(
+      `${dockerInternalProps.imageName}:latest`,
+    );
+    const dockerImage: Image = new Image(
+      scope,
+      `${normalizedId}-image`,
+      imageConf,
+    );
+
+    const machineVolumes: ContainerVolumes[] = this.createContainerVolumes(
+      scope,
+      normalizedId,
+      dockerServerConfig.useVolume,
+      dockerServerConfig.volumes,
+    );
+
+    const fullServerContainerConf: ContainerConfig = {
+      ...this.getDefaultContainerConfig(
+        `${normalizedId}-container`,
+        dockerImage,
+      ),
+      ports: dockerServerConfig.ports ?? [
+        { internal: 80, external: 8080 },
+        { internal: 443, external: 8443 },
+      ],
+      ...(machineVolumes.length ? { volumes: machineVolumes } : {}),
+      ...(dockerServerConfig.networks && dockerServerConfig.networks.length > 0
+        ? { networksAdvanced: dockerServerConfig.networks }
+        : {}),
+    };
+    new Container(scope, `${normalizedId}-container`, fullServerContainerConf);
+  }
+
   // METHODS FOR CREATING COMMON ASSETS //
 
   // Utility methods region for creating basic resources //
 
+  /**
+   * Creates a basic Docker volume.
+   * This method is used to create a volume that can be used by the Docker container.
+   * @param scope The scope in which the volume will be created.
+   * @param volumeId The ID of the volume to be created.
+   * @returns The created Docker volume.
+   */
   private createBasicVolume(scope: Construct, volumeId: string): Volume {
-    return new Volume(scope, volumeId + "-volume", {
-      name: volumeId + "-data",
+    return new Volume(scope, `${volumeId}-volume`, {
+      name: `${volumeId}-data`,
     });
   }
 

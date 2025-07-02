@@ -12,10 +12,12 @@ import { TerraformOutput, Token } from "cdktf";
 import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
 import {
+  AwsServerProps,
   BasicAWSMachineComponentProps,
   BasicMachineComponentPropsInterface,
   InternalAWSMachineComponentProps,
   InternalMachineComponentPropsInterface,
+  ServerPropsInterface,
 } from "../../props/props";
 import { generateUserData } from "../../utils/aws/userDataUtils";
 import { normalizeId } from "../../utils/stringUtils";
@@ -110,6 +112,83 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  deployBasicServer(
+    scope: Construct,
+    id: string,
+    props: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!props.awsProps) {
+      throw new Error(
+        "Server-specific AWS properties are required for basic server.",
+      );
+    }
+    const awsProps: AwsServerProps = props.awsProps;
+    // They should come as this is an internal property we set
+    const internalAWSProps: InternalAWSMachineComponentProps =
+      internalMachineComponentProps.awsProps as InternalAWSMachineComponentProps;
+
+    /* NORMALIZE THE ID FOR USING IT  */
+    // Normalize the ID to ensure it is valid for AWS resources
+    const normalizedId = normalizeId(id);
+
+    // Define the VPC
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    // Subnet ID + get the corresponding availability zone
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    const availabilityZone = subnetData.availabilityZone;
+    // Security group ingress rules
+    const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [];
+    additionalSecurityGroupIngressRules.push(this.getDefaultSSHSecurityGroup());
+    additionalSecurityGroupIngressRules.push(
+      this.getDefaultHTTPSecurityGroup(),
+    );
+    additionalSecurityGroupIngressRules.push(
+      this.getDefaultHTTPSSecurityGroup(),
+    );
+    const securityGroupIngressRules: SecurityGroupIngress[] =
+      awsProps.securityGroupIngressRules ?? [];
+    const allSecurityGroupIngressRules: SecurityGroupIngress[] =
+      this.preserveUniqueRules(
+        securityGroupIngressRules,
+        additionalSecurityGroupIngressRules,
+      );
+    const securityGroup =
+      awsProps.securityGroupId ??
+      new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: allSecurityGroupIngressRules,
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    // Create the EC2 instance
+    const instance = new Instance(scope, `${normalizedId}-basic-server`, {
+      ami: internalAWSProps.ami,
+      instanceType: "t2.micro",
+      availabilityZone: availabilityZone,
+      subnetId,
+      vpcSecurityGroupIds: [securityGroup],
+      associatePublicIpAddress: true,
+      userData: generateUserData({
+        enablePersistence: awsProps.usePersistence ?? false,
+        userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
+      }),
+    });
+
+    // Register the public IP as a Terraform output
+    this.getInstancePublicIp(scope, normalizedId, instance);
+  }
+
   // REGION UTILITY METHODS FOR CREATING AND WORKING WITH AWS RESOURCES //
 
   /**
@@ -186,6 +265,43 @@ export class AwsDeployStrategy implements IDeployStrategy {
   }
 
   /**
+   * Given two arrays of SecurityGroupIngress rules, this method combines them and ensures that only unique rules are preserved.
+   * It uses a Map to track uniqueness based on a combination of protocol, ports, and CIDR blocks.
+   * This is useful to avoid duplicate rules when merging user-defined rules with default rules.
+   * @param securityGroupIngressRules The existing security group ingress rules
+   * @param additionalSecurityGroupIngressRules The additional security group ingress rules to be merged
+   * @returns An array of unique SecurityGroupIngress rules
+   */
+  private preserveUniqueRules(
+    securityGroupIngressRules: SecurityGroupIngress[],
+    additionalSecurityGroupIngressRules: SecurityGroupIngress[],
+  ): SecurityGroupIngress[] {
+    const allSecurityGroupIngressRules: SecurityGroupIngress[] = [
+      ...securityGroupIngressRules,
+      ...additionalSecurityGroupIngressRules,
+    ];
+
+    const uniqueRules = new Map<string, SecurityGroupIngress>();
+
+    allSecurityGroupIngressRules.forEach((rule) => {
+      const protocol = rule.protocol ?? "any";
+      const fromPort =
+        rule.fromPort !== undefined ? rule.fromPort.toString() : "any";
+      const toPort = rule.toPort !== undefined ? rule.toPort.toString() : "any";
+      const cidrBlocks = Array.isArray(rule.cidrBlocks)
+        ? rule.cidrBlocks.slice().sort().join(",")
+        : "any";
+      // Easier to use a string key for uniqueness
+      const key = `${protocol}-${fromPort}-${toPort}-${cidrBlocks}`;
+      if (!uniqueRules.has(key)) {
+        uniqueRules.set(key, rule);
+      }
+    });
+
+    return Array.from(uniqueRules.values());
+  }
+
+  /**
    * Registers a Terraform output for the public IP of the instance.
    * This is useful for accessing the instance after deployment.
    * @param scope Construct scope where the output will be defined
@@ -212,6 +328,34 @@ export class AwsDeployStrategy implements IDeployStrategy {
       protocol: "tcp",
       fromPort: 22,
       toPort: 22,
+      cidrBlocks: ["0.0.0.0/0"],
+    };
+  }
+
+  /**
+   * Returns the default security group ingress rule for HTTP access.
+   * This rule allows HTTP access on port 80 from any IP address.
+   * @returns A SecurityGroupIngress object for HTTP access
+   */
+  private getDefaultHTTPSecurityGroup(): SecurityGroupIngress {
+    return {
+      protocol: "tcp",
+      fromPort: 80,
+      toPort: 80,
+      cidrBlocks: ["0.0.0.0/0"],
+    };
+  }
+
+  /**
+   * Returns the default security group ingress rule for HTTPS access.
+   * This rule allows HTTPS access on port 443 from any IP address.
+   * @returns A SecurityGroupIngress object for HTTPS access
+   */
+  private getDefaultHTTPSSecurityGroup(): SecurityGroupIngress {
+    return {
+      protocol: "tcp",
+      fromPort: 443,
+      toPort: 443,
       cidrBlocks: ["0.0.0.0/0"],
     };
   }

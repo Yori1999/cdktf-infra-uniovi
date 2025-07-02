@@ -64,7 +64,7 @@ export abstract class UbuntuBase extends Construct {
       case ProviderType.DOCKER:
         return this.getDockerProps(imageIdentifier);
       case ProviderType.AWS:
-        return this.getAwsProps(imageIdentifier);
+        return this.getAWSProps(imageIdentifier);
       default:
         return {};
     }
@@ -74,7 +74,7 @@ export abstract class UbuntuBase extends Construct {
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface;
 
-  protected abstract getAwsProps(
+  protected abstract getAWSProps(
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface;
 }

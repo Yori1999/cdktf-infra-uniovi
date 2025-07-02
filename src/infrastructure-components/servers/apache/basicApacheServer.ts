@@ -1,23 +1,30 @@
-import { Construct } from "constructs";
+import { ApacheServerBase } from "./apacheServerBase";
 import {
-  BasicMachineComponentPropsInterface,
   InternalMachineComponentPropsInterface,
+  ServerPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { UbuntuBase } from "../ubuntuBase";
+import { supportedApacheImages } from "../../../supported-images/supportedServerImages";
 
-export class UbuntuBasic extends UbuntuBase {
+export class ApacheServer extends ApacheServerBase {
+  protected get supportedApacheImagesMap(): Record<
+    string,
+    Record<string, string>
+  > {
+    return supportedApacheImages;
+  }
+
   protected deploy(
     strategy: IDeployStrategy,
     id: string,
-    machineProps: BasicMachineComponentPropsInterface,
+    props: ServerPropsInterface,
     imageIdentifier: string,
-  ): Construct {
-    return strategy.deployBasicMachine(
+  ): void {
+    strategy.deployBasicServer(
       this,
       id,
-      machineProps,
-      this.getAdditionalProps(machineProps.providerType, imageIdentifier),
+      props,
+      this.getAdditionalProps(props.providerType, imageIdentifier),
     );
   }
 
@@ -37,6 +44,7 @@ export class UbuntuBasic extends UbuntuBase {
     return {
       awsProps: {
         ami: imageIdentifier,
+        customInitScriptPath: "apache-basic-server",
       },
     };
   }

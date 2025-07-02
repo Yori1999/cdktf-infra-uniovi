@@ -17,6 +17,10 @@ const project = new cdktf.ConstructLibraryCdktf({
 });
 
 // Add dependencies for the cdktf providers we're going to be supporting
-project.addPeerDeps('constructs@>=10.3.0 <11.0.0', "@cdktf/provider-docker@11.x", "@cdktf/provider-aws@19.x");
+project.addPeerDeps(
+  "constructs@>=10.3.0 <11.0.0",
+  "@cdktf/provider-docker@11.x",
+  "@cdktf/provider-aws@19.x",
+);
 
 project.synth();

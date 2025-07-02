@@ -121,3 +121,24 @@ export interface InternalMachineComponentPropsInterface {
   readonly dockerProps?: InternalDockerMachineComponentProps;
   readonly awsProps?: InternalAWSMachineComponentProps;
 }
+
+// REGION SERVER PROPS //
+export interface DockerServerProps extends BasicDockerMachineComponentProps {
+  /**
+   * An optional list of ports to expose from the container, following Docker's `ContainerPorts` schema.
+   * Each port must have an internal value, external is optional (if not present, Docker will choose a random port).
+   */
+  readonly ports?: ContainerPorts[];
+}
+export interface AwsServerProps extends BasicAWSMachineComponentProps {
+  /**
+   * An optional list of security group ingress rules to apply to the server.
+   * This property allows you to define specific rules for inbound traffic to the server.
+   * Each rule must follow the `SecurityGroupIngress` schema.
+   */
+  readonly securityGroupIngressRules?: SecurityGroupIngress[];
+}
+export interface ServerPropsInterface extends BaseInfrastructureComponentProps {
+  readonly dockerProps?: DockerServerProps;
+  readonly awsProps?: AwsServerProps;
+}
