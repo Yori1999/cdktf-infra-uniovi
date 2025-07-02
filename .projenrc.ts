@@ -2,7 +2,7 @@ import { cdktf } from "projen";
 const project = new cdktf.ConstructLibraryCdktf({
   author: "María Flórez",
   authorAddress: "mariaf987@gmail.com",
-  cdktfVersion: "^0.20.11", //'^0.13.0',
+  cdktfVersion: "^0.20.11",
   defaultReleaseBranch: "main",
   jsiiVersion: "~5.8.0",
   name: "cdktf-infra-uniovi",
@@ -17,6 +17,6 @@ const project = new cdktf.ConstructLibraryCdktf({
 });
 
 // Add dependencies for the cdktf providers we're going to be supporting
-project.addPeerDeps("@cdktf/provider-docker@11.x", "@cdktf/provider-aws@19.x");
+project.addPeerDeps('constructs@>=10.3.0 <11.0.0', "@cdktf/provider-docker@11.x", "@cdktf/provider-aws@19.x");
 
 project.synth();
