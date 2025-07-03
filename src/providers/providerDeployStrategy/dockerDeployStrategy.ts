@@ -20,6 +20,18 @@ import { normalizeId } from "../../utils/stringUtils";
 export class DockerDeployStrategy implements IDeployStrategy {
   // DEPLOY METHODS REGION //
 
+  /**
+   * Generates a basic, generic Docker container using the provided properties.
+   * This method is used to deploy a basic machine using Docker.
+   * It creates a Docker image and a container with the specified configurations.
+   * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user
+   * @param scope The scope in which the resources will be created.
+   * @param id
+   * @param basicMachineProps An object containing the properties for the basic machine. At this point it should include Docker-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   * @returns A Construct representing the deployed Docker container.
+   * @throws Error if Docker-specific properties are not provided in basicMachineProps.
+   */
   deployBasicMachine(
     scope: Construct,
     id: string,
@@ -73,6 +85,19 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return new Container(scope, `${normalizedId}-container`, containerConf);
   }
 
+  /**
+   * Generates a basic Docker server using the provided properties.
+   * This method is used to deploy a basic server using Docker.
+   * It creates a Docker image and a container with the specified configurations.
+   * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+   * This method is specifically designed for server deployments, which may include additional configurations such as ports and networks. 
+   * By default, it will expose ports 80 and 443, but this can be customized through the serverProps. 
+   * @param scope The scope in which the resources will be created.
+   * @param id 
+   * @param serverProps An object containing the properties for the server. At this point it should include Docker-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in serverProps.
+   */
   deployBasicServer(
     scope: Construct,
     id: string,
