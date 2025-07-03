@@ -1385,6 +1385,364 @@ public readonly dockerProps: BasicDockerMachineComponentProps;
 
 ---
 
+### CustomAWSMachineComponentProps <a name="CustomAWSMachineComponentProps" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.Initializer"></a>
+
+```typescript
+import { CustomAWSMachineComponentProps } from 'cdktf-infra-uniovi'
+
+const customAWSMachineComponentProps: CustomAWSMachineComponentProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.securityGroupId">securityGroupId</a></code> | <code>string</code> | Security Group ID to associate with the machine. |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.subnetId">subnetId</a></code> | <code>string</code> | Subnet ID where the machine will be deployed. |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.usePersistence">usePersistence</a></code> | <code>boolean</code> | Whether to use persistence for the machine. |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.vpcId">vpcId</a></code> | <code>string</code> | Virtual Private Cloud (VPC) ID where the machine will be deployed. |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.customUserData">customUserData</a></code> | <code>string</code> | Allows the user to pass custom user data for the machine. |
+| <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.securityGroupIngressRules">securityGroupIngressRules</a></code> | <code>@cdktf/provider-aws.securityGroup.SecurityGroupIngress[]</code> | *No description.* |
+
+---
+
+##### `securityGroupId`<sup>Optional</sup> <a name="securityGroupId" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.securityGroupId"></a>
+
+```typescript
+public readonly securityGroupId: string;
+```
+
+- *Type:* string
+
+Security Group ID to associate with the machine.
+
+This is an optional property, and if not specified, a newly created security group will be used.
+
+---
+
+##### `subnetId`<sup>Optional</sup> <a name="subnetId" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.subnetId"></a>
+
+```typescript
+public readonly subnetId: string;
+```
+
+- *Type:* string
+
+Subnet ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default subnet will be used.
+If you specify a VPC, you must also specify a subnet within that VPC.
+
+---
+
+##### `usePersistence`<sup>Optional</sup> <a name="usePersistence" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.usePersistence"></a>
+
+```typescript
+public readonly usePersistence: boolean;
+```
+
+- *Type:* boolean
+
+Whether to use persistence for the machine.
+
+This is an optional property, and if not specified, it defaults to false.
+If set to true, the machine will be configured to use persistent storage, using an EBS volume for AWS.
+
+---
+
+##### `vpcId`<sup>Optional</sup> <a name="vpcId" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.vpcId"></a>
+
+```typescript
+public readonly vpcId: string;
+```
+
+- *Type:* string
+
+Virtual Private Cloud (VPC) ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default VPC will be used.
+
+---
+
+##### `customUserData`<sup>Optional</sup> <a name="customUserData" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.customUserData"></a>
+
+```typescript
+public readonly customUserData: string;
+```
+
+- *Type:* string
+
+Allows the user to pass custom user data for the machine.
+
+This is an optional property; if specified, it will override any default user data that would be generated.
+You are usually okay with not passing this property, unless you have really specific requirements for the machine's initialization and want fine-grained
+control over the user data script.
+
+---
+
+##### `securityGroupIngressRules`<sup>Optional</sup> <a name="securityGroupIngressRules" id="cdktf-infra-uniovi.CustomAWSMachineComponentProps.property.securityGroupIngressRules"></a>
+
+```typescript
+public readonly securityGroupIngressRules: SecurityGroupIngress[];
+```
+
+- *Type:* @cdktf/provider-aws.securityGroup.SecurityGroupIngress[]
+
+---
+
+### CustomDockerMachineComponentProps <a name="CustomDockerMachineComponentProps" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.Initializer"></a>
+
+```typescript
+import { CustomDockerMachineComponentProps } from 'cdktf-infra-uniovi'
+
+const customDockerMachineComponentProps: CustomDockerMachineComponentProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.containerName">containerName</a></code> | <code>string</code> | The custom name or identifier for the Docker container. |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.networks">networks</a></code> | <code>@cdktf/provider-docker.container.ContainerNetworksAdvanced[]</code> | Networks for the Docker container. |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.useVolume">useVolume</a></code> | <code>boolean</code> | Whether you want to use a volume for the container or not; |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.volumes">volumes</a></code> | <code>@cdktf/provider-docker.container.ContainerVolumes[]</code> | List of volumes to use for the container, following Docker's `ContainerVolumes` schema. |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeRDP">exposeRDP</a></code> | <code>boolean</code> | Enables remote desktop access via RDP (default internal & external port is 3389). |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeSSH">exposeSSH</a></code> | <code>boolean</code> | Whether to expose SSH access to the container (defaults to false if not included). |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeVNC">exposeVNC</a></code> | <code>boolean</code> | Enables remote desktop access via VNC (default internal & external port is 5900). |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalRDPPort">externalRDPPort</a></code> | <code>number</code> | External port to use for RDP, if `exposeRDP` is true. |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalSSHPort">externalSSHPort</a></code> | <code>number</code> | External port to map to container's SSH port (22). |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalVNCPort">externalVNCPort</a></code> | <code>number</code> | External port to use for VNC, if `exposeVNC` is true, unless overriden in `ports`. |
+| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.ports">ports</a></code> | <code>@cdktf/provider-docker.container.ContainerPorts[]</code> | List of ports to expose from the container, following Docker's ContainerPorts schema. |
+
+---
+
+##### `containerName`<sup>Required</sup> <a name="containerName" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.containerName"></a>
+
+```typescript
+public readonly containerName: string;
+```
+
+- *Type:* string
+
+The custom name or identifier for the Docker container.
+
+This is the name that will be used to reference the container in the Docker environment.
+No matter the value you pass, it will be normalized to ensure it is valid for Docker.
+
+---
+
+*Example*
+
+```typescript
+"my-docker-container"
+```
+
+
+##### `networks`<sup>Optional</sup> <a name="networks" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.networks"></a>
+
+```typescript
+public readonly networks: ContainerNetworksAdvanced[];
+```
+
+- *Type:* @cdktf/provider-docker.container.ContainerNetworksAdvanced[]
+
+Networks for the Docker container.
+
+This is an advanced property that allows you to specify multiple networks for the container.
+Each network must follow Docker's `ContainerNetworksAdvanced` schema.
+
+---
+
+##### `useVolume`<sup>Optional</sup> <a name="useVolume" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.useVolume"></a>
+
+```typescript
+public readonly useVolume: boolean;
+```
+
+- *Type:* boolean
+
+Whether you want to use a volume for the container or not;
+
+if not specified, it defaults to false.
+If set to true, you can optionally specify `volumes` to define the volumes to use.
+
+---
+
+##### `volumes`<sup>Optional</sup> <a name="volumes" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.volumes"></a>
+
+```typescript
+public readonly volumes: ContainerVolumes[];
+```
+
+- *Type:* @cdktf/provider-docker.container.ContainerVolumes[]
+
+List of volumes to use for the container, following Docker's `ContainerVolumes` schema.
+
+Each volume must have a mandatory `containerPath`
+If `useVolume` is true, this property's value will be used to define the volumes for the container.
+If not specified, internally a default volume will be created.
+
+---
+
+##### `exposeRDP`<sup>Optional</sup> <a name="exposeRDP" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeRDP"></a>
+
+```typescript
+public readonly exposeRDP: boolean;
+```
+
+- *Type:* boolean
+
+Enables remote desktop access via RDP (default internal & external port is 3389).
+
+---
+
+##### `exposeSSH`<sup>Optional</sup> <a name="exposeSSH" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeSSH"></a>
+
+```typescript
+public readonly exposeSSH: boolean;
+```
+
+- *Type:* boolean
+
+Whether to expose SSH access to the container (defaults to false if not included).
+
+If true, you can optionally specify `externalSSHPort` (default internal port is 22, external port is 2222).
+
+---
+
+##### `exposeVNC`<sup>Optional</sup> <a name="exposeVNC" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.exposeVNC"></a>
+
+```typescript
+public readonly exposeVNC: boolean;
+```
+
+- *Type:* boolean
+
+Enables remote desktop access via VNC (default internal & external port is 5900).
+
+---
+
+##### `externalRDPPort`<sup>Optional</sup> <a name="externalRDPPort" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalRDPPort"></a>
+
+```typescript
+public readonly externalRDPPort: number;
+```
+
+- *Type:* number
+
+External port to use for RDP, if `exposeRDP` is true.
+
+---
+
+##### `externalSSHPort`<sup>Optional</sup> <a name="externalSSHPort" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalSSHPort"></a>
+
+```typescript
+public readonly externalSSHPort: number;
+```
+
+- *Type:* number
+
+External port to map to container's SSH port (22).
+
+If not set, port 2222 will try to be assigned
+
+---
+
+##### `externalVNCPort`<sup>Optional</sup> <a name="externalVNCPort" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.externalVNCPort"></a>
+
+```typescript
+public readonly externalVNCPort: number;
+```
+
+- *Type:* number
+
+External port to use for VNC, if `exposeVNC` is true, unless overriden in `ports`.
+
+---
+
+##### `ports`<sup>Optional</sup> <a name="ports" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.ports"></a>
+
+```typescript
+public readonly ports: ContainerPorts[];
+```
+
+- *Type:* @cdktf/provider-docker.container.ContainerPorts[]
+
+List of ports to expose from the container, following Docker's ContainerPorts schema.
+
+Each port must have an internal value, external is optional (if not present, Docker will choose a random port).
+These ports will take precedence over any other port configured, so in case a port is defined in externalSSHPort,
+externalVNCPort or externalRDPPort and explicitly set again in this ports property, this second value is the one
+that will get added to the container
+
+---
+
+### CustomMachineComponentPropsInterface <a name="CustomMachineComponentPropsInterface" id="cdktf-infra-uniovi.CustomMachineComponentPropsInterface"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.CustomMachineComponentPropsInterface.Initializer"></a>
+
+```typescript
+import { CustomMachineComponentPropsInterface } from 'cdktf-infra-uniovi'
+
+const customMachineComponentPropsInterface: CustomMachineComponentPropsInterface = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.providerType">providerType</a></code> | <code><a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a></code> | The provider type for the infrastructure component. |
+| <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.awsProps">awsProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps">CustomAWSMachineComponentProps</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.dockerProps">dockerProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps">CustomDockerMachineComponentProps</a></code> | *No description.* |
+
+---
+
+##### `providerType`<sup>Required</sup> <a name="providerType" id="cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.providerType"></a>
+
+```typescript
+public readonly providerType: ProviderType;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a>
+
+The provider type for the infrastructure component.
+
+This property is used to determine which cloud provider the component will be deployed on.
+It is a mandatory property and must be one of the supported provider types.
+
+---
+
+*Example*
+
+```typescript
+ProviderType.Docker
+```
+
+
+##### `awsProps`<sup>Optional</sup> <a name="awsProps" id="cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.awsProps"></a>
+
+```typescript
+public readonly awsProps: CustomAWSMachineComponentProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomAWSMachineComponentProps">CustomAWSMachineComponentProps</a>
+
+---
+
+##### `dockerProps`<sup>Optional</sup> <a name="dockerProps" id="cdktf-infra-uniovi.CustomMachineComponentPropsInterface.property.dockerProps"></a>
+
+```typescript
+public readonly dockerProps: CustomDockerMachineComponentProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps">CustomDockerMachineComponentProps</a>
+
+---
+
 ### DockerServerProps <a name="DockerServerProps" id="cdktf-infra-uniovi.DockerServerProps"></a>
 
 #### Initializer <a name="Initializer" id="cdktf-infra-uniovi.DockerServerProps.Initializer"></a>
@@ -1798,8 +2156,9 @@ new AwsDeployStrategy()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic AWS machine deployment. |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
 
 ---
 
@@ -1809,9 +2168,16 @@ new AwsDeployStrategy()
 public deployBasicMachine(scope: Construct, id: string, props: BasicMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
+Generates a basic AWS machine deployment.
+
+This method deploys a basic AWS EC2 instance with optional EBS volume for persistence.
+It sets up the necessary VPC, subnet, security group, and instance properties.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The construct scope where the resources will be defined.
 
 ---
 
@@ -1830,6 +2196,10 @@ public deployBasicMachine(scope: Construct, id: string, props: BasicMachineCompo
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including AWS-specific properties.
+
+The `awsProps` property should contain the AWS-specific properties for the machine component.
 
 ---
 
@@ -1863,6 +2233,36 @@ public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterfa
 
 ---
 
+##### `deployCustomMachine` <a name="deployCustomMachine" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine"></a>
+
+```typescript
+public deployCustomMachine(scope: Construct, id: string, props: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
 
 
 
@@ -1887,8 +2287,9 @@ new DockerDeployStrategy()
 
 | **Name** | **Description** |
 | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic, generic Docker container using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer">deployBasicServer</a></code> | Generates a basic Docker server using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
 
 ---
 
@@ -1898,9 +2299,17 @@ new DockerDeployStrategy()
 public deployBasicMachine(scope: Construct, id: string, basicMachineProps: BasicMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
+Generates a basic, generic Docker container using the provided properties.
+
+This method is used to deploy a basic machine using Docker.
+It creates a Docker image and a container with the specified configurations.
+Optionally, it can include volumes, either a default volume or a set of volumes passed by the user
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope in which the resources will be created.
 
 ---
 
@@ -1914,11 +2323,17 @@ public deployBasicMachine(scope: Construct, id: string, basicMachineProps: Basic
 
 - *Type:* <a href="#cdktf-infra-uniovi.BasicMachineComponentPropsInterface">BasicMachineComponentPropsInterface</a>
 
+An object containing the properties for the basic machine.
+
+At this point it should include Docker-specific properties.
+
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including Docker-specific properties.
 
 ---
 
@@ -1928,9 +2343,19 @@ public deployBasicMachine(scope: Construct, id: string, basicMachineProps: Basic
 public deployBasicServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
 ```
 
+Generates a basic Docker server using the provided properties.
+
+This method is used to deploy a basic server using Docker.
+It creates a Docker image and a container with the specified configurations.
+Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope in which the resources will be created.
 
 ---
 
@@ -1944,9 +2369,45 @@ public deployBasicServer(scope: Construct, id: string, serverProps: ServerPropsI
 
 - *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
 
+An object containing the properties for the server.
+
+At this point it should include Docker-specific properties.
+
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including Docker-specific properties.
+
+---
+
+##### `deployCustomMachine` <a name="deployCustomMachine" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine"></a>
+
+```typescript
+public deployCustomMachine(scope: Construct, id: string, customMachineProps: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `customMachineProps`<sup>Required</sup> <a name="customMachineProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.customMachineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 
@@ -2033,6 +2494,7 @@ SingletonProviderFactory.getProvider(providerType: ProviderType, scope: Construc
 | --- | --- |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
 
 ---
 
@@ -2091,6 +2553,36 @@ public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterfa
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployBasicServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
+##### `deployCustomMachine` <a name="deployCustomMachine" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine"></a>
+
+```typescript
+public deployCustomMachine(scope: Construct, id: string, props: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 

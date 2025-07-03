@@ -1,6 +1,7 @@
 import { Construct } from "constructs";
 import {
   BasicMachineComponentPropsInterface,
+  CustomMachineComponentPropsInterface,
   InternalMachineComponentPropsInterface,
   ServerPropsInterface,
 } from "../../props/props";
@@ -12,7 +13,13 @@ export interface IDeployStrategy {
     props: BasicMachineComponentPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct;
-  //deployCustomMachine(scope: Construct, id: string, props: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface) : Construct;
+
+  deployCustomMachine(
+    scope: Construct,
+    id: string,
+    props: CustomMachineComponentPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): Construct;
 
   deployBasicServer(
     scope: Construct,

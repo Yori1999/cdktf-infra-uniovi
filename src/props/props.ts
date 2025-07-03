@@ -75,6 +75,60 @@ export interface BasicMachineComponentPropsInterface
   readonly awsProps?: BasicAWSMachineComponentProps;
 }
 
+// REGION CUSTOM MACHINE PROPS //
+export interface CustomDockerMachineComponentProps
+  extends BasicDockerMachineComponentProps {
+  /**
+   * Whether to expose SSH access to the container (defaults to false if not included).
+   * If true, you can optionally specify `externalSSHPort` (default internal port is 22, external port is 2222).
+   */
+  readonly exposeSSH?: boolean;
+  /**
+   * External port to map to container's SSH port (22). If not set, port 2222 will try to be assigned
+   */
+  readonly externalSSHPort?: number;
+  /**
+   * Enables remote desktop access via VNC (default internal & external port is 5900).
+   */
+  readonly exposeVNC?: boolean;
+  /**
+   * External port to use for VNC, if `exposeVNC` is true, unless overriden in `ports`.
+   */
+  readonly externalVNCPort?: number;
+  /**
+   * Enables remote desktop access via RDP (default internal & external port is 3389).
+   */
+  readonly exposeRDP?: boolean;
+  /**
+   * External port to use for RDP, if `exposeRDP` is true.
+   */
+  readonly externalRDPPort?: number;
+  /**
+   * List of ports to expose from the container, following Docker's ContainerPorts schema.
+   * Each port must have an internal value, external is optional (if not present, Docker will choose a random port).
+   * These ports will take precedence over any other port configured, so in case a port is defined in externalSSHPort,
+   * externalVNCPort or externalRDPPort and explicitly set again in this ports property, this second value is the one
+   * that will get added to the container
+   */
+  readonly ports?: ContainerPorts[];
+}
+export interface CustomAWSMachineComponentProps
+  extends BasicAWSMachineComponentProps {
+  readonly securityGroupIngressRules?: SecurityGroupIngress[];
+  /**
+   * Allows the user to pass custom user data for the machine.
+   * This is an optional property; if specified, it will override any default user data that would be generated.
+   * You are usually okay with not passing this property, unless you have really specific requirements for the machine's initialization and want fine-grained
+   * control over the user data script.
+   */
+  readonly customUserData?: string;
+}
+export interface CustomMachineComponentPropsInterface
+  extends BaseInfrastructureComponentProps {
+  readonly dockerProps?: CustomDockerMachineComponentProps;
+  readonly awsProps?: CustomAWSMachineComponentProps;
+}
+
 // REGION INTERNAL MACHINE PROPS //
 // For internal use only //
 export interface InternalDockerMachineComponentProps {
