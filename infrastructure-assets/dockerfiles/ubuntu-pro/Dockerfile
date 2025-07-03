@@ -28,10 +28,12 @@ RUN apt-get update && apt-get install -y \
     tmux \
     vim \
     wget \
+    ufw \
+    fail2ban \
     && apt-get clean
 
-COPY tmux.conf /etc/tmux.conf
-COPY nanorc /root/.nanorc
+COPY ../../configs/tmux/tmux.conf /etc/tmux.conf
+COPY ../../configs/nano/nanorc /root/.nanorc
 
 # Install everything 
 RUN apt-get install -y ubuntu-advantage-tools && apt-get clean

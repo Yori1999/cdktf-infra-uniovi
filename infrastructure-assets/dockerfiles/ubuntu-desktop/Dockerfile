@@ -19,7 +19,14 @@ RUN apt-get update && apt-get install -y \
   xterm \
   wget \
   sudo \
+  zip \
+  unzip \
+  thunar \
+  ufw \
   && apt-get clean
+
+COPY ../../configs/tmux/tmux.conf /etc/tmux.conf
+COPY ../../configs/nano/nanorc /root/.nanorc
 
 # Create a user + set its password + make it sudo
 RUN useradd -m ubuntuuser && \

@@ -23,7 +23,7 @@ export function generateUserData(userDataOptions: UserDataOptions): string {
   if (userDataOptions.userDataSetupFileDirectory) {
     const basePath = path.resolve(
       __dirname,
-      "../../infrastructure-assets/userdata/" +
+      "../../../infrastructure-assets/userdata/" +
         userDataOptions.userDataSetupFileDirectory,
     );
     const scriptPath = path.join(basePath, "init.sh");

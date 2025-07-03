@@ -23,4 +23,7 @@ project.addPeerDeps(
   "@cdktf/provider-aws@19.x",
 );
 
+project.addPackageIgnore("!infrastructure-assets/**"); // include this dir
+project.npmignore?.addPatterns("!infrastructure-assets/**"); // override .npmignore default
+
 project.synth();
