@@ -510,6 +510,260 @@ The tree node.
 ---
 
 
+### NginxServer <a name="NginxServer" id="cdktf-infra-uniovi.NginxServer"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.NginxServer.Initializer"></a>
+
+```typescript
+import { NginxServer } from 'cdktf-infra-uniovi'
+
+new NginxServer(scope: Construct, id: string, version: NginxVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.NginxServer.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.NginxServer.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.NginxServer.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.NginxServer.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.NginxServer.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.NginxServer.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.NginxServer.isConstruct"></a>
+
+```typescript
+import { NginxServer } from 'cdktf-infra-uniovi'
+
+NginxServer.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.NginxServer.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServer.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.NginxServer.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### NginxServerBase <a name="NginxServerBase" id="cdktf-infra-uniovi.NginxServerBase"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.NginxServerBase.Initializer"></a>
+
+```typescript
+import { NginxServerBase } from 'cdktf-infra-uniovi'
+
+new NginxServerBase(scope: Construct, id: string, version: NginxVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.NginxServerBase.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.NginxServerBase.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.NginxServerBase.isConstruct"></a>
+
+```typescript
+import { NginxServerBase } from 'cdktf-infra-uniovi'
+
+NginxServerBase.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.NginxServerBase.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxServerBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.NginxServerBase.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ### UbuntuBase <a name="UbuntuBase" id="cdktf-infra-uniovi.UbuntuBase"></a>
 
 #### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuBase.Initializer"></a>

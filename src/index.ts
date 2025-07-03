@@ -4,6 +4,8 @@ export * from "./infrastructure-components/machines/basic-containers/debianBasic
 export * from "./infrastructure-components/machines/basic-containers/alpineBasic";
 export * from "./infrastructure-components/servers/apache/apacheServerBase";
 export * from "./infrastructure-components/servers/apache/basicApacheServer";
+export * from "./infrastructure-components/servers/nginx/nginxServerBase";
+export * from "./infrastructure-components/servers/nginx/basicNginxServer";
 export * from "./providers/providerDeployStrategy/deployStrategy";
 export * from "./providers/providerDeployStrategy/dockerDeployStrategy";
 export * from "./providers/providerDeployStrategy/awsDeployStrategy";
