@@ -21,8 +21,8 @@ import {
   InternalMachineComponentPropsInterface,
   ServerPropsInterface,
 } from "../../props/props";
-import { getDockerfilesPath } from "../../utils/fileUtils";
 import { normalizeId } from "../../utils/stringUtils";
+import { getDockerfilePath } from "../../utils/fileUtils";
 
 export class DockerDeployStrategy implements IDeployStrategy {
   // DEPLOY METHODS REGION //
@@ -50,12 +50,14 @@ export class DockerDeployStrategy implements IDeployStrategy {
         "DockerDeployStrategy didn't receive Docker-specific props.",
       );
     }
+    if (!internalMachineComponentProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific internal props.",
+      );
+    }
     const dockerMachineConfig: BasicDockerMachineComponentProps =
       basicMachineProps.dockerProps;
-
-    // We know the properties are going to come, they are internal
-    const dockerInternalProps: InternalDockerMachineComponentProps =
-      internalMachineComponentProps.dockerProps as InternalDockerMachineComponentProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -115,15 +117,22 @@ export class DockerDeployStrategy implements IDeployStrategy {
         "DockerDeployStrategy didn't receive Docker-specific props.",
       );
     }
+    if (!internalMachineComponentProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific internal props.",
+      );
+    }
     const dockerProps: CustomDockerMachineComponentProps =
       customMachineProps.dockerProps;
+    const internalDockerProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
 
     // Normalize the ID to ensure it is valid for AWS resources
     const normalizedId = normalizeId(id);
 
     // PORTS FINAL DEFINITION //
     const additionalPorts: ContainerPorts[] = [
-      ...(internalMachineComponentProps.dockerProps?.additionalPorts ?? []),
+      ...(internalDockerProps.additionalPorts ?? []),
     ];
     if (dockerProps.exposeSSH) {
       const sshDefaultPort: ContainerPorts = dockerProps.externalSSHPort
@@ -149,26 +158,20 @@ export class DockerDeployStrategy implements IDeployStrategy {
       additionalPorts,
     );
 
-    // We know the properties are going to come, they are internal
-    const dockerInternalMachineComponentProps: InternalDockerMachineComponentProps =
-      internalMachineComponentProps.dockerProps as InternalDockerMachineComponentProps;
-
     const fullImageConf: ImageConfig = {
-      ...(dockerInternalMachineComponentProps.customImageName
+      ...(internalDockerProps.customImageName
         ? this.getDefaultImageConfig(
-            `${dockerInternalMachineComponentProps.customImageName}:latest`,
+            `${internalDockerProps.customImageName}:latest`,
           )
         : this.getDefaultImageConfig(
-            dockerInternalMachineComponentProps.imageName,
+            internalDockerProps.imageName,
           )),
-      ...(dockerInternalMachineComponentProps.dockerfilePath
+      ...(internalDockerProps.dockerfilePath
         ? {
             buildAttribute: {
-              context:
-                path.dirname(getDockerfilesPath()) +
-                dockerInternalMachineComponentProps.dockerfilePath,
+              context: path.dirname(getDockerfilePath(internalDockerProps.dockerfilePath)),
               buildArgs: {
-                BASE_IMAGE: dockerInternalMachineComponentProps.imageName,
+                BASE_IMAGE: internalDockerProps.imageName,
                 UBUNTU_PRO_TOKEN:
                   internalMachineComponentProps.ubuntuProToken ?? "",
               },
@@ -178,7 +181,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     };
     const dockerImage: Image = new Image(
       scope,
-      `${normalizedId}-${dockerInternalMachineComponentProps.customImageName}-image`,
+      `${normalizedId}-${internalDockerProps.customImageName}-image`,
       fullImageConf,
     );
 
@@ -187,7 +190,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
       normalizedId,
       dockerProps.useVolume,
       dockerProps.volumes,
-      dockerInternalMachineComponentProps.volumeContainerPath,
+      internalDockerProps.volumeContainerPath,
     );
 
     const containerConf: ContainerConfig = {
@@ -203,7 +206,8 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ...(finalPorts.length > 0 ? { ports: finalPorts } : {}),
     };
 
-    return new Container(scope, `${normalizedId}-container`, containerConf);
+    const container : Container = new Container(scope, `${normalizedId}-container`, containerConf);
+    return container;
   }
 
   /**
@@ -230,10 +234,13 @@ export class DockerDeployStrategy implements IDeployStrategy {
         "DockerDeployStrategy didn't receive Docker-specific props.",
       );
     }
+    if (!internalMachineComponentProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific internal props.",
+      );
+    }
     const dockerServerConfig: DockerServerProps = serverProps.dockerProps;
-    // We know the properties are going to come, they are internal
-    const dockerInternalProps: InternalDockerMachineComponentProps =
-      internalMachineComponentProps.dockerProps as InternalDockerMachineComponentProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -310,14 +317,16 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ...this.getDefaultImageConfig(
         `${dockerInternalProps.customImageName}:latest`,
       ),
-      buildAttribute: {
-        context:
-          path.dirname(getDockerfilesPath()) +
-          dockerInternalProps.dockerfilePath,
-        buildArgs: {
-          BASE_IMAGE: dockerInternalProps.imageName,
-        },
-      },
+      ...(dockerInternalProps.dockerfilePath
+        ? {
+          buildAttribute: {
+            context: path.dirname(getDockerfilePath(dockerInternalProps.dockerfilePath)),
+            buildArgs: {
+              BASE_IMAGE: dockerInternalProps.imageName,
+            },
+          }
+        }
+        : {})
     };
     const dockerImage: Image = new Image(
       scope,
@@ -341,7 +350,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
       fullServerContainerConf,
     );
 
-    this.getContainerPublicIp(scope, normalizedId, container);
+    this.getContainerIp(scope, normalizedId, container);
   }
 
   deployHardenedServer(
@@ -361,9 +370,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
       );
     }
     const dockerServerProps: DockerServerProps = serverProps.dockerProps;
-    // We know the properties are going to come, they are internal
-    const dockerInternalProps: InternalDockerMachineComponentProps =
-      internalMachineComponentProps.dockerProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -408,7 +415,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
       fullServerContainerConf,
     );
 
-    this.getContainerPublicIp(scope, normalizedId, container);
+    this.getContainerIp(scope, normalizedId, container);
   }
 
   // METHODS FOR CREATING COMMON ASSETS //
@@ -421,7 +428,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
    * @param normId The normalized ID
    * @param container The Docker container for which the IP will be registered
    */
-  private getContainerPublicIp(
+  private getContainerIp(
     scope: Construct,
     normalizedId: string,
     container: Container,

@@ -1,5 +1,5 @@
 import * as path from "path";
 
-export function getDockerfilesPath(): string {
-  return path.resolve(__dirname, "../../infrastructure-assets/dockerfiles/");
+export function getDockerfilePath(filename : string): string {
+  return path.resolve(__dirname, "../../infrastructure-assets/dockerfiles", filename);
 }
