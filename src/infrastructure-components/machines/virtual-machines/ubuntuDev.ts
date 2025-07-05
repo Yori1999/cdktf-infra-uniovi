@@ -4,9 +4,9 @@ import {
   InternalMachineComponentPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { UbuntuBase } from "../ubuntuBase";
+import { UbuntuCustomBase } from "../ubuntuCustomBase";
 
-export class UbuntuDev extends UbuntuBase {
+export class UbuntuDev extends UbuntuCustomBase {
   protected deploy(
     strategy: IDeployStrategy,
     id: string,

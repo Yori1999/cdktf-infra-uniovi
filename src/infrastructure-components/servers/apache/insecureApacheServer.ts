@@ -4,16 +4,12 @@ import {
   ServerPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { ProviderType } from "../../../providers/providerType";
-import {
-  ApacheVersion,
-  supportedApacheImages,
-} from "../../../supported-images/supportedServerImages";
+import { supportedApacheImages } from "../../../supported-images/supportedServerImages";
 
 export class InsecureApacheServer extends ApacheServerBase {
   protected get supportedApacheImagesMap(): Record<
-    ProviderType,
-    Record<ApacheVersion, string>
+    string,
+    Record<string, string>
   > {
     return supportedApacheImages;
   }

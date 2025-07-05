@@ -5,9 +5,9 @@ import {
   InternalMachineComponentPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { UbuntuBase } from "../ubuntuBase";
+import { UbuntuCustomBase } from "../ubuntuCustomBase";
 
-export class UbuntuPro extends UbuntuBase {
+export class UbuntuPro extends UbuntuCustomBase {
   protected ubuntuProToken?: TerraformVariable;
 
   protected deploy(

@@ -1,7 +1,7 @@
 import { TerraformProvider } from "cdktf";
 import { Construct } from "constructs";
 import {
-  BasicMachineComponentPropsInterface,
+  CustomMachineComponentPropsInterface,
   InternalMachineComponentPropsInterface,
 } from "../../props/props";
 import { IDeployStrategy } from "../../providers/providerDeployStrategy/deployStrategy";
@@ -14,14 +14,14 @@ import {
 } from "../../supported-images/supportedMachineImages";
 import { checkIsValidId } from "../../utils/stringUtils";
 
-export abstract class UbuntuBase extends Construct {
+export abstract class UbuntuCustomBase extends Construct {
   protected createdUbuntuConstruct?: Construct;
 
   constructor(
     scope: Construct,
     id: string,
     version: UbuntuVersion,
-    machineProps: BasicMachineComponentPropsInterface,
+    machineProps: CustomMachineComponentPropsInterface,
     provider?: TerraformProvider,
   ) {
     checkIsValidId(id);
@@ -31,7 +31,7 @@ export abstract class UbuntuBase extends Construct {
     const deployWith: ProviderType = machineProps.providerType;
     const imageIdentifier: string = supportedUbuntuImages[deployWith][version];
 
-    if (!imageIdentifier) {
+    if (!imageIdentifier || imageIdentifier === "") {
       throw new Error(
         "This version of the machine doesn't exist for the given provider",
       );
@@ -52,7 +52,7 @@ export abstract class UbuntuBase extends Construct {
   protected abstract deploy(
     strategy: IDeployStrategy,
     id: string,
-    machineProps: BasicMachineComponentPropsInterface,
+    machineProps: CustomMachineComponentPropsInterface,
     imageIdentifier: string,
   ): Construct;
 

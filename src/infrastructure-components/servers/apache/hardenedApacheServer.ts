@@ -1,17 +1,17 @@
-import { NginxServerBase } from "./nginxServerBase";
+import { ApacheServerBase } from "./apacheServerBase";
 import {
   InternalMachineComponentPropsInterface,
   ServerPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { supportedNginxImages } from "../../../supported-images/supportedServerImages";
+import { supportedHardenedApacheImages } from "../../../supported-images/supportedServerImages";
 
-export class InsecureNginxServer extends NginxServerBase {
-  protected get supportedNginxImagesMap(): Record<
+export class HardenedApacheServer extends ApacheServerBase {
+  protected get supportedApacheImagesMap(): Record<
     string,
     Record<string, string>
   > {
-    return supportedNginxImages;
+    return supportedHardenedApacheImages;
   }
 
   protected deploy(
@@ -20,7 +20,7 @@ export class InsecureNginxServer extends NginxServerBase {
     props: ServerPropsInterface,
     imageIdentifier: string,
   ): void {
-    strategy.deployInsecureServer(
+    strategy.deployHardenedServer(
       this,
       id,
       props,
@@ -34,8 +34,7 @@ export class InsecureNginxServer extends NginxServerBase {
     return {
       dockerProps: {
         imageName: imageIdentifier,
-        customImageName: "nginx-insecure",
-        dockerfilePath: "nginx-insecure",
+        // In this case, we'll be using a custom hardened image, so no need to curate a custom Dockerfile
       },
     };
   }
@@ -46,7 +45,7 @@ export class InsecureNginxServer extends NginxServerBase {
     return {
       awsProps: {
         ami: imageIdentifier,
-        customInitScriptPath: "nginx-insecure",
+        customInitScriptPath: "apache-hardened",
       },
     };
   }

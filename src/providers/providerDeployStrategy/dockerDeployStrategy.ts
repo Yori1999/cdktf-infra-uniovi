@@ -344,6 +344,73 @@ export class DockerDeployStrategy implements IDeployStrategy {
     this.getContainerPublicIp(scope, normalizedId, container);
   }
 
+  deployHardenedServer(
+    scope: Construct,
+    id: string,
+    serverProps: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!serverProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific props.",
+      );
+    }
+    if (!internalMachineComponentProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific internal props.",
+      );
+    }
+    const dockerServerProps: DockerServerProps = serverProps.dockerProps;
+    // We know the properties are going to come, they are internal
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
+
+    const normalizedId = normalizeId(id);
+
+    const imageConf: ImageConfig = this.getDefaultImageConfig(
+      dockerInternalProps.imageName,
+    );
+    const dockerImage: Image = new Image(
+      scope,
+      `${normalizedId}-hardened-image`,
+      imageConf,
+    );
+
+    const machineVolumes: ContainerVolumes[] = this.createContainerVolumes(
+      scope,
+      normalizedId,
+      dockerServerProps.useVolume,
+      dockerServerProps.volumes,
+    );
+
+    const fullServerContainerConf = {
+      ...this.getDefaultContainerConfig(
+        `${normalizedId}-hardened-container`,
+        dockerImage,
+      ),
+      ...(dockerServerProps.ports?.length
+        ? { ports: dockerServerProps.ports }
+        : {
+            ports: [
+              { internal: 80, external: 8080 },
+              { internal: 443, external: 8443 },
+            ],
+          }),
+      ...(dockerServerProps.networks?.length
+        ? { networksAdvanced: dockerServerProps.networks }
+        : {}),
+      ...(machineVolumes.length ? { volumes: machineVolumes } : {}),
+    };
+
+    const container: Container = new Container(
+      scope,
+      `${normalizedId}-hardened-container`,
+      fullServerContainerConf,
+    );
+
+    this.getContainerPublicIp(scope, normalizedId, container);
+  }
+
   // METHODS FOR CREATING COMMON ASSETS //
 
   // Method to register the IP of the container //

@@ -49,6 +49,7 @@ export const supportedHardenedApacheImages = Object.freeze({
       "rapidfort/apache-official:2.4.63-alpine3.22",
   },
   [ProviderType.AWS]: {
+    // We need to build the secure apache from scratch, using the newest possible version of Ubuntu and customizing them via scripts
     [ApacheVersion.LATEST]:
       supportedDebianImages[ProviderType.AWS][DebianVersion.LATEST],
     [ApacheVersion.APACHE_DEBIAN]:

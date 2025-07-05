@@ -258,14 +258,11 @@ export class AwsDeployStrategy implements IDeployStrategy {
     });
     const availabilityZone = subnetData.availabilityZone;
     // Security group ingress rules
-    const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [];
-    additionalSecurityGroupIngressRules.push(this.getDefaultSSHSecurityGroup());
-    additionalSecurityGroupIngressRules.push(
+    const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
+      this.getDefaultSSHSecurityGroup(),
       this.getDefaultHTTPSecurityGroup(),
-    );
-    additionalSecurityGroupIngressRules.push(
       this.getDefaultHTTPSSecurityGroup(),
-    );
+    ];
     const securityGroupIngressRules: SecurityGroupIngress[] =
       awsProps.securityGroupIngressRules ?? [];
     const allSecurityGroupIngressRules: SecurityGroupIngress[] =
@@ -371,6 +368,92 @@ export class AwsDeployStrategy implements IDeployStrategy {
 
     // Create the EC2 instance
     const instance = new Instance(scope, `${normalizedId}-insecure-server`, {
+      ami: internalAWSProps.ami,
+      instanceType: "t2.micro",
+      availabilityZone: availabilityZone,
+      subnetId,
+      vpcSecurityGroupIds: [securityGroup],
+      associatePublicIpAddress: true,
+      userData: generateUserData({
+        enablePersistence: awsProps.usePersistence ?? false,
+        userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
+      }),
+    });
+
+    if (awsProps.usePersistence) {
+      this.createBasicVolumeAndAttachment(
+        scope,
+        normalizedId,
+        instance,
+        availabilityZone,
+      );
+    }
+
+    // Register the public IP as a Terraform output
+    this.getInstancePublicIp(scope, normalizedId, instance);
+  }
+
+  deployHardenedServer(
+    scope: Construct,
+    id: string,
+    props: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!props.awsProps) {
+      throw new Error(
+        "Server-specific AWS properties are required for basic server.",
+      );
+    }
+    if (!internalMachineComponentProps.awsProps) {
+      throw new Error(
+        "Internal AWS properties are required for the hardened server.",
+      );
+    }
+    const awsProps: CustomAWSMachineComponentProps = props.awsProps;
+    // They should come as this is an internal property we set
+    const internalAWSProps: InternalAWSMachineComponentProps =
+      internalMachineComponentProps.awsProps;
+
+    const normalizedId = normalizeId(id);
+
+    // Define the VPC
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    // Subnet ID + get the corresponding availability zone
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    const availabilityZone = subnetData.availabilityZone;
+    // Security group ingress rules
+    const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
+      this.getDefaultSSHSecurityGroup(),
+      this.getDefaultHTTPSecurityGroup(),
+      this.getDefaultHTTPSSecurityGroup(),
+    ];
+    const securityGroupIngressRules: SecurityGroupIngress[] =
+      awsProps.securityGroupIngressRules ?? [];
+    const allSecurityGroupIngressRules: SecurityGroupIngress[] =
+      this.preserveUniqueRules(
+        securityGroupIngressRules,
+        additionalSecurityGroupIngressRules,
+      );
+    const securityGroup =
+      awsProps.securityGroupId ??
+      new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: allSecurityGroupIngressRules,
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    // Create the EC2 instance
+    const instance = new Instance(scope, `${normalizedId}-hardened-server `, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
       availabilityZone: availabilityZone,

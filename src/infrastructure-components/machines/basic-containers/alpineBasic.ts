@@ -8,6 +8,7 @@ import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deplo
 import { ProviderDeployStrategyFactory } from "../../../providers/providerDeployStrategy/providerDeployStrategyFactory";
 import { ProviderType } from "../../../providers/providerType";
 import { SingletonProviderFactory } from "../../../providers/singletonProviderFactory";
+import { validateImageExists } from "../../../supported-images/supportedImagesValidator";
 import {
   AlpineVersion,
   supportedAlpineImages,
@@ -28,23 +29,19 @@ export class AlpineBasic extends Construct {
     super(scope, id);
 
     const deployWith: ProviderType = machineProps.providerType;
+    const imageIdentifier: string = supportedAlpineImages[deployWith][version];
 
-    if (Object.keys(supportedAlpineImages[deployWith]).length > 0) {
-      const imageWithTag = (
-        supportedAlpineImages[deployWith] as Record<AlpineVersion, string>
-      )[version];
-      if (imageWithTag != undefined) {
-        SingletonProviderFactory.getProvider(deployWith, this, provider);
-        const deployStrategy: IDeployStrategy =
-          ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-        deployStrategy.deployBasicMachine(
-          this,
-          id,
-          machineProps,
-          this.getAdditionalProps(deployWith, imageWithTag),
-        );
-      }
-    }
+    validateImageExists(imageIdentifier);
+
+    SingletonProviderFactory.getProvider(deployWith, this, provider);
+    const deployStrategy: IDeployStrategy =
+      ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
+    deployStrategy.deployBasicMachine(
+      this,
+      id,
+      machineProps,
+      this.getAdditionalProps(deployWith, imageIdentifier),
+    );
   }
 
   protected getAdditionalProps(

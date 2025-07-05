@@ -510,6 +510,514 @@ The tree node.
 ---
 
 
+### HardenedApacheServer <a name="HardenedApacheServer" id="cdktf-infra-uniovi.HardenedApacheServer"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer"></a>
+
+```typescript
+import { HardenedApacheServer } from 'cdktf-infra-uniovi'
+
+new HardenedApacheServer(scope: Construct, id: string, version: ApacheVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.ApacheVersion">ApacheVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ApacheVersion">ApacheVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.HardenedApacheServer.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.HardenedApacheServer.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.HardenedApacheServer.isConstruct"></a>
+
+```typescript
+import { HardenedApacheServer } from 'cdktf-infra-uniovi'
+
+HardenedApacheServer.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.HardenedApacheServer.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedApacheServer.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.HardenedApacheServer.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### HardenedNginxServer <a name="HardenedNginxServer" id="cdktf-infra-uniovi.HardenedNginxServer"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer"></a>
+
+```typescript
+import { HardenedNginxServer } from 'cdktf-infra-uniovi'
+
+new HardenedNginxServer(scope: Construct, id: string, version: NginxVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.HardenedNginxServer.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.HardenedNginxServer.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.HardenedNginxServer.isConstruct"></a>
+
+```typescript
+import { HardenedNginxServer } from 'cdktf-infra-uniovi'
+
+HardenedNginxServer.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.HardenedNginxServer.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.HardenedNginxServer.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.HardenedNginxServer.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### InsecureApacheServer <a name="InsecureApacheServer" id="cdktf-infra-uniovi.InsecureApacheServer"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer"></a>
+
+```typescript
+import { InsecureApacheServer } from 'cdktf-infra-uniovi'
+
+new InsecureApacheServer(scope: Construct, id: string, version: ApacheVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.ApacheVersion">ApacheVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ApacheVersion">ApacheVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.InsecureApacheServer.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.InsecureApacheServer.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.InsecureApacheServer.isConstruct"></a>
+
+```typescript
+import { InsecureApacheServer } from 'cdktf-infra-uniovi'
+
+InsecureApacheServer.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.InsecureApacheServer.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureApacheServer.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.InsecureApacheServer.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### InsecureNginxServer <a name="InsecureNginxServer" id="cdktf-infra-uniovi.InsecureNginxServer"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer"></a>
+
+```typescript
+import { InsecureNginxServer } from 'cdktf-infra-uniovi'
+
+new InsecureNginxServer(scope: Construct, id: string, version: NginxVersion, serverProps: ServerPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.serverProps">serverProps</a></code> | <code><a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.NginxVersion">NginxVersion</a>
+
+---
+
+##### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.InsecureNginxServer.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.InsecureNginxServer.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.InsecureNginxServer.isConstruct"></a>
+
+```typescript
+import { InsecureNginxServer } from 'cdktf-infra-uniovi'
+
+InsecureNginxServer.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.InsecureNginxServer.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.InsecureNginxServer.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.InsecureNginxServer.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ### NginxServer <a name="NginxServer" id="cdktf-infra-uniovi.NginxServer"></a>
 
 #### Initializers <a name="Initializers" id="cdktf-infra-uniovi.NginxServer.Initializer"></a>
@@ -764,133 +1272,6 @@ The tree node.
 ---
 
 
-### UbuntuBase <a name="UbuntuBase" id="cdktf-infra-uniovi.UbuntuBase"></a>
-
-#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuBase.Initializer"></a>
-
-```typescript
-import { UbuntuBase } from 'cdktf-infra-uniovi'
-
-new UbuntuBase(scope: Construct, id: string, version: UbuntuVersion, machineProps: BasicMachineComponentPropsInterface, provider?: TerraformProvider)
-```
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.BasicMachineComponentPropsInterface">BasicMachineComponentPropsInterface</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
-
----
-
-##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.scope"></a>
-
-- *Type:* constructs.Construct
-
----
-
-##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.id"></a>
-
-- *Type:* string
-
----
-
-##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.version"></a>
-
-- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
-
----
-
-##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.machineProps"></a>
-
-- *Type:* <a href="#cdktf-infra-uniovi.BasicMachineComponentPropsInterface">BasicMachineComponentPropsInterface</a>
-
----
-
-##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuBase.Initializer.parameter.provider"></a>
-
-- *Type:* cdktf.TerraformProvider
-
----
-
-#### Methods <a name="Methods" id="Methods"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.toString">toString</a></code> | Returns a string representation of this construct. |
-
----
-
-##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuBase.toString"></a>
-
-```typescript
-public toString(): string
-```
-
-Returns a string representation of this construct.
-
-#### Static Functions <a name="Static Functions" id="Static Functions"></a>
-
-| **Name** | **Description** |
-| --- | --- |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
-
----
-
-##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuBase.isConstruct"></a>
-
-```typescript
-import { UbuntuBase } from 'cdktf-infra-uniovi'
-
-UbuntuBase.isConstruct(x: any)
-```
-
-Checks if `x` is a construct.
-
-Use this method instead of `instanceof` to properly detect `Construct`
-instances, even when the construct library is symlinked.
-
-Explanation: in JavaScript, multiple copies of the `constructs` library on
-disk are seen as independent, completely different libraries. As a
-consequence, the class `Construct` in each copy of the `constructs` library
-is seen as a different class, and an instance of one class will not test as
-`instanceof` the other class. `npm install` will not create installations
-like this, but users may manually symlink construct libraries together or
-use a monorepo tool: in those cases, multiple copies of the `constructs`
-library can be accidentally installed, and `instanceof` will behave
-unpredictably. It is safest to avoid using `instanceof`, and using
-this type-testing method instead.
-
-###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuBase.isConstruct.parameter.x"></a>
-
-- *Type:* any
-
-Any object.
-
----
-
-#### Properties <a name="Properties" id="Properties"></a>
-
-| **Name** | **Type** | **Description** |
-| --- | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.UbuntuBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
-
----
-
-##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuBase.property.node"></a>
-
-```typescript
-public readonly node: Node;
-```
-
-- *Type:* constructs.Node
-
-The tree node.
-
----
-
-
 ### UbuntuBasic <a name="UbuntuBasic" id="cdktf-infra-uniovi.UbuntuBasic"></a>
 
 #### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuBasic.Initializer"></a>
@@ -1006,6 +1387,641 @@ Any object.
 ---
 
 ##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuBasic.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### UbuntuCustomBase <a name="UbuntuCustomBase" id="cdktf-infra-uniovi.UbuntuCustomBase"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer"></a>
+
+```typescript
+import { UbuntuCustomBase } from 'cdktf-infra-uniovi'
+
+new UbuntuCustomBase(scope: Construct, id: string, version: UbuntuVersion, machineProps: CustomMachineComponentPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
+
+---
+
+##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.machineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuCustomBase.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuCustomBase.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuCustomBase.isConstruct"></a>
+
+```typescript
+import { UbuntuCustomBase } from 'cdktf-infra-uniovi'
+
+UbuntuCustomBase.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuCustomBase.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuCustomBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuCustomBase.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### UbuntuDesktop <a name="UbuntuDesktop" id="cdktf-infra-uniovi.UbuntuDesktop"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer"></a>
+
+```typescript
+import { UbuntuDesktop } from 'cdktf-infra-uniovi'
+
+new UbuntuDesktop(scope: Construct, id: string, version: UbuntuVersion, machineProps: CustomMachineComponentPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
+
+---
+
+##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.machineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuDesktop.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuDesktop.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuDesktop.isConstruct"></a>
+
+```typescript
+import { UbuntuDesktop } from 'cdktf-infra-uniovi'
+
+UbuntuDesktop.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuDesktop.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDesktop.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuDesktop.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### UbuntuDev <a name="UbuntuDev" id="cdktf-infra-uniovi.UbuntuDev"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuDev.Initializer"></a>
+
+```typescript
+import { UbuntuDev } from 'cdktf-infra-uniovi'
+
+new UbuntuDev(scope: Construct, id: string, version: UbuntuVersion, machineProps: CustomMachineComponentPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
+
+---
+
+##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.machineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuDev.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuDev.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuDev.isConstruct"></a>
+
+```typescript
+import { UbuntuDev } from 'cdktf-infra-uniovi'
+
+UbuntuDev.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuDev.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDev.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuDev.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### UbuntuDNS <a name="UbuntuDNS" id="cdktf-infra-uniovi.UbuntuDNS"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuDNS.Initializer"></a>
+
+```typescript
+import { UbuntuDNS } from 'cdktf-infra-uniovi'
+
+new UbuntuDNS(scope: Construct, id: string, version: UbuntuVersion, machineProps: CustomMachineComponentPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
+
+---
+
+##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.machineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuDNS.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuDNS.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuDNS.isConstruct"></a>
+
+```typescript
+import { UbuntuDNS } from 'cdktf-infra-uniovi'
+
+UbuntuDNS.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuDNS.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuDNS.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuDNS.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### UbuntuPro <a name="UbuntuPro" id="cdktf-infra-uniovi.UbuntuPro"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.UbuntuPro.Initializer"></a>
+
+```typescript
+import { UbuntuPro } from 'cdktf-infra-uniovi'
+
+new UbuntuPro(scope: Construct, id: string, version: UbuntuVersion, machineProps: CustomMachineComponentPropsInterface, provider?: TerraformProvider)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.version">version</a></code> | <code><a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.machineProps">machineProps</a></code> | <code><a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.provider">provider</a></code> | <code>cdktf.TerraformProvider</code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `version`<sup>Required</sup> <a name="version" id="cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.version"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.UbuntuVersion">UbuntuVersion</a>
+
+---
+
+##### `machineProps`<sup>Required</sup> <a name="machineProps" id="cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.machineProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+---
+
+##### `provider`<sup>Optional</sup> <a name="provider" id="cdktf-infra-uniovi.UbuntuPro.Initializer.parameter.provider"></a>
+
+- *Type:* cdktf.TerraformProvider
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.UbuntuPro.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.UbuntuPro.isConstruct"></a>
+
+```typescript
+import { UbuntuPro } from 'cdktf-infra-uniovi'
+
+UbuntuPro.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.UbuntuPro.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.UbuntuPro.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.UbuntuPro.property.node"></a>
 
 ```typescript
 public readonly node: Node;
@@ -2159,6 +3175,7 @@ new AwsDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic AWS machine deployment. |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
 
 ---
@@ -2264,6 +3281,36 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 
 ---
 
+##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer"></a>
+
+```typescript
+public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
@@ -2321,6 +3368,7 @@ new DockerDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic, generic Docker container using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer">deployBasicServer</a></code> | Generates a basic Docker server using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | Generates a custom Docker machine using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | Generates an insecure Docker server using the provided properties. |
 
 ---
@@ -2459,6 +3507,36 @@ An object containing internal properties for the machine component, including Do
 
 ---
 
+##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer"></a>
+
+```typescript
+public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
@@ -2588,6 +3666,7 @@ SingletonProviderFactory.getProvider(providerType: ProviderType, scope: Construc
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
 
 ---
@@ -2677,6 +3756,36 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
+##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer"></a>
+
+```typescript
+public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 

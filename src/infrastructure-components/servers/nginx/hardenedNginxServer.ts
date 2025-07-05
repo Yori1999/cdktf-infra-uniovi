@@ -4,14 +4,14 @@ import {
   ServerPropsInterface,
 } from "../../../props/props";
 import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deployStrategy";
-import { supportedNginxImages } from "../../../supported-images/supportedServerImages";
+import { supportedHardenedNginxImages } from "../../../supported-images/supportedServerImages";
 
-export class InsecureNginxServer extends NginxServerBase {
+export class HardenedNginxServer extends NginxServerBase {
   protected get supportedNginxImagesMap(): Record<
     string,
     Record<string, string>
   > {
-    return supportedNginxImages;
+    return supportedHardenedNginxImages;
   }
 
   protected deploy(
@@ -20,7 +20,7 @@ export class InsecureNginxServer extends NginxServerBase {
     props: ServerPropsInterface,
     imageIdentifier: string,
   ): void {
-    strategy.deployInsecureServer(
+    strategy.deployHardenedServer(
       this,
       id,
       props,
@@ -34,8 +34,7 @@ export class InsecureNginxServer extends NginxServerBase {
     return {
       dockerProps: {
         imageName: imageIdentifier,
-        customImageName: "nginx-insecure",
-        dockerfilePath: "nginx-insecure",
+        // In this case, we'll be using a custom hardened image, so no need to curate a custom Dockerfile
       },
     };
   }
@@ -46,7 +45,7 @@ export class InsecureNginxServer extends NginxServerBase {
     return {
       awsProps: {
         ami: imageIdentifier,
-        customInitScriptPath: "nginx-insecure",
+        // In this case, we'll be using a hardened AMI from Nginx, so no need to curate any custom scripts
       },
     };
   }

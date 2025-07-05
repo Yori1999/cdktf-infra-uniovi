@@ -8,6 +8,7 @@ import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deplo
 import { ProviderDeployStrategyFactory } from "../../../providers/providerDeployStrategy/providerDeployStrategyFactory";
 import { ProviderType } from "../../../providers/providerType";
 import { SingletonProviderFactory } from "../../../providers/singletonProviderFactory";
+import { validateImageExists } from "../../../supported-images/supportedImagesValidator";
 import {
   DebianVersion,
   supportedDebianImages,
@@ -30,17 +31,17 @@ export class DebianBasic extends Construct {
     const deployWith: ProviderType = machineProps.providerType;
     const imageIdentifier: string = supportedDebianImages[deployWith][version];
 
-    if (imageIdentifier != undefined) {
-      SingletonProviderFactory.getProvider(deployWith, this, provider);
-      const deployStrategy: IDeployStrategy =
-        ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-      deployStrategy.deployBasicMachine(
-        this,
-        id,
-        machineProps,
-        this.getAdditionalProps(deployWith, imageIdentifier),
-      );
-    }
+    validateImageExists(imageIdentifier);
+
+    SingletonProviderFactory.getProvider(deployWith, this, provider);
+    const deployStrategy: IDeployStrategy =
+      ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
+    deployStrategy.deployBasicMachine(
+      this,
+      id,
+      machineProps,
+      this.getAdditionalProps(deployWith, imageIdentifier),
+    );
   }
 
   protected getAdditionalProps(
