@@ -27,7 +27,13 @@ export interface IDeployStrategy {
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): void;
-  //deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface) : void;
+  
+  deployInsecureServer(
+    scope: Construct,
+    id: string,
+    props: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void;
   //deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface) : void;
 
   //deployWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;

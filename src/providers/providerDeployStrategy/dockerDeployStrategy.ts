@@ -8,6 +8,7 @@ import {
 } from "@cdktf/provider-docker/lib/container";
 import { Image, ImageConfig } from "@cdktf/provider-docker/lib/image";
 import { Volume } from "@cdktf/provider-docker/lib/volume";
+import { TerraformOutput } from "cdktf";
 import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
 import {
@@ -91,6 +92,18 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return new Container(scope, `${normalizedId}-container`, containerConf);
   }
 
+  /**
+   * Generates a custom Docker machine using the provided properties.
+   * This method is used to deploy a custom machine using Docker.
+   * A custom machine is any machine that is slightly more complex than a basic machine, and that will require a custom Docker image that we build with a custom Dockerfile.
+   * It can include additional configurations such as ports, networks, and volumes.
+   * @param scope The scope in which the resources will be created.
+   * @param id
+   * @param customMachineProps An object containing the properties for the custom machine. At this point it should include Docker-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in customMachineProps.
+   * @returns A Construct representing the deployed Docker container.
+   */
   deployCustomMachine(
     scope: Construct,
     id: string,
@@ -257,7 +270,105 @@ export class DockerDeployStrategy implements IDeployStrategy {
     new Container(scope, `${normalizedId}-container`, fullServerContainerConf);
   }
 
+  /**
+   * Generates an insecure Docker server using the provided properties.
+   * This method is used to deploy an insecure server using Docker.
+   * It creates a Docker image and a container with the specified configurations.
+   * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+   * This method is specifically designed for server deployments, which may include additional
+   * configurations such as ports and networks.
+   * By default, it will expose ports 80 and 8080, but this can be customized through the serverProps.
+   * @param scope The scope in which the resources will be created.
+   * @param id
+   * @param serverProps An object containing the properties for the server. At this point it should include Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in serverProps.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   */
+  deployInsecureServer(
+    scope: Construct,
+    id: string,
+    serverProps: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!serverProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific props.",
+      );
+    }
+    if (!internalMachineComponentProps.dockerProps) {
+      throw new Error(
+        "DockerDeployStrategy didn't receive Docker-specific internal props.",
+      );
+    }
+    const dockerServerConfig: DockerServerProps = serverProps.dockerProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
+
+    const normalizedId = normalizeId(id);
+
+    const fullImageConf: ImageConfig = {
+      ...this.getDefaultImageConfig(
+        `${dockerInternalProps.customImageName}:latest`,
+      ),
+      buildAttribute: {
+        context:
+          path.dirname(getDockerfilesPath()) +
+          dockerInternalProps.dockerfilePath,
+        buildArgs: {
+          BASE_IMAGE: dockerInternalProps.imageName,
+        },
+      },
+    };
+    const dockerImage: Image = new Image(
+      scope,
+      `${normalizedId}-insecure-image`,
+      fullImageConf,
+    );
+
+    const fullServerContainerConf = {
+      ...this.getDefaultContainerConfig(
+        `${normalizedId}-insecure-container`,
+        dockerImage,
+      ),
+      ports: dockerServerConfig.ports ?? [{ internal: 80, external: 8080 }],
+      ...(dockerServerConfig.networks && dockerServerConfig.networks.length > 0
+        ? { networksAdvanced: dockerServerConfig.networks }
+        : {}),
+    };
+    const container: Container = new Container(
+      scope,
+      `${normalizedId}-insecure-container`,
+      fullServerContainerConf,
+    );
+
+    this.getContainerPublicIp(scope, normalizedId, container);
+  }
+
   // METHODS FOR CREATING COMMON ASSETS //
+
+  // Method to register the IP of the container //
+  /**
+   * Registers a Terraform output for the public IP of the container.
+   * This is useful for accessing the container after deployment.
+   * @param scope Construct scope where the output will be defined
+   * @param normId The normalized ID
+   * @param container The Docker container for which the IP will be registered
+   */
+  private getContainerPublicIp(
+    scope: Construct,
+    normalizedId: string,
+    container: Container,
+  ): TerraformOutput {
+    let ip: string;
+    try {
+      ip = container.networkData.get(0).ipAddress;
+    } catch {
+      ip = "No IP address available";
+    }
+    return new TerraformOutput(scope, `${normalizedId}-public-ip`, {
+      value: ip,
+    });
+  }
 
   // Utility methods region for creating basic resources //
 

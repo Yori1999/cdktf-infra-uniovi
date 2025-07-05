@@ -2159,6 +2159,7 @@ new AwsDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic AWS machine deployment. |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
 
 ---
 
@@ -2263,6 +2264,36 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 
 ---
 
+##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer"></a>
+
+```typescript
+public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
 
 
 
@@ -2289,7 +2320,8 @@ new DockerDeployStrategy()
 | --- | --- |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic, generic Docker container using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer">deployBasicServer</a></code> | Generates a basic Docker server using the provided properties. |
-| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | Generates a custom Docker machine using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | Generates an insecure Docker server using the provided properties. |
 
 ---
 
@@ -2389,9 +2421,17 @@ An object containing internal properties for the machine component, including Do
 public deployCustomMachine(scope: Construct, id: string, customMachineProps: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
+Generates a custom Docker machine using the provided properties.
+
+This method is used to deploy a custom machine using Docker.
+A custom machine is any machine that is slightly more complex than a basic machine, and that will require a custom Docker image that we build with a custom Dockerfile.
+It can include additional configurations such as ports, networks, and volumes.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope in which the resources will be created.
 
 ---
 
@@ -2405,11 +2445,64 @@ public deployCustomMachine(scope: Construct, id: string, customMachineProps: Cus
 
 - *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
 
+An object containing the properties for the custom machine.
+
+At this point it should include Docker-specific properties.
+
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including Docker-specific properties.
+
+---
+
+##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer"></a>
+
+```typescript
+public deployInsecureServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+Generates an insecure Docker server using the provided properties.
+
+This method is used to deploy an insecure server using Docker.
+It creates a Docker image and a container with the specified configurations.
+Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+This method is specifically designed for server deployments, which may include additional
+configurations such as ports and networks.
+By default, it will expose ports 80 and 8080, but this can be customized through the serverProps.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+The scope in which the resources will be created.
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.serverProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+An object containing the properties for the server.
+
+At this point it should include Docker-specific properties.
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including Docker-specific properties.
 
 ---
 
@@ -2495,6 +2588,7 @@ SingletonProviderFactory.getProvider(providerType: ProviderType, scope: Construc
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
 
 ---
 
@@ -2583,6 +2677,36 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine.parameter.internalMachineComponentProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+---
+
+##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer"></a>
+
+```typescript
+public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+---
+
+###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 

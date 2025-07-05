@@ -48,10 +48,15 @@ export class AwsDeployStrategy implements IDeployStrategy {
         "AWS properties are required for deploying a basic machine.",
       );
     }
+    if (!internalMachineComponentProps.awsProps) {
+      throw new Error(
+        "Internal AWS properties are required for the basic machine.",
+      );
+    }
     const awsProps: BasicAWSMachineComponentProps = props.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
-      internalMachineComponentProps.awsProps as InternalAWSMachineComponentProps;
+      internalMachineComponentProps.awsProps;
 
     /* NORMALIZE THE ID FOR USING IT  */
     // Normalize the ID to ensure it is valid for AWS resources
@@ -108,8 +113,8 @@ export class AwsDeployStrategy implements IDeployStrategy {
       }),
     });
 
+    // If persistence is enabled, create an EBS volume and attach it to the instance
     if (awsProps.usePersistence) {
-      // If persistence is enabled, create an EBS volume and attach it to the instance
       this.createBasicVolumeAndAttachment(
         scope,
         normalizedId,
@@ -133,10 +138,13 @@ export class AwsDeployStrategy implements IDeployStrategy {
     if (!props.awsProps) {
       throw new Error("AWS properties required for custom AWS machine.");
     }
+    if (!internalMachineComponentProps.awsProps) {
+      throw new Error("Internal AWS properties are required");
+    }
     const awsProps: CustomAWSMachineComponentProps = props.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
-      internalMachineComponentProps.awsProps as InternalAWSMachineComponentProps;
+      internalMachineComponentProps.awsProps;
 
     /* NORMALIZE THE ID FOR USING IT  */
     // Normalize the ID to ensure it is valid for AWS resources
@@ -224,6 +232,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
         "Server-specific AWS properties are required for basic server.",
       );
     }
+    if (!internalMachineComponentProps.awsProps) {
+      throw new Error("Internal AWS properties are required for basic server.");
+    }
     const awsProps: AwsServerProps = props.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
@@ -285,6 +296,101 @@ export class AwsDeployStrategy implements IDeployStrategy {
         userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
       }),
     });
+
+    if (awsProps.usePersistence) {
+      this.createBasicVolumeAndAttachment(
+        scope,
+        normalizedId,
+        instance,
+        availabilityZone,
+      );
+    }
+
+    // Register the public IP as a Terraform output
+    this.getInstancePublicIp(scope, normalizedId, instance);
+  }
+
+  deployInsecureServer(
+    scope: Construct,
+    id: string,
+    props: ServerPropsInterface,
+    internalMachineComponentProps: InternalMachineComponentPropsInterface,
+  ): void {
+    if (!props.awsProps) {
+      throw new Error(
+        "Server-specific AWS properties are required for the insecure server.",
+      );
+    }
+    if (!internalMachineComponentProps.awsProps) {
+      throw new Error(
+        "Internal AWS properties are required for the insecure server.",
+      );
+    }
+    const awsProps: CustomAWSMachineComponentProps = props.awsProps;
+    const internalAWSProps: InternalAWSMachineComponentProps =
+      internalMachineComponentProps.awsProps;
+
+    /* NORMALIZE THE ID FOR USING IT  */
+    // Normalize the ID to ensure it is valid for AWS resources
+    const normalizedId = normalizeId(id);
+
+    // Define the VPC
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    // Subnet ID + get the corresponding availability zone
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    const availabilityZone = subnetData.availabilityZone;
+    // Security group ingress rules
+    const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
+      this.getDefaultSSHSecurityGroup(),
+      this.getDefaultHTTPSecurityGroup(),
+    ];
+    const securityGroupIngressRules: SecurityGroupIngress[] =
+      awsProps.securityGroupIngressRules ?? [];
+    const allSecurityGroupIngressRules: SecurityGroupIngress[] =
+      this.preserveUniqueRules(
+        securityGroupIngressRules,
+        additionalSecurityGroupIngressRules,
+      );
+    const securityGroup =
+      awsProps.securityGroupId ??
+      new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: allSecurityGroupIngressRules,
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    // Create the EC2 instance
+    const instance = new Instance(scope, `${normalizedId}-insecure-server`, {
+      ami: internalAWSProps.ami,
+      instanceType: "t2.micro",
+      availabilityZone: availabilityZone,
+      subnetId,
+      vpcSecurityGroupIds: [securityGroup],
+      associatePublicIpAddress: true,
+      userData: generateUserData({
+        enablePersistence: awsProps.usePersistence ?? false,
+        userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
+      }),
+    });
+
+    if (awsProps.usePersistence) {
+      this.createBasicVolumeAndAttachment(
+        scope,
+        normalizedId,
+        instance,
+        availabilityZone,
+      );
+    }
 
     // Register the public IP as a Terraform output
     this.getInstancePublicIp(scope, normalizedId, instance);
