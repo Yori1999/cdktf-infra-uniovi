@@ -40,13 +40,13 @@ describe("isValidId", () => {
     expect(isValidId("   ")).toBe(false);
   });
 
-  it("should return false for a string longer than 100 characters", () => {
-    const longString = "a".repeat(101);
+  it("should return false for a string longer than 40 characters", () => {
+    const longString = "a".repeat(41);
     expect(isValidId(longString)).toBe(false);
   });
 
-  it("should return true for a string that is exactly 100 characters long", () => {
-    const longString = "a".repeat(100);
+  it("should return true for a string that is exactly 40 characters long", () => {
+    const longString = "a".repeat(40);
     expect(isValidId(longString)).toBe(true);
   });
 });
@@ -68,15 +68,15 @@ describe("checkIsValidId", () => {
     );
   });
 
-  it("should throw an error for a string longer than 100 characters", () => {
-    const longString = "a".repeat(101);
+  it("should throw an error for a string longer than 40 characters", () => {
+    const longString = "a".repeat(41);
     expect(() => checkIsValidId(longString)).toThrow(
       "Invalid 'id' provided: must be a non-empty, non-blank string, and no longer than 100 characters once normalized.",
     );
   });
 
-  it("should not throw for a string that is exactly 100 characters long", () => {
-    const longString = "a".repeat(100);
+  it("should not throw for a string that is exactly 40 characters long", () => {
+    const longString = "a".repeat(40);
     expect(() => checkIsValidId(longString)).not.toThrow();
   });
 });

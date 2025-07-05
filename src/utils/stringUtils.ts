@@ -15,7 +15,7 @@ export function normalizeId(id: string): string {
  * @returns True if the string is a valid ID, false otherwise.
  */
 export function isValidId(id: string): boolean {
-  return !isEmptyString(id) && id.normalize().length <= 100;
+  return !isEmptyString(id) && id.normalize().length <= 40;
 }
 
 /**
@@ -26,7 +26,7 @@ export function isValidId(id: string): boolean {
  * @throws {Error} If the string is not a valid ID.
  */
 export function checkIsValidId(id: string): void {
-  if (isEmptyString(id) || id.normalize().length > 100) {
+  if (isEmptyString(id) || id.normalize().length > 40) {
     throw new Error(
       "Invalid 'id' provided: must be a non-empty, non-blank string, and no longer than 100 characters once normalized.",
     );

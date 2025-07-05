@@ -9,6 +9,14 @@ const project = new cdktf.ConstructLibraryCdktf({
   projenrcTs: true,
   repositoryUrl: "https://github.com/Yori1999/cdktf-infra-uniovi.git",
   prettier: true, // optional, but convenient
+  tsconfig: {
+    compilerOptions: {
+      baseUrl: "src",
+      paths: {
+        "*": ["*"],
+      },
+    },
+  },
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */

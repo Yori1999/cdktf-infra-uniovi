@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`creates a Docker container 1`] = `
+{
+  "provider": {
+    "docker": [
+      {},
+    ],
+  },
+  "resource": {
+    "docker_container": {
+      "Test_Test-container_72A6054C": {
+        "command": [
+          "sleep",
+          "infinity",
+        ],
+        "image": "\${docker_image.Test_Test-image_5197E2DB.name}",
+        "name": "Test-container",
+      },
+    },
+    "docker_image": {
+      "Test_Test-image_5197E2DB": {
+        "keep_locally": false,
+        "name": "alpine:latest",
+      },
+    },
+  },
+  "terraform": {
+    "required_providers": {
+      "docker": {
+        "source": "kreuzwerker/docker",
+        "version": "3.0.2",
+      },
+    },
+  },
+}
+`;
