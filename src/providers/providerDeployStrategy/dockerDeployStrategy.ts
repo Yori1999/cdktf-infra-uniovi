@@ -191,9 +191,11 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ...(internalDockerProps.dockerfilePath
         ? {
             buildAttribute: {
-              context: path.dirname(
+              context: path.resolve(
                 getDockerfilePath(internalDockerProps.dockerfilePath),
+                "../..", // needs to be resolved like this because when building the image, Dockerfile only knows about the context; so we wouldn't be able to access files which are not under the specific Dockerfile path
               ),
+              dockerfile: `dockerfiles/${internalDockerProps.dockerfilePath}/Dockerfile`,
               buildArgs: {
                 BASE_IMAGE: internalDockerProps.imageName,
                 UBUNTU_PRO_TOKEN:
@@ -361,9 +363,11 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ...(dockerInternalProps.dockerfilePath
         ? {
             buildAttribute: {
-              context: path.dirname(
+              context: path.resolve(
                 getDockerfilePath(dockerInternalProps.dockerfilePath),
+                "../..", // needs to be resolved like this because when building the image, Dockerfile only knows about the context; so we wouldn't be able to access files which are not under the specific Dockerfile path
               ),
+              dockerfile: `dockerfiles/${dockerInternalProps.dockerfilePath}/Dockerfile`,
               buildArgs: {
                 BASE_IMAGE: dockerInternalProps.imageName,
               },
@@ -694,9 +698,11 @@ export class DockerDeployStrategy implements IDeployStrategy {
     const nginxImage = new Image(scope, `${id}-lemp-nginx-image`, {
       ...this.getDefaultImageConfig(`lemp-nginx-image:latest`),
       buildAttribute: {
-        context: path.dirname(
-          getDockerfilePath("lemp-nginx"), // This is the path to the Dockerfile for the LEMP Nginx image
+        context: path.resolve(
+          getDockerfilePath("lemp-nginx"),
+          "../..", // needs to be resolved like this because when building the image, Dockerfile only knows about the context; so we wouldn't be able to access files which are not under the specific Dockerfile path
         ),
+        dockerfile: `dockerfiles/lemp-nginx/Dockerfile`,
         buildArgs: {
           BASE_IMAGE: supportedNginxImages[ProviderType.DOCKER].latest,
           PHP_CONTAINER_NAME: phpContainer.name,

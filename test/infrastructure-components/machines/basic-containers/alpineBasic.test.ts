@@ -1,15 +1,7 @@
-//import { App, TerraformProvider, TerraformStack } from "cdktf";
 import { App, TerraformStack, Testing } from "cdktf";
 import { Construct } from "constructs";
-//import { checkIsValidId } from "../../../../src/utils/stringUtils";
-//import { BasicMachineComponentPropsInterface } from "../../../../src/props/props";
 import { AlpineBasic } from "../../../../src/infrastructure-components/machines/basic-containers/alpineBasic";
 import { ProviderType } from "../../../../src/providers/providerType";
-//import { SingletonProviderFactory } from "../../../../src/providers/singletonProviderFactory";
-//import { ProviderDeployStrategyFactory } from "../../../../src/providers/providerDeployStrategy/providerDeployStrategyFactory";
-//import { AlpineVersion, supportedAlpineImages } from "../../../../src/supported-images/supportedMachineImages";
-
-//import { Container } from "@cdktf/provider-docker/lib/container";
 import { AlpineVersion } from "../../../../src/supported-images/supportedMachineImages";
 
 class TestStack extends TerraformStack {
@@ -18,9 +10,7 @@ class TestStack extends TerraformStack {
 
     new AlpineBasic(this, "Test", AlpineVersion.LATEST, {
       providerType: ProviderType.DOCKER,
-      dockerProps: {
-        containerName: "TestContainer",
-      },
+      dockerProps: {},
     });
   }
 }

@@ -8,7 +8,7 @@ import {
   SecurityGroupIngress,
 } from "@cdktf/provider-aws/lib/security-group";
 import { VolumeAttachment } from "@cdktf/provider-aws/lib/volume-attachment";
-import { TerraformOutput, Token } from "cdktf";
+import { Fn, TerraformOutput } from "cdktf";
 import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
 import { StackType } from "../../infrastructure-components/stacks/stackType";
@@ -81,7 +81,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
     });
-    const availabilityZone = subnetData.availabilityZone;
 
     /* GET THE SECURITY GROUP PASSED BY THE USER OR CREATE ONE FOR THE USER'S VPC */
     // Security group
@@ -113,6 +112,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
           systemctl start ssh
           `,
       }),
+      tags: {
+        Name: `${normalizedId}-basic-machine`,
+      },
     });
 
     // If persistence is enabled, create an EBS volume and attach it to the instance
@@ -121,7 +123,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         scope,
         normalizedId,
         instance,
-        availabilityZone,
+        subnetData.availabilityZone,
       );
     }
 
@@ -179,7 +181,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
     });
-    const availabilityZone = subnetData.availabilityZone;
     // Security group ingress rules
     const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
       ...(internalAWSProps.additionalSecurityGroupIngressRules ?? []),
@@ -207,7 +208,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const instance = new Instance(scope, `${normalizedId}-custom-machine`, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
-      availabilityZone: availabilityZone,
+      availabilityZone: subnetData.availabilityZone,
       subnetId,
       vpcSecurityGroupIds: [securityGroup],
       associatePublicIpAddress: true,
@@ -228,7 +229,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         scope,
         normalizedId,
         instance,
-        availabilityZone,
+        subnetData.availabilityZone,
       );
     }
 
@@ -284,7 +285,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
     });
-    const availabilityZone = subnetData.availabilityZone;
     // Security group ingress rules
     const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
       this.getDefaultSSHSecurityGroup(),
@@ -312,7 +312,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const instance = new Instance(scope, `${normalizedId}-basic-server`, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
-      availabilityZone: availabilityZone,
+      availabilityZone: subnetData.availabilityZone,
       subnetId,
       vpcSecurityGroupIds: [securityGroup],
       associatePublicIpAddress: true,
@@ -327,7 +327,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         scope,
         normalizedId,
         instance,
-        availabilityZone,
+        subnetData.availabilityZone,
       );
     }
 
@@ -386,7 +386,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
     });
-    const availabilityZone = subnetData.availabilityZone;
     // Security group ingress rules
     const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
       this.getDefaultSSHSecurityGroup(),
@@ -413,7 +412,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const instance = new Instance(scope, `${normalizedId}-insecure-server`, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
-      availabilityZone: availabilityZone,
+      availabilityZone: subnetData.availabilityZone,
       subnetId,
       vpcSecurityGroupIds: [securityGroup],
       associatePublicIpAddress: true,
@@ -428,7 +427,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         scope,
         normalizedId,
         instance,
-        availabilityZone,
+        subnetData.availabilityZone,
       );
     }
 
@@ -486,7 +485,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
     });
-    const availabilityZone = subnetData.availabilityZone;
     // Security group ingress rules
     const additionalSecurityGroupIngressRules: SecurityGroupIngress[] = [
       this.getDefaultSSHSecurityGroup(),
@@ -514,7 +512,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const instance = new Instance(scope, `${normalizedId}-hardened-server `, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
-      availabilityZone: availabilityZone,
+      availabilityZone: subnetData.availabilityZone,
       subnetId,
       vpcSecurityGroupIds: [securityGroup],
       associatePublicIpAddress: true,
@@ -529,7 +527,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         scope,
         normalizedId,
         instance,
-        availabilityZone,
+        subnetData.availabilityZone,
       );
     }
 
@@ -602,14 +600,13 @@ export class AwsDeployStrategy implements IDeployStrategy {
     vpcId: string,
     subnetId?: string,
   ): string {
-    return (
-      subnetId ??
-      Token.asString(
-        new DataAwsSubnets(scope, `${normalizedId}-subnets`, {
-          filter: [{ name: "vpc-id", values: [vpcId] }],
-        }).ids[0],
-      )
-    );
+    if (subnetId) {
+      return subnetId;
+    }
+    const subnets = new DataAwsSubnets(scope, `${normalizedId}-subnets`, {
+      filter: [{ name: "vpc-id", values: [vpcId] }],
+    });
+    return Fn.element(subnets.ids, 0);
   }
 
   /**

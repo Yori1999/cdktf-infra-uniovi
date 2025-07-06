@@ -25,13 +25,6 @@ export interface BaseInfrastructureComponentProps {
 // REGION SIMPLE MACHINE PROPS //
 export interface BasicDockerMachineComponentProps {
   /**
-   * The custom name or identifier for the Docker container.
-   * This is the name that will be used to reference the container in the Docker environment.
-   * No matter the value you pass, it will be normalized to ensure it is valid for Docker.
-   * @example "my-docker-container"
-   */
-  readonly containerName: string;
-  /**
    * Networks for the Docker container.
    * This is an advanced property that allows you to specify multiple networks for the container.
    * Each network must follow Docker's `ContainerNetworksAdvanced` schema.
@@ -51,7 +44,6 @@ export interface BasicDockerMachineComponentProps {
   readonly volumes?: ContainerVolumes[];
 }
 export interface BasicAWSMachineComponentProps {
-  //instanceType?: string;
   /**
    * Virtual Private Cloud (VPC) ID where the machine will be deployed.
    * This is an optional property, and if not specified, the default VPC will be used.

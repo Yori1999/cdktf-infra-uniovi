@@ -2822,34 +2822,11 @@ const basicDockerMachineComponentProps: BasicDockerMachineComponentProps = { ...
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.containerName">containerName</a></code> | <code>string</code> | The custom name or identifier for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.networks">networks</a></code> | <code>@cdktf/provider-docker.container.ContainerNetworksAdvanced[]</code> | Networks for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.useVolume">useVolume</a></code> | <code>boolean</code> | Whether you want to use a volume for the container or not; |
 | <code><a href="#cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.volumes">volumes</a></code> | <code>@cdktf/provider-docker.container.ContainerVolumes[]</code> | List of volumes to use for the container, following Docker's `ContainerVolumes` schema. |
 
 ---
-
-##### `containerName`<sup>Required</sup> <a name="containerName" id="cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.containerName"></a>
-
-```typescript
-public readonly containerName: string;
-```
-
-- *Type:* string
-
-The custom name or identifier for the Docker container.
-
-This is the name that will be used to reference the container in the Docker environment.
-No matter the value you pass, it will be normalized to ensure it is valid for Docker.
-
----
-
-*Example*
-
-```typescript
-"my-docker-container"
-```
-
 
 ##### `networks`<sup>Optional</sup> <a name="networks" id="cdktf-infra-uniovi.BasicDockerMachineComponentProps.property.networks"></a>
 
@@ -3080,7 +3057,6 @@ const customDockerMachineComponentProps: CustomDockerMachineComponentProps = { .
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.containerName">containerName</a></code> | <code>string</code> | The custom name or identifier for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.networks">networks</a></code> | <code>@cdktf/provider-docker.container.ContainerNetworksAdvanced[]</code> | Networks for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.useVolume">useVolume</a></code> | <code>boolean</code> | Whether you want to use a volume for the container or not; |
 | <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.volumes">volumes</a></code> | <code>@cdktf/provider-docker.container.ContainerVolumes[]</code> | List of volumes to use for the container, following Docker's `ContainerVolumes` schema. |
@@ -3093,28 +3069,6 @@ const customDockerMachineComponentProps: CustomDockerMachineComponentProps = { .
 | <code><a href="#cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.ports">ports</a></code> | <code>@cdktf/provider-docker.container.ContainerPorts[]</code> | List of ports to expose from the container, following Docker's ContainerPorts schema. |
 
 ---
-
-##### `containerName`<sup>Required</sup> <a name="containerName" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.containerName"></a>
-
-```typescript
-public readonly containerName: string;
-```
-
-- *Type:* string
-
-The custom name or identifier for the Docker container.
-
-This is the name that will be used to reference the container in the Docker environment.
-No matter the value you pass, it will be normalized to ensure it is valid for Docker.
-
----
-
-*Example*
-
-```typescript
-"my-docker-container"
-```
-
 
 ##### `networks`<sup>Optional</sup> <a name="networks" id="cdktf-infra-uniovi.CustomDockerMachineComponentProps.property.networks"></a>
 
@@ -3420,35 +3374,12 @@ const dockerServerProps: DockerServerProps = { ... }
 
 | **Name** | **Type** | **Description** |
 | --- | --- | --- |
-| <code><a href="#cdktf-infra-uniovi.DockerServerProps.property.containerName">containerName</a></code> | <code>string</code> | The custom name or identifier for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.DockerServerProps.property.networks">networks</a></code> | <code>@cdktf/provider-docker.container.ContainerNetworksAdvanced[]</code> | Networks for the Docker container. |
 | <code><a href="#cdktf-infra-uniovi.DockerServerProps.property.useVolume">useVolume</a></code> | <code>boolean</code> | Whether you want to use a volume for the container or not; |
 | <code><a href="#cdktf-infra-uniovi.DockerServerProps.property.volumes">volumes</a></code> | <code>@cdktf/provider-docker.container.ContainerVolumes[]</code> | List of volumes to use for the container, following Docker's `ContainerVolumes` schema. |
 | <code><a href="#cdktf-infra-uniovi.DockerServerProps.property.ports">ports</a></code> | <code>@cdktf/provider-docker.container.ContainerPorts[]</code> | An optional list of ports to expose from the container, following Docker's `ContainerPorts` schema. |
 
 ---
-
-##### `containerName`<sup>Required</sup> <a name="containerName" id="cdktf-infra-uniovi.DockerServerProps.property.containerName"></a>
-
-```typescript
-public readonly containerName: string;
-```
-
-- *Type:* string
-
-The custom name or identifier for the Docker container.
-
-This is the name that will be used to reference the container in the Docker environment.
-No matter the value you pass, it will be normalized to ensure it is valid for Docker.
-
----
-
-*Example*
-
-```typescript
-"my-docker-container"
-```
-
 
 ##### `networks`<sup>Optional</sup> <a name="networks" id="cdktf-infra-uniovi.DockerServerProps.property.networks"></a>
 
