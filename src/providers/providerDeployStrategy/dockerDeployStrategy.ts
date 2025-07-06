@@ -7,11 +7,14 @@ import {
   ContainerVolumes,
 } from "@cdktf/provider-docker/lib/container";
 import { Image, ImageConfig } from "@cdktf/provider-docker/lib/image";
+import { Network } from "@cdktf/provider-docker/lib/network";
 import { Volume } from "@cdktf/provider-docker/lib/volume";
 import { TerraformOutput } from "cdktf";
 import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
+import { StackType } from "../../infrastructure-components/stacks/stackType";
 import {
+  BaseWebStackProps,
   BasicDockerMachineComponentProps,
   BasicMachineComponentPropsInterface,
   CustomDockerMachineComponentProps,
@@ -19,10 +22,22 @@ import {
   DockerServerProps,
   InternalDockerMachineComponentProps,
   InternalMachineComponentPropsInterface,
+  LampStackPropsInterface,
+  LempStackPropsInterface,
   ServerPropsInterface,
 } from "../../props/props";
+import { supportedNginxImages } from "../../supported-images/supportedServerImages";
+import {
+  MySQLVersion,
+  supportedApachePhpImages,
+  supportedHardenedMySqlImages,
+  supportedMySqlImages,
+  supportedNginxPhpImages,
+  supportedPhpMyAdminImages,
+} from "../../supported-images/supportedWebStacksImages";
 import { getDockerfilePath } from "../../utils/fileUtils";
 import { normalizeId } from "../../utils/stringUtils";
+import { ProviderType } from "../providerType";
 
 export class DockerDeployStrategy implements IDeployStrategy {
   // DEPLOY METHODS REGION //
@@ -444,6 +459,309 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return container;
   }
 
+  deployWebStack(
+    scope: Construct,
+    id: string,
+    stackType: StackType,
+    props: BaseWebStackProps,
+  ): void {
+    const normalizedId = normalizeId(id);
+    const network: Network = this.createBasicNetwork(
+      scope,
+      `${normalizedId}-${stackType}`,
+    );
+    switch (stackType) {
+      case StackType.LAMP: {
+        const lampStackProps: LampStackPropsInterface =
+          props as LampStackPropsInterface;
+        if (!lampStackProps.dockerProps) {
+          throw new Error(
+            "DockerDeployStrategy didn't receive Docker-specific props for LAMP stack.",
+          );
+        }
+        const mySqlPort: number = lampStackProps.dockerProps.mySqlPort ?? 3306;
+        const mySqlContainer: Container = this.createSqlContainer(
+          scope,
+          normalizedId,
+          network,
+          stackType,
+          props,
+          mySqlPort,
+          false,
+        ); // at this point, we're telling whether we want to deploy the hardened MySQL version or not (in this case, not)
+        return this.deployLampStack(
+          scope,
+          normalizedId,
+          network,
+          mySqlContainer,
+          lampStackProps,
+        );
+      }
+      case StackType.LEMP: {
+        const lempStackProps: LempStackPropsInterface =
+          props as LempStackPropsInterface;
+        if (!lempStackProps.dockerProps) {
+          throw new Error(
+            "DockerDeployStrategy didn't receive Docker-specific props for LEMP stack.",
+          );
+        }
+        const mySqlPort: number = lempStackProps.dockerProps.mySqlPort ?? 3306;
+        const mySqlContainer: Container = this.createSqlContainer(
+          scope,
+          normalizedId,
+          network,
+          stackType,
+          props,
+          mySqlPort,
+          false,
+        ); // at this point, we're telling whether we want to deploy the hardened MySQL version or not (in this case, not)
+        return this.deployLempStack(
+          scope,
+          normalizedId,
+          network,
+          mySqlContainer,
+          props as LempStackPropsInterface,
+        );
+      }
+    }
+  }
+
+  /**
+   * Helper method to deploy a LAMP stack.
+   * This method creates the necessary Docker containers for a LAMP stack, including Apache with PHP and optionally PhpMyAdmin container, save for the MySQL container, which must be created beforehand
+   * @param scope
+   * @param id
+   * @param network
+   * @param mySqlContainer
+   * @param props
+   */
+  private deployLampStack(
+    scope: Construct,
+    id: string,
+    network: Network,
+    mySqlContainer: Container,
+    props: LampStackPropsInterface,
+  ): void {
+    if (!props.dockerProps) {
+      throw new Error(
+        "The method didn't receive Docker-specific props for LAMP stack.",
+      );
+    } // This needs to be checked again as well because in TypeScript we can use props.dockerProps?.apachePort but it isn't translatable to other languages directly
+
+    const apacheImage = new Image(
+      scope,
+      `${id}-lamp-apache-image`,
+      this.getDefaultImageConfig(
+        props.phpVersion ??
+          supportedApachePhpImages[ProviderType.DOCKER].phpApache82,
+      ),
+    );
+    const apachePHPContainer: Container = new Container(
+      scope,
+      `${id}-apache-php-container`,
+      {
+        ...this.getDefaultContainerConfig(
+          `${id}-apache-php-container`,
+          apacheImage,
+        ),
+        networksAdvanced: [{ name: network.name }],
+        ports: [
+          {
+            internal: 80,
+            external: props.dockerProps.apachePort ?? 8080,
+          },
+        ],
+      },
+    );
+    this.getContainerIp(
+      scope,
+      `${id}-apache-php-container`,
+      apachePHPContainer,
+    );
+
+    if (props.includePhpMyAdmin) {
+      const phpMyAdminImage = new Image(
+        scope,
+        `${id}-phpmyadmin-image`,
+        this.getDefaultImageConfig(
+          supportedPhpMyAdminImages[ProviderType.DOCKER].latest,
+        ),
+      );
+      const phpMyAdminContainer: Container = new Container(
+        scope,
+        `${id}-phpmyadmin-container`,
+        {
+          ...this.getDefaultContainerConfig(
+            `${id}-phpmyadmin-container`,
+            phpMyAdminImage,
+          ),
+          networksAdvanced: [{ name: network.name }],
+          ports: [
+            {
+              internal: 80,
+              external: props.dockerProps.phpMyAdminPort ?? 8081,
+            },
+          ],
+          env: [
+            "PMA_HOST=" + mySqlContainer.name,
+            "PMA_PORT=" + mySqlContainer.ports.get(0).external,
+          ],
+        },
+      );
+      this.getContainerIp(
+        scope,
+        `${id}-phpmyadmin-container`,
+        phpMyAdminContainer,
+      );
+    }
+  }
+
+  /**
+   * Helper method to deploy a LEMP stack.
+   * This method creates the necessary Docker containers for a LEMP stack, including Apache with PHP, save for the MySQL container, which must be created beforehand
+   * @param scope
+   * @param id
+   * @param network
+   * @param mySqlContainer
+   * @param props
+   */
+  private deployLempStack(
+    scope: Construct,
+    id: string,
+    network: Network,
+    mySqlContainer: Container,
+    props: LempStackPropsInterface,
+  ): void {
+    if (!props.dockerProps) {
+      throw new Error(
+        "The method didn't receive Docker-specific props for LEMP stack.",
+      );
+    } // This needs to be checked again as well because in TypeScript we can use props.dockerProps?.apachePort but it isn't translatable to other languages directly
+
+    const phpImage = new Image(
+      scope,
+      `${id}-nginx-php-image`,
+      this.getDefaultImageConfig(
+        props.phpVersion ??
+          supportedNginxPhpImages[ProviderType.DOCKER].phpNginx82,
+      ),
+    );
+    const phpContainer = new Container(scope, `${id}-lemp-php-container`, {
+      ...this.getDefaultContainerConfig(`${id}-lemp-php-container`, phpImage),
+      networksAdvanced: [{ name: network.name }],
+      env: [
+        "DB_HOST=" + mySqlContainer.name,
+        "DB_NAME=" + (props.mySqlDatabase ?? "lempdb"),
+        "DB_USER=" + (props.mySqlUser ?? "lempuser"),
+        "DB_PASSWORD=" + (props.mySqlPassword ?? "test123..."),
+      ],
+    });
+
+    const nginxImage = new Image(scope, `${id}-lemp-nginx-image`, {
+      ...this.getDefaultImageConfig(`lemp-nginx-image:latest`),
+      buildAttribute: {
+        context: path.dirname(
+          getDockerfilePath("lemp-nginx"), // This is the path to the Dockerfile for the LEMP Nginx image
+        ),
+        buildArgs: {
+          BASE_IMAGE: supportedNginxImages[ProviderType.DOCKER].latest,
+          PHP_CONTAINER_NAME: phpContainer.name,
+        },
+      },
+    });
+
+    const container: Container = new Container(
+      scope,
+      `${id}-lemp-nginx-container`,
+      {
+        ...this.getDefaultContainerConfig(
+          `${id}-lemp-nginx-container`,
+          nginxImage,
+        ),
+        networksAdvanced: [{ name: network.name }],
+        ports: [
+          {
+            internal: 80,
+            external: props.dockerProps.nginxPort ?? 8080,
+          },
+        ],
+      },
+    );
+    this.getContainerIp(scope, `${id}-lemp-nginx-container`, container);
+  }
+
+  /**
+   * Helper method to create a SQL container for the LAMP/LEMP stack.
+   * This method creates a MySQL container with the specified configurations.
+   * It includes the option to use a hardened version of the MySQL image, so we can deploy a more secure version of MySQL while still reusing the method.
+   * @param scope The scope in which the resources will be created.
+   * @param constructId The ID of the construct to be created.
+   * @param network The Docker network in which the MySQL container will be created, which should be the same as for the other containers that are part of the stack.
+   * @param props The properties for the base web stack, which should include MySQL-specific properties.
+   * @param mySqlPort The port on which the MySQL container will be exposed. If not provided, it defaults to 3306.
+   * @param useHardenedVersion Whether to use a hardened version of the MySQL image. If true, it will use the hardened version; otherwise, it will use the standard version.
+   * @returns The created MySQL container.
+   */
+  private createSqlContainer(
+    scope: Construct,
+    constructId: string,
+    network: Network,
+    stackType: StackType,
+    props: BaseWebStackProps,
+    mySqlPort: number,
+    useHardenedVersion: boolean,
+  ): Container {
+    const mySqlImageVersion: MySQLVersion =
+      props.mySqlVersion ?? MySQLVersion.LATEST;
+    const databaseVolume: Volume = this.createBasicVolume(
+      scope,
+      `${constructId}-${stackType}-mysql`,
+    );
+    const mySqlImage = new Image(
+      scope,
+      `${constructId}-mysql-${stackType}-image`,
+      useHardenedVersion
+        ? this.getDefaultImageConfig(
+            supportedHardenedMySqlImages[ProviderType.DOCKER][
+              mySqlImageVersion
+            ],
+          )
+        : this.getDefaultImageConfig(
+            supportedMySqlImages[ProviderType.DOCKER][mySqlImageVersion],
+          ),
+    );
+    const container: Container = new Container(
+      scope,
+      `${constructId}-mysql-${stackType}-container`,
+      {
+        ...this.getDefaultContainerConfig(
+          `${constructId}-mysql-${stackType}-container`,
+          mySqlImage,
+        ),
+        networksAdvanced: [{ name: network.name }],
+        volumes: [
+          {
+            containerPath: "/var/lib/mysql",
+            volumeName: databaseVolume.name,
+          },
+        ],
+        env: [
+          `MYSQL_ROOT_PASSWORD=${props.mySqlRootPassword ?? "test123..."}`,
+          `MYSQL_DATABASE=${props.mySqlDatabase ?? stackType + "db"}`,
+          `MYSQL_USER=${props.mySqlUser ?? stackType + "user"}`,
+          `MYSQL_PASSWORD=${props.mySqlPassword ?? "test123..."}`,
+        ],
+        ports: [{ internal: 3306, external: mySqlPort ?? 3306 }],
+      },
+    );
+    this.getContainerIp(
+      scope,
+      `${constructId}-mysql-${stackType}-container`,
+      container,
+    );
+    return container;
+  }
+
   // METHODS FOR CREATING COMMON ASSETS //
 
   // Method to register the IP of the container //
@@ -482,6 +800,19 @@ export class DockerDeployStrategy implements IDeployStrategy {
   private createBasicVolume(scope: Construct, volumeId: string): Volume {
     return new Volume(scope, `${volumeId}-volume`, {
       name: `${volumeId}-data`,
+    });
+  }
+
+  /**
+   * Creates a basic Docker network.
+   * This method is used to create a network that can be used by the Docker container.
+   * @param scope The scope in which the network will be created.
+   * @param networkId The ID of the network to be created.
+   * @returns The created Docker network.
+   */
+  private createBasicNetwork(scope: Construct, networkId: string): Network {
+    return new Network(scope, networkId + "-network", {
+      name: networkId + "-network",
     });
   }
 

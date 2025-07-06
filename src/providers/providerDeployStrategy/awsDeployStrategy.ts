@@ -11,8 +11,10 @@ import { VolumeAttachment } from "@cdktf/provider-aws/lib/volume-attachment";
 import { TerraformOutput, Token } from "cdktf";
 import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
+import { StackType } from "../../infrastructure-components/stacks/stackType";
 import {
   AwsServerProps,
+  BaseWebStackProps,
   BasicAWSMachineComponentProps,
   BasicMachineComponentPropsInterface,
   CustomAWSMachineComponentProps,
@@ -483,6 +485,23 @@ export class AwsDeployStrategy implements IDeployStrategy {
     this.getInstancePublicIp(scope, normalizedId, instance);
 
     return instance;
+  }
+
+  deployWebStack(
+    scope: Construct,
+    id: string,
+    stackType: StackType,
+    props: BaseWebStackProps,
+  ): void {
+    const normalizedId = normalizeId(id);
+    console.log(scope); // to use it somewhere so that jsii doesn't complain
+    console.log(normalizedId); // to use it somewhere so that jsii doesn't complain
+    console.log(stackType); // to use it somewhere so that jsii doesn't complain
+    if (!props) {
+      throw new Error(
+        "Server-specific AWS properties are required for the insecure server.",
+      );
+    }
   }
 
   // REGION UTILITY METHODS FOR CREATING AND WORKING WITH AWS RESOURCES //

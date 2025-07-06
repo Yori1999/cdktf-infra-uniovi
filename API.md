@@ -1018,6 +1018,458 @@ The tree node.
 ---
 
 
+### LampBase <a name="LampBase" id="cdktf-infra-uniovi.LampBase"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.LampBase.Initializer"></a>
+
+```typescript
+import { LampBase } from 'cdktf-infra-uniovi'
+
+new LampBase(scope: Construct, id: string, stackProps: LampStackPropsInterface)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampBase.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampBase.Initializer.parameter.stackProps">stackProps</a></code> | <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface">LampStackPropsInterface</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.LampBase.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.LampBase.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `stackProps`<sup>Required</sup> <a name="stackProps" id="cdktf-infra-uniovi.LampBase.Initializer.parameter.stackProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.LampStackPropsInterface">LampStackPropsInterface</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampBase.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.LampBase.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.LampBase.isConstruct"></a>
+
+```typescript
+import { LampBase } from 'cdktf-infra-uniovi'
+
+LampBase.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.LampBase.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.LampBase.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### LampStack <a name="LampStack" id="cdktf-infra-uniovi.LampStack"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.LampStack.Initializer"></a>
+
+```typescript
+import { LampStack } from 'cdktf-infra-uniovi'
+
+new LampStack(scope: Construct, id: string, stackProps: LampStackPropsInterface)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampStack.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStack.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStack.Initializer.parameter.stackProps">stackProps</a></code> | <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface">LampStackPropsInterface</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.LampStack.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.LampStack.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `stackProps`<sup>Required</sup> <a name="stackProps" id="cdktf-infra-uniovi.LampStack.Initializer.parameter.stackProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.LampStackPropsInterface">LampStackPropsInterface</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampStack.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.LampStack.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampStack.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.LampStack.isConstruct"></a>
+
+```typescript
+import { LampStack } from 'cdktf-infra-uniovi'
+
+LampStack.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.LampStack.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampStack.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.LampStack.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### LempBase <a name="LempBase" id="cdktf-infra-uniovi.LempBase"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.LempBase.Initializer"></a>
+
+```typescript
+import { LempBase } from 'cdktf-infra-uniovi'
+
+new LempBase(scope: Construct, id: string, stackProps: LempStackPropsInterface)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempBase.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempBase.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempBase.Initializer.parameter.stackProps">stackProps</a></code> | <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface">LempStackPropsInterface</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.LempBase.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.LempBase.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `stackProps`<sup>Required</sup> <a name="stackProps" id="cdktf-infra-uniovi.LempBase.Initializer.parameter.stackProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.LempStackPropsInterface">LempStackPropsInterface</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempBase.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.LempBase.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempBase.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.LempBase.isConstruct"></a>
+
+```typescript
+import { LempBase } from 'cdktf-infra-uniovi'
+
+LempBase.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.LempBase.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempBase.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.LempBase.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
+### LempStack <a name="LempStack" id="cdktf-infra-uniovi.LempStack"></a>
+
+#### Initializers <a name="Initializers" id="cdktf-infra-uniovi.LempStack.Initializer"></a>
+
+```typescript
+import { LempStack } from 'cdktf-infra-uniovi'
+
+new LempStack(scope: Construct, id: string, stackProps: LempStackPropsInterface)
+```
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempStack.Initializer.parameter.scope">scope</a></code> | <code>constructs.Construct</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStack.Initializer.parameter.id">id</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStack.Initializer.parameter.stackProps">stackProps</a></code> | <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface">LempStackPropsInterface</a></code> | *No description.* |
+
+---
+
+##### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.LempStack.Initializer.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+##### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.LempStack.Initializer.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+##### `stackProps`<sup>Required</sup> <a name="stackProps" id="cdktf-infra-uniovi.LempStack.Initializer.parameter.stackProps"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.LempStackPropsInterface">LempStackPropsInterface</a>
+
+---
+
+#### Methods <a name="Methods" id="Methods"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempStack.toString">toString</a></code> | Returns a string representation of this construct. |
+
+---
+
+##### `toString` <a name="toString" id="cdktf-infra-uniovi.LempStack.toString"></a>
+
+```typescript
+public toString(): string
+```
+
+Returns a string representation of this construct.
+
+#### Static Functions <a name="Static Functions" id="Static Functions"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempStack.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+
+---
+
+##### `isConstruct` <a name="isConstruct" id="cdktf-infra-uniovi.LempStack.isConstruct"></a>
+
+```typescript
+import { LempStack } from 'cdktf-infra-uniovi'
+
+LempStack.isConstruct(x: any)
+```
+
+Checks if `x` is a construct.
+
+Use this method instead of `instanceof` to properly detect `Construct`
+instances, even when the construct library is symlinked.
+
+Explanation: in JavaScript, multiple copies of the `constructs` library on
+disk are seen as independent, completely different libraries. As a
+consequence, the class `Construct` in each copy of the `constructs` library
+is seen as a different class, and an instance of one class will not test as
+`instanceof` the other class. `npm install` will not create installations
+like this, but users may manually symlink construct libraries together or
+use a monorepo tool: in those cases, multiple copies of the `constructs`
+library can be accidentally installed, and `instanceof` will behave
+unpredictably. It is safest to avoid using `instanceof`, and using
+this type-testing method instead.
+
+###### `x`<sup>Required</sup> <a name="x" id="cdktf-infra-uniovi.LempStack.isConstruct.parameter.x"></a>
+
+- *Type:* any
+
+Any object.
+
+---
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempStack.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
+
+---
+
+##### `node`<sup>Required</sup> <a name="node" id="cdktf-infra-uniovi.LempStack.property.node"></a>
+
+```typescript
+public readonly node: Node;
+```
+
+- *Type:* constructs.Node
+
+The tree node.
+
+---
+
+
 ### NginxServer <a name="NginxServer" id="cdktf-infra-uniovi.NginxServer"></a>
 
 #### Initializers <a name="Initializers" id="cdktf-infra-uniovi.NginxServer.Initializer"></a>
@@ -2036,6 +2488,28 @@ The tree node.
 
 ## Structs <a name="Structs" id="Structs"></a>
 
+### AWSLampStackProps <a name="AWSLampStackProps" id="cdktf-infra-uniovi.AWSLampStackProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.AWSLampStackProps.Initializer"></a>
+
+```typescript
+import { AWSLampStackProps } from 'cdktf-infra-uniovi'
+
+const aWSLampStackProps: AWSLampStackProps = { ... }
+```
+
+
+### AWSLempStackProps <a name="AWSLempStackProps" id="cdktf-infra-uniovi.AWSLempStackProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.AWSLempStackProps.Initializer"></a>
+
+```typescript
+import { AWSLempStackProps } from 'cdktf-infra-uniovi'
+
+const aWSLempStackProps: AWSLempStackProps = { ... }
+```
+
+
 ### AwsServerProps <a name="AwsServerProps" id="cdktf-infra-uniovi.AwsServerProps"></a>
 
 #### Initializer <a name="Initializer" id="cdktf-infra-uniovi.AwsServerProps.Initializer"></a>
@@ -2168,6 +2642,90 @@ It is a mandatory property and must be one of the supported provider types.
 
 ```typescript
 ProviderType.Docker
+```
+
+
+### BaseWebStackProps <a name="BaseWebStackProps" id="cdktf-infra-uniovi.BaseWebStackProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.BaseWebStackProps.Initializer"></a>
+
+```typescript
+import { BaseWebStackProps } from 'cdktf-infra-uniovi'
+
+const baseWebStackProps: BaseWebStackProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.BaseWebStackProps.property.mySqlDatabase">mySqlDatabase</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.BaseWebStackProps.property.mySqlPassword">mySqlPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.BaseWebStackProps.property.mySqlRootPassword">mySqlRootPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.BaseWebStackProps.property.mySqlUser">mySqlUser</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.BaseWebStackProps.property.mySqlVersion">mySqlVersion</a></code> | <code><a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a></code> | The type of stack being deployed. |
+
+---
+
+##### `mySqlDatabase`<sup>Optional</sup> <a name="mySqlDatabase" id="cdktf-infra-uniovi.BaseWebStackProps.property.mySqlDatabase"></a>
+
+```typescript
+public readonly mySqlDatabase: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlPassword`<sup>Optional</sup> <a name="mySqlPassword" id="cdktf-infra-uniovi.BaseWebStackProps.property.mySqlPassword"></a>
+
+```typescript
+public readonly mySqlPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlRootPassword`<sup>Optional</sup> <a name="mySqlRootPassword" id="cdktf-infra-uniovi.BaseWebStackProps.property.mySqlRootPassword"></a>
+
+```typescript
+public readonly mySqlRootPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlUser`<sup>Optional</sup> <a name="mySqlUser" id="cdktf-infra-uniovi.BaseWebStackProps.property.mySqlUser"></a>
+
+```typescript
+public readonly mySqlUser: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlVersion`<sup>Optional</sup> <a name="mySqlVersion" id="cdktf-infra-uniovi.BaseWebStackProps.property.mySqlVersion"></a>
+
+```typescript
+public readonly mySqlVersion: MySQLVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a>
+
+The type of stack being deployed.
+
+This property is used to determine the specific stack configuration and behavior.
+It is a mandatory property and must be one of the supported stack types.
+
+---
+
+*Example*
+
+```typescript
+StackType.LAMP
 ```
 
 
@@ -2759,6 +3317,95 @@ public readonly dockerProps: CustomDockerMachineComponentProps;
 
 ---
 
+### DockerLampStackProps <a name="DockerLampStackProps" id="cdktf-infra-uniovi.DockerLampStackProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.DockerLampStackProps.Initializer"></a>
+
+```typescript
+import { DockerLampStackProps } from 'cdktf-infra-uniovi'
+
+const dockerLampStackProps: DockerLampStackProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.DockerLampStackProps.property.apachePort">apachePort</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerLampStackProps.property.mySqlPort">mySqlPort</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerLampStackProps.property.phpMyAdminPort">phpMyAdminPort</a></code> | <code>number</code> | *No description.* |
+
+---
+
+##### `apachePort`<sup>Optional</sup> <a name="apachePort" id="cdktf-infra-uniovi.DockerLampStackProps.property.apachePort"></a>
+
+```typescript
+public readonly apachePort: number;
+```
+
+- *Type:* number
+
+---
+
+##### `mySqlPort`<sup>Optional</sup> <a name="mySqlPort" id="cdktf-infra-uniovi.DockerLampStackProps.property.mySqlPort"></a>
+
+```typescript
+public readonly mySqlPort: number;
+```
+
+- *Type:* number
+
+---
+
+##### `phpMyAdminPort`<sup>Optional</sup> <a name="phpMyAdminPort" id="cdktf-infra-uniovi.DockerLampStackProps.property.phpMyAdminPort"></a>
+
+```typescript
+public readonly phpMyAdminPort: number;
+```
+
+- *Type:* number
+
+---
+
+### DockerLempStackProps <a name="DockerLempStackProps" id="cdktf-infra-uniovi.DockerLempStackProps"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.DockerLempStackProps.Initializer"></a>
+
+```typescript
+import { DockerLempStackProps } from 'cdktf-infra-uniovi'
+
+const dockerLempStackProps: DockerLempStackProps = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.DockerLempStackProps.property.mySqlPort">mySqlPort</a></code> | <code>number</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerLempStackProps.property.nginxPort">nginxPort</a></code> | <code>number</code> | *No description.* |
+
+---
+
+##### `mySqlPort`<sup>Optional</sup> <a name="mySqlPort" id="cdktf-infra-uniovi.DockerLempStackProps.property.mySqlPort"></a>
+
+```typescript
+public readonly mySqlPort: number;
+```
+
+- *Type:* number
+
+---
+
+##### `nginxPort`<sup>Optional</sup> <a name="nginxPort" id="cdktf-infra-uniovi.DockerLempStackProps.property.nginxPort"></a>
+
+```typescript
+public readonly nginxPort: number;
+```
+
+- *Type:* number
+
+---
+
 ### DockerServerProps <a name="DockerServerProps" id="cdktf-infra-uniovi.DockerServerProps"></a>
 
 #### Initializer <a name="Initializer" id="cdktf-infra-uniovi.DockerServerProps.Initializer"></a>
@@ -3087,6 +3734,313 @@ Ubuntu Pro subscription token used to attach the instance.
 
 ---
 
+### LampStackPropsInterface <a name="LampStackPropsInterface" id="cdktf-infra-uniovi.LampStackPropsInterface"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.LampStackPropsInterface.Initializer"></a>
+
+```typescript
+import { LampStackPropsInterface } from 'cdktf-infra-uniovi'
+
+const lampStackPropsInterface: LampStackPropsInterface = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.providerType">providerType</a></code> | <code><a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a></code> | The provider type for the infrastructure component. |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlDatabase">mySqlDatabase</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlPassword">mySqlPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlRootPassword">mySqlRootPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlUser">mySqlUser</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlVersion">mySqlVersion</a></code> | <code><a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a></code> | The type of stack being deployed. |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.includePhpMyAdmin">includePhpMyAdmin</a></code> | <code>boolean</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.awsProps">awsProps</a></code> | <code><a href="#cdktf-infra-uniovi.AWSLampStackProps">AWSLampStackProps</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.dockerProps">dockerProps</a></code> | <code><a href="#cdktf-infra-uniovi.DockerLampStackProps">DockerLampStackProps</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.phpMyAdminVersion">phpMyAdminVersion</a></code> | <code><a href="#cdktf-infra-uniovi.PhpMyAdminVersion">PhpMyAdminVersion</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LampStackPropsInterface.property.phpVersion">phpVersion</a></code> | <code><a href="#cdktf-infra-uniovi.ApachePhpVersion">ApachePhpVersion</a></code> | The version of PHP to use in the LAMP stack. |
+
+---
+
+##### `providerType`<sup>Required</sup> <a name="providerType" id="cdktf-infra-uniovi.LampStackPropsInterface.property.providerType"></a>
+
+```typescript
+public readonly providerType: ProviderType;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a>
+
+The provider type for the infrastructure component.
+
+This property is used to determine which cloud provider the component will be deployed on.
+It is a mandatory property and must be one of the supported provider types.
+
+---
+
+*Example*
+
+```typescript
+ProviderType.Docker
+```
+
+
+##### `mySqlDatabase`<sup>Optional</sup> <a name="mySqlDatabase" id="cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlDatabase"></a>
+
+```typescript
+public readonly mySqlDatabase: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlPassword`<sup>Optional</sup> <a name="mySqlPassword" id="cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlPassword"></a>
+
+```typescript
+public readonly mySqlPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlRootPassword`<sup>Optional</sup> <a name="mySqlRootPassword" id="cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlRootPassword"></a>
+
+```typescript
+public readonly mySqlRootPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlUser`<sup>Optional</sup> <a name="mySqlUser" id="cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlUser"></a>
+
+```typescript
+public readonly mySqlUser: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlVersion`<sup>Optional</sup> <a name="mySqlVersion" id="cdktf-infra-uniovi.LampStackPropsInterface.property.mySqlVersion"></a>
+
+```typescript
+public readonly mySqlVersion: MySQLVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a>
+
+The type of stack being deployed.
+
+This property is used to determine the specific stack configuration and behavior.
+It is a mandatory property and must be one of the supported stack types.
+
+---
+
+*Example*
+
+```typescript
+StackType.LAMP
+```
+
+
+##### `includePhpMyAdmin`<sup>Required</sup> <a name="includePhpMyAdmin" id="cdktf-infra-uniovi.LampStackPropsInterface.property.includePhpMyAdmin"></a>
+
+```typescript
+public readonly includePhpMyAdmin: boolean;
+```
+
+- *Type:* boolean
+
+---
+
+##### `awsProps`<sup>Optional</sup> <a name="awsProps" id="cdktf-infra-uniovi.LampStackPropsInterface.property.awsProps"></a>
+
+```typescript
+public readonly awsProps: AWSLampStackProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.AWSLampStackProps">AWSLampStackProps</a>
+
+---
+
+##### `dockerProps`<sup>Optional</sup> <a name="dockerProps" id="cdktf-infra-uniovi.LampStackPropsInterface.property.dockerProps"></a>
+
+```typescript
+public readonly dockerProps: DockerLampStackProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.DockerLampStackProps">DockerLampStackProps</a>
+
+---
+
+##### `phpMyAdminVersion`<sup>Optional</sup> <a name="phpMyAdminVersion" id="cdktf-infra-uniovi.LampStackPropsInterface.property.phpMyAdminVersion"></a>
+
+```typescript
+public readonly phpMyAdminVersion: PhpMyAdminVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.PhpMyAdminVersion">PhpMyAdminVersion</a>
+
+---
+
+##### `phpVersion`<sup>Optional</sup> <a name="phpVersion" id="cdktf-infra-uniovi.LampStackPropsInterface.property.phpVersion"></a>
+
+```typescript
+public readonly phpVersion: ApachePhpVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.ApachePhpVersion">ApachePhpVersion</a>
+
+The version of PHP to use in the LAMP stack.
+
+This property is optional and can be omitted if the default version is acceptable.
+If specified, it is mandatory to use a supported version from the `ApachePhpVersion` enum.
+
+---
+
+### LempStackPropsInterface <a name="LempStackPropsInterface" id="cdktf-infra-uniovi.LempStackPropsInterface"></a>
+
+#### Initializer <a name="Initializer" id="cdktf-infra-uniovi.LempStackPropsInterface.Initializer"></a>
+
+```typescript
+import { LempStackPropsInterface } from 'cdktf-infra-uniovi'
+
+const lempStackPropsInterface: LempStackPropsInterface = { ... }
+```
+
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.providerType">providerType</a></code> | <code><a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a></code> | The provider type for the infrastructure component. |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlDatabase">mySqlDatabase</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlPassword">mySqlPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlRootPassword">mySqlRootPassword</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlUser">mySqlUser</a></code> | <code>string</code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlVersion">mySqlVersion</a></code> | <code><a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a></code> | The type of stack being deployed. |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.awsProps">awsProps</a></code> | <code><a href="#cdktf-infra-uniovi.AWSLempStackProps">AWSLempStackProps</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.dockerProps">dockerProps</a></code> | <code><a href="#cdktf-infra-uniovi.DockerLempStackProps">DockerLempStackProps</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.LempStackPropsInterface.property.phpVersion">phpVersion</a></code> | <code><a href="#cdktf-infra-uniovi.NginxPhpVersion">NginxPhpVersion</a></code> | *No description.* |
+
+---
+
+##### `providerType`<sup>Required</sup> <a name="providerType" id="cdktf-infra-uniovi.LempStackPropsInterface.property.providerType"></a>
+
+```typescript
+public readonly providerType: ProviderType;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.ProviderType">ProviderType</a>
+
+The provider type for the infrastructure component.
+
+This property is used to determine which cloud provider the component will be deployed on.
+It is a mandatory property and must be one of the supported provider types.
+
+---
+
+*Example*
+
+```typescript
+ProviderType.Docker
+```
+
+
+##### `mySqlDatabase`<sup>Optional</sup> <a name="mySqlDatabase" id="cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlDatabase"></a>
+
+```typescript
+public readonly mySqlDatabase: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlPassword`<sup>Optional</sup> <a name="mySqlPassword" id="cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlPassword"></a>
+
+```typescript
+public readonly mySqlPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlRootPassword`<sup>Optional</sup> <a name="mySqlRootPassword" id="cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlRootPassword"></a>
+
+```typescript
+public readonly mySqlRootPassword: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlUser`<sup>Optional</sup> <a name="mySqlUser" id="cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlUser"></a>
+
+```typescript
+public readonly mySqlUser: string;
+```
+
+- *Type:* string
+
+---
+
+##### `mySqlVersion`<sup>Optional</sup> <a name="mySqlVersion" id="cdktf-infra-uniovi.LempStackPropsInterface.property.mySqlVersion"></a>
+
+```typescript
+public readonly mySqlVersion: MySQLVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.MySQLVersion">MySQLVersion</a>
+
+The type of stack being deployed.
+
+This property is used to determine the specific stack configuration and behavior.
+It is a mandatory property and must be one of the supported stack types.
+
+---
+
+*Example*
+
+```typescript
+StackType.LAMP
+```
+
+
+##### `awsProps`<sup>Optional</sup> <a name="awsProps" id="cdktf-infra-uniovi.LempStackPropsInterface.property.awsProps"></a>
+
+```typescript
+public readonly awsProps: AWSLempStackProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.AWSLempStackProps">AWSLempStackProps</a>
+
+---
+
+##### `dockerProps`<sup>Optional</sup> <a name="dockerProps" id="cdktf-infra-uniovi.LempStackPropsInterface.property.dockerProps"></a>
+
+```typescript
+public readonly dockerProps: DockerLempStackProps;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.DockerLempStackProps">DockerLempStackProps</a>
+
+---
+
+##### `phpVersion`<sup>Optional</sup> <a name="phpVersion" id="cdktf-infra-uniovi.LempStackPropsInterface.property.phpVersion"></a>
+
+```typescript
+public readonly phpVersion: NginxPhpVersion;
+```
+
+- *Type:* <a href="#cdktf-infra-uniovi.NginxPhpVersion">NginxPhpVersion</a>
+
+---
+
 ### ServerPropsInterface <a name="ServerPropsInterface" id="cdktf-infra-uniovi.ServerPropsInterface"></a>
 
 #### Initializer <a name="Initializer" id="cdktf-infra-uniovi.ServerPropsInterface.Initializer"></a>
@@ -3177,6 +4131,7 @@ new AwsDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack">deployWebStack</a></code> | *No description.* |
 
 ---
 
@@ -3341,6 +4296,36 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 
 ---
 
+##### `deployWebStack` <a name="deployWebStack" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack"></a>
+
+```typescript
+public deployWebStack(scope: Construct, id: string, stackType: StackType, props: BaseWebStackProps): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `stackType`<sup>Required</sup> <a name="stackType" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.stackType"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.StackType">StackType</a>
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.BaseWebStackProps">BaseWebStackProps</a>
+
+---
+
 
 
 
@@ -3370,6 +4355,7 @@ new DockerDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | Generates a custom Docker machine using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | Generates an insecure Docker server using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack">deployWebStack</a></code> | *No description.* |
 
 ---
 
@@ -3584,6 +4570,36 @@ An object containing internal properties for the machine component, including Do
 
 ---
 
+##### `deployWebStack` <a name="deployWebStack" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack"></a>
+
+```typescript
+public deployWebStack(scope: Construct, id: string, stackType: StackType, props: BaseWebStackProps): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `stackType`<sup>Required</sup> <a name="stackType" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.stackType"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.StackType">StackType</a>
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.BaseWebStackProps">BaseWebStackProps</a>
+
+---
+
 
 
 
@@ -3668,6 +4684,7 @@ SingletonProviderFactory.getProvider(providerType: ProviderType, scope: Construc
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
 | <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.IDeployStrategy.deployWebStack">deployWebStack</a></code> | *No description.* |
 
 ---
 
@@ -3821,6 +4838,36 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 
 ---
 
+##### `deployWebStack` <a name="deployWebStack" id="cdktf-infra-uniovi.IDeployStrategy.deployWebStack"></a>
+
+```typescript
+public deployWebStack(scope: Construct, id: string, stackType: StackType, props: BaseWebStackProps): void
+```
+
+###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployWebStack.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.IDeployStrategy.deployWebStack.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `stackType`<sup>Required</sup> <a name="stackType" id="cdktf-infra-uniovi.IDeployStrategy.deployWebStack.parameter.stackType"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.StackType">StackType</a>
+
+---
+
+###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.IDeployStrategy.deployWebStack.parameter.props"></a>
+
+- *Type:* <a href="#cdktf-infra-uniovi.BaseWebStackProps">BaseWebStackProps</a>
+
+---
+
 
 ## Enums <a name="Enums" id="Enums"></a>
 
@@ -3835,6 +4882,27 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 ---
 
 ##### `LATEST` <a name="LATEST" id="cdktf-infra-uniovi.AlpineVersion.LATEST"></a>
+
+---
+
+
+### ApachePhpVersion <a name="ApachePhpVersion" id="cdktf-infra-uniovi.ApachePhpVersion"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.ApachePhpVersion.PHP_APACHE_8_2">PHP_APACHE_8_2</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.ApachePhpVersion.PHP_APACHE_8_3">PHP_APACHE_8_3</a></code> | *No description.* |
+
+---
+
+##### `PHP_APACHE_8_2` <a name="PHP_APACHE_8_2" id="cdktf-infra-uniovi.ApachePhpVersion.PHP_APACHE_8_2"></a>
+
+---
+
+
+##### `PHP_APACHE_8_3` <a name="PHP_APACHE_8_3" id="cdktf-infra-uniovi.ApachePhpVersion.PHP_APACHE_8_3"></a>
 
 ---
 
@@ -3893,6 +4961,54 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 ---
 
 
+### MySQLVersion <a name="MySQLVersion" id="cdktf-infra-uniovi.MySQLVersion"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.MySQLVersion.LATEST">LATEST</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.MySQLVersion.LTS">LTS</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.MySQLVersion.MYSQL_9_3">MYSQL_9_3</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.MySQLVersion.MYSQL_8_4">MYSQL_8_4</a></code> | *No description.* |
+
+---
+
+##### `LATEST` <a name="LATEST" id="cdktf-infra-uniovi.MySQLVersion.LATEST"></a>
+
+---
+
+
+##### `LTS` <a name="LTS" id="cdktf-infra-uniovi.MySQLVersion.LTS"></a>
+
+---
+
+
+##### `MYSQL_9_3` <a name="MYSQL_9_3" id="cdktf-infra-uniovi.MySQLVersion.MYSQL_9_3"></a>
+
+---
+
+
+##### `MYSQL_8_4` <a name="MYSQL_8_4" id="cdktf-infra-uniovi.MySQLVersion.MYSQL_8_4"></a>
+
+---
+
+
+### NginxPhpVersion <a name="NginxPhpVersion" id="cdktf-infra-uniovi.NginxPhpVersion"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.NginxPhpVersion.PHP_NGINX_8_2">PHP_NGINX_8_2</a></code> | *No description.* |
+
+---
+
+##### `PHP_NGINX_8_2` <a name="PHP_NGINX_8_2" id="cdktf-infra-uniovi.NginxPhpVersion.PHP_NGINX_8_2"></a>
+
+---
+
+
 ### NginxVersion <a name="NginxVersion" id="cdktf-infra-uniovi.NginxVersion"></a>
 
 #### Members <a name="Members" id="Members"></a>
@@ -3904,6 +5020,21 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 ---
 
 ##### `LATEST` <a name="LATEST" id="cdktf-infra-uniovi.NginxVersion.LATEST"></a>
+
+---
+
+
+### PhpMyAdminVersion <a name="PhpMyAdminVersion" id="cdktf-infra-uniovi.PhpMyAdminVersion"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.PhpMyAdminVersion.LATEST">LATEST</a></code> | *No description.* |
+
+---
+
+##### `LATEST` <a name="LATEST" id="cdktf-infra-uniovi.PhpMyAdminVersion.LATEST"></a>
 
 ---
 
@@ -3925,6 +5056,27 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 
 
 ##### `AWS` <a name="AWS" id="cdktf-infra-uniovi.ProviderType.AWS"></a>
+
+---
+
+
+### StackType <a name="StackType" id="cdktf-infra-uniovi.StackType"></a>
+
+#### Members <a name="Members" id="Members"></a>
+
+| **Name** | **Description** |
+| --- | --- |
+| <code><a href="#cdktf-infra-uniovi.StackType.LAMP">LAMP</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.StackType.LEMP">LEMP</a></code> | *No description.* |
+
+---
+
+##### `LAMP` <a name="LAMP" id="cdktf-infra-uniovi.StackType.LAMP"></a>
+
+---
+
+
+##### `LEMP` <a name="LEMP" id="cdktf-infra-uniovi.StackType.LEMP"></a>
 
 ---
 

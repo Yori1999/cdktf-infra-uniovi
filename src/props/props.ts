@@ -5,6 +5,12 @@ import {
   ContainerVolumes,
 } from "@cdktf/provider-docker/lib/container";
 import { ProviderType } from "../providers/providerType";
+import {
+  MySQLVersion,
+  ApachePhpVersion,
+  PhpMyAdminVersion,
+  NginxPhpVersion,
+} from "../supported-images/supportedWebStacksImages";
 
 export interface BaseInfrastructureComponentProps {
   /**
@@ -195,4 +201,59 @@ export interface AwsServerProps extends BasicAWSMachineComponentProps {
 export interface ServerPropsInterface extends BaseInfrastructureComponentProps {
   readonly dockerProps?: DockerServerProps;
   readonly awsProps?: AwsServerProps;
+}
+
+// REGION LAMP STACK CONFIG //
+export interface BaseWebStackProps {
+  /**
+   * The type of stack being deployed.
+   * This property is used to determine the specific stack configuration and behavior.
+   * It is a mandatory property and must be one of the supported stack types.
+   * @example StackType.LAMP
+   */
+  readonly mySqlVersion?: MySQLVersion;
+  readonly mySqlRootPassword?: string;
+  readonly mySqlPassword?: string;
+  readonly mySqlUser?: string;
+  readonly mySqlDatabase?: string;
+}
+interface BaseLampStackProps extends BaseWebStackProps {
+  /**
+   * The version of PHP to use in the LAMP stack.
+   * This property is optional and can be omitted if the default version is acceptable.
+   * If specified, it is mandatory to use a supported version from the `ApachePhpVersion` enum.
+   */
+  readonly phpVersion?: ApachePhpVersion;
+  readonly includePhpMyAdmin: boolean;
+  readonly phpMyAdminVersion?: PhpMyAdminVersion;
+}
+interface BaseLempStackProps extends BaseWebStackProps {
+  readonly phpVersion?: NginxPhpVersion;
+}
+export interface DockerLampStackProps {
+  readonly apachePort?: number;
+  readonly phpMyAdminPort?: number;
+  readonly mySqlPort?: number;
+}
+export interface DockerLempStackProps {
+  readonly nginxPort?: number;
+  readonly mySqlPort?: number;
+}
+export interface AWSLampStackProps {
+  //readonly additionalNetworksIds?: string[];
+}
+export interface AWSLempStackProps {
+  //readonly additionalNetworksIds?: string[];
+}
+export interface LampStackPropsInterface
+  extends BaseInfrastructureComponentProps,
+    BaseLampStackProps {
+  readonly dockerProps?: DockerLampStackProps;
+  readonly awsProps?: AWSLampStackProps;
+}
+export interface LempStackPropsInterface
+  extends BaseInfrastructureComponentProps,
+    BaseLempStackProps {
+  readonly dockerProps?: DockerLempStackProps;
+  readonly awsProps?: AWSLempStackProps;
 }

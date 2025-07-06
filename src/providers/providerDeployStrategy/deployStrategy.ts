@@ -1,5 +1,7 @@
 import { Construct } from "constructs";
+import { StackType } from "../../infrastructure-components/stacks/stackType";
 import {
+  BaseWebStackProps,
   BasicMachineComponentPropsInterface,
   CustomMachineComponentPropsInterface,
   InternalMachineComponentPropsInterface,
@@ -42,6 +44,11 @@ export interface IDeployStrategy {
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct;
 
-  //deployWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;
+  deployWebStack(
+    scope: Construct,
+    id: string,
+    stackType: StackType,
+    props: BaseWebStackProps,
+  ): void;
   //deployHardenedWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;
 }
