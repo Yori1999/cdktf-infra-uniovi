@@ -32,8 +32,8 @@ export class AwsDeployStrategy implements IDeployStrategy {
    * This method deploys a basic AWS EC2 instance with optional EBS volume for persistence.
    * It sets up the necessary VPC, subnet, security group, and instance properties.
    * @param scope The construct scope where the resources will be defined
-   * @param id
-   * @param props
+   * @param id The ID for the machine component, which will be normalized to ensure it is valid for AWS resources.
+   * @param basicMachineProps An object containing the properties for the basic machine.
    * @param internalMachineComponentProps An object containing internal properties for the machine component, including AWS-specific properties.
    * The `awsProps` property should contain the AWS-specific properties for the machine component.
    * @returns
@@ -41,11 +41,11 @@ export class AwsDeployStrategy implements IDeployStrategy {
   deployBasicMachine(
     scope: Construct,
     id: string,
-    props: BasicMachineComponentPropsInterface,
+    basicMachineProps: BasicMachineComponentPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct {
     // Validate properties for AWS machine deployment exist
-    if (!props.awsProps) {
+    if (!basicMachineProps.awsProps) {
       throw new Error(
         "AWS properties are required for deploying a basic machine.",
       );
@@ -55,7 +55,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         "Internal AWS properties are required for the basic machine.",
       );
     }
-    const awsProps: BasicAWSMachineComponentProps = props.awsProps;
+    const awsProps: BasicAWSMachineComponentProps = basicMachineProps.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
       internalMachineComponentProps.awsProps;
@@ -131,19 +131,34 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  /**
+   * Generates a custom AWS machine using the provided properties.
+   * A custom machine is any machine that is slightly more complex than a basic machine, and that will require a custom init script for further personalization.
+   * This method deploys an AWS EC2 instance with custom properties and optional EBS volume for persistence.
+   * It sets up the necessary VPC, subnet, security group, and instance properties, if not provided.
+   * It also allows for custom user data to be provided, which can include additional setup scripts or configurations that will override the original script
+   * @param scope The construct scope where the resources will be defined
+   * @param id The ID for the machine component, which will be normalized to ensure it is valid for AWS resources.
+   * @param customMachineProps An object containing the properties for the custom machine. At this point it should include AWS-specific properties.
+   * @throws Error if AWS-specific properties are not provided in customMachineProps.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including AWS-specific properties.
+   * @throws Error if internal AWS properties are not provided in internalMachineComponentProps.
+   * @returns
+   */
   deployCustomMachine(
     scope: Construct,
     id: string,
-    props: CustomMachineComponentPropsInterface,
+    customMachineProps: CustomMachineComponentPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct {
-    if (!props.awsProps) {
+    if (!customMachineProps.awsProps) {
       throw new Error("AWS properties required for custom AWS machine.");
     }
     if (!internalMachineComponentProps.awsProps) {
       throw new Error("Internal AWS properties are required");
     }
-    const awsProps: CustomAWSMachineComponentProps = props.awsProps;
+    const awsProps: CustomAWSMachineComponentProps =
+      customMachineProps.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
       internalMachineComponentProps.awsProps;
@@ -223,13 +238,24 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  /**
+   * Generates a basic AWS server using the provided properties.
+   * This method is used to deploy an AWS EC2 instance with basic server properties and optional EBS volume for persistence.
+   * This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+   * By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
+   * @param scope The scope where the resources will be defined
+   * @param id The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+   * @param serverProps An object containing the properties for the server. At this point it should include AWS-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including AWS-specific properties.
+   * @returns A Construct representing instance that is the AWS server.
+   */
   deployBasicServer(
     scope: Construct,
     id: string,
-    props: ServerPropsInterface,
+    serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct {
-    if (!props.awsProps) {
+    if (!serverProps.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for basic server.",
       );
@@ -237,10 +263,10 @@ export class AwsDeployStrategy implements IDeployStrategy {
     if (!internalMachineComponentProps.awsProps) {
       throw new Error("Internal AWS properties are required for basic server.");
     }
-    const awsProps: AwsServerProps = props.awsProps;
+    const awsProps: AwsServerProps = serverProps.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
-      internalMachineComponentProps.awsProps as InternalAWSMachineComponentProps;
+      internalMachineComponentProps.awsProps;
 
     /* NORMALIZE THE ID FOR USING IT  */
     // Normalize the ID to ensure it is valid for AWS resources
@@ -311,13 +337,26 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  /**
+   * Generates an insecure AWS server using the provided properties.
+   * This method is used to deploy an AWS EC2 instance with insecure server properties and optional EBS volume for persistence.
+   * This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+   * By default, it will expose ports 22 (SSH) and 80 (HTTP), but this can be customized through the serverProps.
+   * @param scope The scope where the resources will be defined
+   * @param id The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+   * @param serverProps An object containing the properties for the server. At this point it should include AWS-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including AWS-specific properties.
+   * @throws Error if AWS-specific properties are not provided in serverProps.
+   * @throws Error if internal AWS properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing instance that is the AWS server.
+   */
   deployInsecureServer(
     scope: Construct,
     id: string,
-    props: ServerPropsInterface,
+    serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct {
-    if (!props.awsProps) {
+    if (!serverProps.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for the insecure server.",
       );
@@ -327,7 +366,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         "Internal AWS properties are required for the insecure server.",
       );
     }
-    const awsProps: CustomAWSMachineComponentProps = props.awsProps;
+    const awsProps: AwsServerProps = serverProps.awsProps;
     const internalAWSProps: InternalAWSMachineComponentProps =
       internalMachineComponentProps.awsProps;
 
@@ -399,13 +438,26 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  /**
+   * Generates a hardened AWS server using the provided properties.
+   * This method is used to deploy an AWS EC2 instance with hardened server properties and optional EBS volume for persistence.
+   * This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+   * By default, it will expose ports 22 (SSH), 80 (HTTP), and 443 (HTTPS), but this can be customized through the serverProps.
+   * @param scope The scope where the resources will be defined
+   * @param id The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+   * @param serverProps An object containing the properties for the server. At this point it should include AWS-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including AWS-specific properties.
+   * @throws Error if AWS-specific properties are not provided in serverProps.
+   * @throws Error if internal AWS properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing instance that is the AWS server.
+   */
   deployHardenedServer(
     scope: Construct,
     id: string,
-    props: ServerPropsInterface,
+    serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
   ): Construct {
-    if (!props.awsProps) {
+    if (!serverProps.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for basic server.",
       );
@@ -415,7 +467,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
         "Internal AWS properties are required for the hardened server.",
       );
     }
-    const awsProps: CustomAWSMachineComponentProps = props.awsProps;
+    const awsProps: AwsServerProps = serverProps.awsProps;
     // They should come as this is an internal property we set
     const internalAWSProps: InternalAWSMachineComponentProps =
       internalMachineComponentProps.awsProps;
@@ -487,6 +539,16 @@ export class AwsDeployStrategy implements IDeployStrategy {
     return instance;
   }
 
+  /**
+   * Generates a basic web stack using the provided properties.
+   * This method is used to deploy a web stack using AWS, which can be either a LAMP or LEMP stack depending on the `stackType` property.
+   * It will be used to set up a single instance with everything necessary to run a web stack (database, PHP, web server).
+   * @param scope The construct scope where the resources will be defined
+   * @param id The ID for the instance, which will be normalized to ensure it is valid for AWS resources.
+   * @param stackType The type of stack to deploy, which can be either a basic web stack or a hardened web stack.
+   * @param props An object containing the properties for the web stack. At this point it should include AWS-specific properties.
+   * @throws Error if AWS-specific properties are not provided in props.
+   */
   deployWebStack(
     scope: Construct,
     id: string,

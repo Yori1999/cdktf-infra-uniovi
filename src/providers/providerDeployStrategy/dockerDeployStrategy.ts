@@ -48,11 +48,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
    * It creates a Docker image and a container with the specified configurations.
    * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user
    * @param scope The scope in which the resources will be created.
-   * @param id
+   * @param id The ID of the machine component, which will be normalized to ensure it is valid for Docker resources.
    * @param basicMachineProps An object containing the properties for the basic machine. At this point it should include Docker-specific properties.
    * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
-   * @returns A Construct representing the deployed Docker container.
+   * @returns A Construct representing the Docker container.
    * @throws Error if Docker-specific properties are not provided in basicMachineProps.
+   * @throws Error if internal Docker properties are not provided in internalMachineComponentProps.
    */
   deployBasicMachine(
     scope: Construct,
@@ -122,11 +123,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
    * A custom machine is any machine that is slightly more complex than a basic machine, and that will require a custom Docker image that we build with a custom Dockerfile.
    * It can include additional configurations such as ports, networks, and volumes.
    * @param scope The scope in which the resources will be created.
-   * @param id
+   * @param id The ID of the machine component, which will be normalized to ensure it is valid for Docker resources.
    * @param customMachineProps An object containing the properties for the custom machine. At this point it should include Docker-specific properties.
    * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
    * @throws Error if Docker-specific properties are not provided in customMachineProps.
-   * @returns A Construct representing the deployed Docker container.
+   * @throws Error if internal Docker properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing the Docker container.
    */
   deployCustomMachine(
     scope: Construct,
@@ -245,10 +247,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
    * This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
    * By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
    * @param scope The scope in which the resources will be created.
-   * @param id
+   * @param id The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
    * @param serverProps An object containing the properties for the server. At this point it should include Docker-specific properties.
    * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
    * @throws Error if Docker-specific properties are not provided in serverProps.
+   * @throws Error if internal Docker properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing the Docker container.
    */
   deployBasicServer(
     scope: Construct,
@@ -319,12 +323,14 @@ export class DockerDeployStrategy implements IDeployStrategy {
    * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
    * This method is specifically designed for server deployments, which may include additional
    * configurations such as ports and networks.
-   * By default, it will expose ports 80 and 8080, but this can be customized through the serverProps.
+   * By default, it will expose port 80 (mapped to 8080 by default), but this can be customized through the serverProps.
    * @param scope The scope in which the resources will be created.
-   * @param id
+   * @param id The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
    * @param serverProps An object containing the properties for the server. At this point it should include Docker-specific properties.
    * @throws Error if Docker-specific properties are not provided in serverProps.
    * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   * @throws Error if internal Docker properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing the Docker container.
    */
   deployInsecureServer(
     scope: Construct,
@@ -392,6 +398,22 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return container;
   }
 
+  /**
+   * Generates a hardened Docker server using the provided properties.
+   * This method is used to deploy an hardened server using Docker.
+   * It creates a Docker image and a container with the specified configurations.
+   * Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+   * This method is specifically designed for server deployments, which may include additional
+   * configurations such as ports and networks.
+   * By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
+   * @param scope The scope in which the resources will be created.
+   * @param id The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
+   * @param serverProps An object containing the properties for the server. At this point it should include Docker-specific properties.
+   * @param internalMachineComponentProps An object containing internal properties for the machine component, including Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in serverProps.
+   * @throws Error if internal Docker properties are not provided in internalMachineComponentProps.
+   * @returns A Construct representing the Docker container.
+   */
   deployHardenedServer(
     scope: Construct,
     id: string,
@@ -459,6 +481,16 @@ export class DockerDeployStrategy implements IDeployStrategy {
     return container;
   }
 
+  /**
+   * Generates a basic web stack using the provided properties.
+   * This method is used to deploy a web stack using Docker, which can be either a LAMP or LEMP stack depending on the `stackType` property.
+   * It will create several Docker containers, including a MySQL container, an Apache or Nginx container with PHP, and optionally a PhpMyAdmin container (only for LAMP stacks)
+   * @param scope The construct scope in which the resources will be created.
+   * @param id The ID of the web stack component, which will be normalized to ensure it is valid for Docker resources.
+   * @param stackType The type of web stack to deploy, which can be either LAMP or LEMP.
+   * @param props An object containing the properties for the base web stack, which should include Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in props.
+   */
   deployWebStack(
     scope: Construct,
     id: string,
@@ -529,11 +561,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
   /**
    * Helper method to deploy a LAMP stack.
    * This method creates the necessary Docker containers for a LAMP stack, including Apache with PHP and optionally PhpMyAdmin container, save for the MySQL container, which must be created beforehand
-   * @param scope
-   * @param id
-   * @param network
-   * @param mySqlContainer
-   * @param props
+   * @param scope The construct scope in which the resources will be created.
+   * @param id The ID of the LAMP stack component, which will be normalized to ensure it is valid for Docker resources.
+   * @param network The Docker network in which the LAMP stack will be deployed so that every container that is a component of this stack can see and interact with each other.
+   * @param mySqlContainer The MySQL container that has been created beforehand, which will be used by the Apache/PHP and PhpMyAdmin containers.
+   * @param props An object containing the properties for the LAMP stack, which should include Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in props.
    */
   private deployLampStack(
     scope: Construct,
@@ -619,11 +652,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
   /**
    * Helper method to deploy a LEMP stack.
    * This method creates the necessary Docker containers for a LEMP stack, including Apache with PHP, save for the MySQL container, which must be created beforehand
-   * @param scope
-   * @param id
-   * @param network
-   * @param mySqlContainer
-   * @param props
+   * @param scope The construct scope in which the resources will be created.
+   * @param id The ID of the LEMP stack component, which will be normalized to ensure it is valid for Docker resources.
+   * @param network The Docker network in which the LEMP stack will be deployed so that every container that is a component of this stack can see and interact with each other.
+   * @param mySqlContainer The MySQL container that has been created beforehand, which will be used by the Nginx/PHP containers.
+   * @param props An object containing the properties for the LEMP stack, which should include Docker-specific properties.
+   * @throws Error if Docker-specific properties are not provided in props.
    */
   private deployLempStack(
     scope: Construct,
@@ -818,6 +852,18 @@ export class DockerDeployStrategy implements IDeployStrategy {
 
   // Utility methods region for creating more complex assets //
 
+  /**
+   * Creates container volumes based on the provided properties.
+   * This method checks if a volume is to be used, and if so, it either creates a default volume or uses the provided volumes.
+   * It returns an array of ContainerVolumes that can be used in the Docker container configuration.
+   * If no volumes are provided and `useVolume` is true, it creates a default volume with a specified path.
+   * @param scope The scope in which the volumes will be created.
+   * @param id The ID of the construct, which will be normalized to ensure it is valid for Docker resources.
+   * @param useVolume Whether to use a volume for the container. If true, it will create or use volumes.
+   * @param volumes The array of ContainerVolumes to be used. If not provided, a default volume will be created.
+   * @param defaultVolumePath The default path for the volume in the container. If not provided, it defaults to "/mnt/data".
+   * @returns The array of ContainerVolumes that can be used in the Docker container configuration. If `useVolume` is false, it returns an empty array.
+   */
   private createContainerVolumes(
     scope: Construct,
     id: string,
@@ -879,6 +925,11 @@ export class DockerDeployStrategy implements IDeployStrategy {
 
   // UTILITY METHODS REGION FOR DEFAULT CONFIGS //
 
+  /**
+   * This method provides a really simple, default image configuration for Docker images.
+   * @param imageName The name of the Docker image to be used.
+   * @returns The default ImageConfig for the Docker image.
+   */
   private getDefaultImageConfig(imageName: string): ImageConfig {
     return {
       name: imageName,
@@ -886,6 +937,13 @@ export class DockerDeployStrategy implements IDeployStrategy {
     };
   }
 
+  /**
+   * This method provides a really simple, default container configuration for Docker containers.
+   * It includes the container name and the Docker image to be used.
+   * @param containerName The name of the Docker container to be created.
+   * @param dockerImage The Docker image to be used for the container.
+   * @returns The default ContainerConfig for the Docker container.
+   */
   private getDefaultContainerConfig(
     containerName: string,
     dockerImage: Image,

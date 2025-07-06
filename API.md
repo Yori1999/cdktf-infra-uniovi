@@ -4127,18 +4127,18 @@ new AwsDeployStrategy()
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic AWS machine deployment. |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer">deployBasicServer</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | *No description.* |
-| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack">deployWebStack</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer">deployBasicServer</a></code> | Generates a basic AWS server using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | Generates a custom AWS machine using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | Generates a hardened AWS server using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | Generates an insecure AWS server using the provided properties. |
+| <code><a href="#cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack">deployWebStack</a></code> | Generates a basic web stack using the provided properties. |
 
 ---
 
 ##### `deployBasicMachine` <a name="deployBasicMachine" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine"></a>
 
 ```typescript
-public deployBasicMachine(scope: Construct, id: string, props: BasicMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+public deployBasicMachine(scope: Construct, id: string, basicMachineProps: BasicMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 Generates a basic AWS machine deployment.
@@ -4158,11 +4158,15 @@ The construct scope where the resources will be defined.
 
 - *Type:* string
 
+The ID for the machine component, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
-###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine.parameter.props"></a>
+###### `basicMachineProps`<sup>Required</sup> <a name="basicMachineProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicMachine.parameter.basicMachineProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.BasicMachineComponentPropsInterface">BasicMachineComponentPropsInterface</a>
+
+An object containing the properties for the basic machine.
 
 ---
 
@@ -4179,12 +4183,20 @@ The `awsProps` property should contain the AWS-specific properties for the machi
 ##### `deployBasicServer` <a name="deployBasicServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer"></a>
 
 ```typescript
-public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+public deployBasicServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
+
+Generates a basic AWS server using the provided properties.
+
+This method is used to deploy an AWS EC2 instance with basic server properties and optional EBS volume for persistence.
+This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope where the resources will be defined.
 
 ---
 
@@ -4192,11 +4204,17 @@ public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterfa
 
 - *Type:* string
 
+The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
-###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer.parameter.props"></a>
+###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer.parameter.serverProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+An object containing the properties for the server.
+
+At this point it should include AWS-specific properties.
 
 ---
 
@@ -4204,17 +4222,28 @@ public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterfa
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 
+An object containing internal properties for the machine component, including AWS-specific properties.
+
 ---
 
 ##### `deployCustomMachine` <a name="deployCustomMachine" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine"></a>
 
 ```typescript
-public deployCustomMachine(scope: Construct, id: string, props: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+public deployCustomMachine(scope: Construct, id: string, customMachineProps: CustomMachineComponentPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
+
+Generates a custom AWS machine using the provided properties.
+
+A custom machine is any machine that is slightly more complex than a basic machine, and that will require a custom init script for further personalization.
+This method deploys an AWS EC2 instance with custom properties and optional EBS volume for persistence.
+It sets up the necessary VPC, subnet, security group, and instance properties, if not provided.
+It also allows for custom user data to be provided, which can include additional setup scripts or configurations that will override the original script
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The construct scope where the resources will be defined.
 
 ---
 
@@ -4222,11 +4251,17 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 
 - *Type:* string
 
+The ID for the machine component, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
-###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.props"></a>
+###### `customMachineProps`<sup>Required</sup> <a name="customMachineProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployCustomMachine.parameter.customMachineProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.CustomMachineComponentPropsInterface">CustomMachineComponentPropsInterface</a>
+
+An object containing the properties for the custom machine.
+
+At this point it should include AWS-specific properties.
 
 ---
 
@@ -4234,17 +4269,27 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 
+An object containing internal properties for the machine component, including AWS-specific properties.
+
 ---
 
 ##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer"></a>
 
 ```typescript
-public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
+
+Generates a hardened AWS server using the provided properties.
+
+This method is used to deploy an AWS EC2 instance with hardened server properties and optional EBS volume for persistence.
+This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+By default, it will expose ports 22 (SSH), 80 (HTTP), and 443 (HTTPS), but this can be customized through the serverProps.
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope where the resources will be defined.
 
 ---
 
@@ -4252,11 +4297,17 @@ public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInte
 
 - *Type:* string
 
+The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
-###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.props"></a>
+###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.serverProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+An object containing the properties for the server.
+
+At this point it should include AWS-specific properties.
 
 ---
 
@@ -4264,17 +4315,27 @@ public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInte
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
 
+An object containing internal properties for the machine component, including AWS-specific properties.
+
 ---
 
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
-public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
+public deployInsecureServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
+
+Generates an insecure AWS server using the provided properties.
+
+This method is used to deploy an AWS EC2 instance with insecure server properties and optional EBS volume for persistence.
+This method is specifically designed for server deployments, which may include additional configurations such as ports and networks.
+By default, it will expose ports 22 (SSH) and 80 (HTTP), but this can be customized through the serverProps.
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope where the resources will be defined.
 
 ---
 
@@ -4282,17 +4343,25 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 
 - *Type:* string
 
+The ID for the server component, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
-###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.props"></a>
+###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.serverProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
+
+An object containing the properties for the server.
+
+At this point it should include AWS-specific properties.
 
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including AWS-specific properties.
 
 ---
 
@@ -4302,9 +4371,16 @@ public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInte
 public deployWebStack(scope: Construct, id: string, stackType: StackType, props: BaseWebStackProps): void
 ```
 
+Generates a basic web stack using the provided properties.
+
+This method is used to deploy a web stack using AWS, which can be either a LAMP or LEMP stack depending on the `stackType` property.
+It will be used to set up a single instance with everything necessary to run a web stack (database, PHP, web server).
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The construct scope where the resources will be defined.
 
 ---
 
@@ -4312,17 +4388,25 @@ public deployWebStack(scope: Construct, id: string, stackType: StackType, props:
 
 - *Type:* string
 
+The ID for the instance, which will be normalized to ensure it is valid for AWS resources.
+
 ---
 
 ###### `stackType`<sup>Required</sup> <a name="stackType" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.stackType"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.StackType">StackType</a>
 
+The type of stack to deploy, which can be either a basic web stack or a hardened web stack.
+
 ---
 
 ###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.AwsDeployStrategy.deployWebStack.parameter.props"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.BaseWebStackProps">BaseWebStackProps</a>
+
+An object containing the properties for the web stack.
+
+At this point it should include AWS-specific properties.
 
 ---
 
@@ -4353,9 +4437,9 @@ new DockerDeployStrategy()
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine">deployBasicMachine</a></code> | Generates a basic, generic Docker container using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer">deployBasicServer</a></code> | Generates a basic Docker server using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine">deployCustomMachine</a></code> | Generates a custom Docker machine using the provided properties. |
-| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer">deployHardenedServer</a></code> | Generates a hardened Docker server using the provided properties. |
 | <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer">deployInsecureServer</a></code> | Generates an insecure Docker server using the provided properties. |
-| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack">deployWebStack</a></code> | *No description.* |
+| <code><a href="#cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack">deployWebStack</a></code> | Generates a basic web stack using the provided properties. |
 
 ---
 
@@ -4382,6 +4466,8 @@ The scope in which the resources will be created.
 ###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicMachine.parameter.id"></a>
 
 - *Type:* string
+
+The ID of the machine component, which will be normalized to ensure it is valid for Docker resources.
 
 ---
 
@@ -4429,6 +4515,8 @@ The scope in which the resources will be created.
 
 - *Type:* string
 
+The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
+
 ---
 
 ###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer.parameter.serverProps"></a>
@@ -4473,6 +4561,8 @@ The scope in which the resources will be created.
 
 - *Type:* string
 
+The ID of the machine component, which will be normalized to ensure it is valid for Docker resources.
+
 ---
 
 ###### `customMachineProps`<sup>Required</sup> <a name="customMachineProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployCustomMachine.parameter.customMachineProps"></a>
@@ -4499,9 +4589,20 @@ An object containing internal properties for the machine component, including Do
 public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
+Generates a hardened Docker server using the provided properties.
+
+This method is used to deploy an hardened server using Docker.
+It creates a Docker image and a container with the specified configurations.
+Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
+This method is specifically designed for server deployments, which may include additional
+configurations such as ports and networks.
+By default, it will expose ports 80 and 443, but this can be customized through the serverProps.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The scope in which the resources will be created.
 
 ---
 
@@ -4509,17 +4610,25 @@ public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPro
 
 - *Type:* string
 
+The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
+
 ---
 
 ###### `serverProps`<sup>Required</sup> <a name="serverProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.serverProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.ServerPropsInterface">ServerPropsInterface</a>
 
+An object containing the properties for the server.
+
+At this point it should include Docker-specific properties.
+
 ---
 
 ###### `internalMachineComponentProps`<sup>Required</sup> <a name="internalMachineComponentProps" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.internalMachineComponentProps"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.InternalMachineComponentPropsInterface">InternalMachineComponentPropsInterface</a>
+
+An object containing internal properties for the machine component, including Docker-specific properties.
 
 ---
 
@@ -4536,7 +4645,7 @@ It creates a Docker image and a container with the specified configurations.
 Optionally, it can include volumes, either a default volume or a set of volumes passed by the user.
 This method is specifically designed for server deployments, which may include additional
 configurations such as ports and networks.
-By default, it will expose ports 80 and 8080, but this can be customized through the serverProps.
+By default, it will expose port 80 (mapped to 8080 by default), but this can be customized through the serverProps.
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.scope"></a>
 
@@ -4549,6 +4658,8 @@ The scope in which the resources will be created.
 ###### `id`<sup>Required</sup> <a name="id" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer.parameter.id"></a>
 
 - *Type:* string
+
+The ID of the server component, which will be normalized to ensure it is valid for Docker resources.
 
 ---
 
@@ -4576,9 +4687,16 @@ An object containing internal properties for the machine component, including Do
 public deployWebStack(scope: Construct, id: string, stackType: StackType, props: BaseWebStackProps): void
 ```
 
+Generates a basic web stack using the provided properties.
+
+This method is used to deploy a web stack using Docker, which can be either a LAMP or LEMP stack depending on the `stackType` property.
+It will create several Docker containers, including a MySQL container, an Apache or Nginx container with PHP, and optionally a PhpMyAdmin container (only for LAMP stacks)
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.scope"></a>
 
 - *Type:* constructs.Construct
+
+The construct scope in which the resources will be created.
 
 ---
 
@@ -4586,17 +4704,23 @@ public deployWebStack(scope: Construct, id: string, stackType: StackType, props:
 
 - *Type:* string
 
+The ID of the web stack component, which will be normalized to ensure it is valid for Docker resources.
+
 ---
 
 ###### `stackType`<sup>Required</sup> <a name="stackType" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.stackType"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.StackType">StackType</a>
 
+The type of web stack to deploy, which can be either LAMP or LEMP.
+
 ---
 
 ###### `props`<sup>Required</sup> <a name="props" id="cdktf-infra-uniovi.DockerDeployStrategy.deployWebStack.parameter.props"></a>
 
 - *Type:* <a href="#cdktf-infra-uniovi.BaseWebStackProps">BaseWebStackProps</a>
+
+An object containing the properties for the base web stack, which should include Docker-specific properties.
 
 ---
 
