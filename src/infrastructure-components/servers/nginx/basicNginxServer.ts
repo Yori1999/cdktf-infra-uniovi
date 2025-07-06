@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { NginxServerBase } from "./nginxServerBase";
 import {
   InternalMachineComponentPropsInterface,
@@ -19,8 +20,8 @@ export class NginxServer extends NginxServerBase {
     id: string,
     props: ServerPropsInterface,
     imageIdentifier: string,
-  ): void {
-    strategy.deployBasicServer(
+  ): Construct {
+    return strategy.deployBasicServer(
       this,
       id,
       props,

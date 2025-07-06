@@ -26,21 +26,21 @@ export interface IDeployStrategy {
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void;
+  ): Construct;
 
   deployInsecureServer(
     scope: Construct,
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void;
+  ): Construct;
 
   deployHardenedServer(
     scope: Construct,
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void;
+  ): Construct;
 
   //deployWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;
   //deployHardenedWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;

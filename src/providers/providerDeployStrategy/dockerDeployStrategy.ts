@@ -21,8 +21,8 @@ import {
   InternalMachineComponentPropsInterface,
   ServerPropsInterface,
 } from "../../props/props";
-import { normalizeId } from "../../utils/stringUtils";
 import { getDockerfilePath } from "../../utils/fileUtils";
+import { normalizeId } from "../../utils/stringUtils";
 
 export class DockerDeployStrategy implements IDeployStrategy {
   // DEPLOY METHODS REGION //
@@ -57,7 +57,8 @@ export class DockerDeployStrategy implements IDeployStrategy {
     }
     const dockerMachineConfig: BasicDockerMachineComponentProps =
       basicMachineProps.dockerProps;
-    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -91,7 +92,13 @@ export class DockerDeployStrategy implements IDeployStrategy {
         : {}),
     };
 
-    return new Container(scope, `${normalizedId}-container`, containerConf);
+    const container: Container = new Container(
+      scope,
+      `${normalizedId}-container`,
+      containerConf,
+    );
+    this.getContainerIp(scope, normalizedId, container);
+    return container;
   }
 
   /**
@@ -163,13 +170,13 @@ export class DockerDeployStrategy implements IDeployStrategy {
         ? this.getDefaultImageConfig(
             `${internalDockerProps.customImageName}:latest`,
           )
-        : this.getDefaultImageConfig(
-            internalDockerProps.imageName,
-          )),
+        : this.getDefaultImageConfig(internalDockerProps.imageName)),
       ...(internalDockerProps.dockerfilePath
         ? {
             buildAttribute: {
-              context: path.dirname(getDockerfilePath(internalDockerProps.dockerfilePath)),
+              context: path.dirname(
+                getDockerfilePath(internalDockerProps.dockerfilePath),
+              ),
               buildArgs: {
                 BASE_IMAGE: internalDockerProps.imageName,
                 UBUNTU_PRO_TOKEN:
@@ -206,7 +213,12 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ...(finalPorts.length > 0 ? { ports: finalPorts } : {}),
     };
 
-    const container : Container = new Container(scope, `${normalizedId}-container`, containerConf);
+    const container: Container = new Container(
+      scope,
+      `${normalizedId}-container`,
+      containerConf,
+    );
+    this.getContainerIp(scope, normalizedId, container);
     return container;
   }
 
@@ -228,7 +240,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     id: string,
     serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!serverProps.dockerProps) {
       throw new Error(
         "DockerDeployStrategy didn't receive Docker-specific props.",
@@ -240,7 +252,8 @@ export class DockerDeployStrategy implements IDeployStrategy {
       );
     }
     const dockerServerConfig: DockerServerProps = serverProps.dockerProps;
-    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -274,7 +287,14 @@ export class DockerDeployStrategy implements IDeployStrategy {
         ? { networksAdvanced: dockerServerConfig.networks }
         : {}),
     };
-    new Container(scope, `${normalizedId}-container`, fullServerContainerConf);
+    const container: Container = new Container(
+      scope,
+      `${normalizedId}-container`,
+      fullServerContainerConf,
+    );
+
+    this.getContainerIp(scope, normalizedId, container);
+    return container;
   }
 
   /**
@@ -296,7 +316,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     id: string,
     serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!serverProps.dockerProps) {
       throw new Error(
         "DockerDeployStrategy didn't receive Docker-specific props.",
@@ -319,14 +339,16 @@ export class DockerDeployStrategy implements IDeployStrategy {
       ),
       ...(dockerInternalProps.dockerfilePath
         ? {
-          buildAttribute: {
-            context: path.dirname(getDockerfilePath(dockerInternalProps.dockerfilePath)),
-            buildArgs: {
-              BASE_IMAGE: dockerInternalProps.imageName,
+            buildAttribute: {
+              context: path.dirname(
+                getDockerfilePath(dockerInternalProps.dockerfilePath),
+              ),
+              buildArgs: {
+                BASE_IMAGE: dockerInternalProps.imageName,
+              },
             },
           }
-        }
-        : {})
+        : {}),
     };
     const dockerImage: Image = new Image(
       scope,
@@ -344,6 +366,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
         ? { networksAdvanced: dockerServerConfig.networks }
         : {}),
     };
+
     const container: Container = new Container(
       scope,
       `${normalizedId}-insecure-container`,
@@ -351,6 +374,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     );
 
     this.getContainerIp(scope, normalizedId, container);
+    return container;
   }
 
   deployHardenedServer(
@@ -358,7 +382,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     id: string,
     serverProps: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!serverProps.dockerProps) {
       throw new Error(
         "DockerDeployStrategy didn't receive Docker-specific props.",
@@ -370,7 +394,8 @@ export class DockerDeployStrategy implements IDeployStrategy {
       );
     }
     const dockerServerProps: DockerServerProps = serverProps.dockerProps;
-    const dockerInternalProps: InternalDockerMachineComponentProps = internalMachineComponentProps.dockerProps;
+    const dockerInternalProps: InternalDockerMachineComponentProps =
+      internalMachineComponentProps.dockerProps;
 
     const normalizedId = normalizeId(id);
 
@@ -416,6 +441,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     );
 
     this.getContainerIp(scope, normalizedId, container);
+    return container;
   }
 
   // METHODS FOR CREATING COMMON ASSETS //

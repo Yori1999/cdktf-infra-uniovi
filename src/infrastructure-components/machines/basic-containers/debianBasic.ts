@@ -16,6 +16,8 @@ import {
 import { checkIsValidId } from "../../../utils/stringUtils";
 
 export class DebianBasic extends Construct {
+  protected createdDebianMachine?: Construct;
+
   constructor(
     scope: Construct,
     id: string,
@@ -36,7 +38,7 @@ export class DebianBasic extends Construct {
     SingletonProviderFactory.getProvider(deployWith, this, provider);
     const deployStrategy: IDeployStrategy =
       ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-    deployStrategy.deployBasicMachine(
+    this.createdDebianMachine = deployStrategy.deployBasicMachine(
       this,
       id,
       machineProps,

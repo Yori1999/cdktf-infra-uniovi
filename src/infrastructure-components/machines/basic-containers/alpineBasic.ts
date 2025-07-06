@@ -16,6 +16,8 @@ import {
 import { checkIsValidId } from "../../../utils/stringUtils";
 
 export class AlpineBasic extends Construct {
+  protected createdAlpineMachine?: Construct;
+
   constructor(
     scope: Construct,
     id: string,
@@ -36,7 +38,7 @@ export class AlpineBasic extends Construct {
     SingletonProviderFactory.getProvider(deployWith, this, provider);
     const deployStrategy: IDeployStrategy =
       ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-    deployStrategy.deployBasicMachine(
+    this.createdAlpineMachine = deployStrategy.deployBasicMachine(
       this,
       id,
       machineProps,

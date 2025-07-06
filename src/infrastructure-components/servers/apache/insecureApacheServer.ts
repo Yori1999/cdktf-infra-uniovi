@@ -1,3 +1,4 @@
+import { Construct } from "constructs";
 import { ApacheServerBase } from "./apacheServerBase";
 import {
   InternalMachineComponentPropsInterface,
@@ -19,8 +20,8 @@ export class InsecureApacheServer extends ApacheServerBase {
     id: string,
     props: ServerPropsInterface,
     imageIdentifier: string,
-  ): void {
-    strategy.deployInsecureServer(
+  ): Construct {
+    return strategy.deployInsecureServer(
       this,
       id,
       props,

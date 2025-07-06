@@ -16,6 +16,8 @@ import {
 import { checkIsValidId } from "../../../utils/stringUtils";
 
 export class UbuntuBasic extends Construct {
+  protected createdUbuntuMachine?: Construct;
+
   constructor(
     scope: Construct,
     id: string,
@@ -36,7 +38,7 @@ export class UbuntuBasic extends Construct {
     SingletonProviderFactory.getProvider(deployWith, this, provider);
     const deployStrategy: IDeployStrategy =
       ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-    deployStrategy.deployBasicMachine(
+    this.createdUbuntuMachine = deployStrategy.deployBasicMachine(
       this,
       id,
       machineProps,

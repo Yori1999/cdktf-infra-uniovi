@@ -8,6 +8,7 @@ import { IDeployStrategy } from "../../providers/providerDeployStrategy/deploySt
 import { ProviderDeployStrategyFactory } from "../../providers/providerDeployStrategy/providerDeployStrategyFactory";
 import { ProviderType } from "../../providers/providerType";
 import { SingletonProviderFactory } from "../../providers/singletonProviderFactory";
+import { validateImageExists } from "../../supported-images/supportedImagesValidator";
 import {
   supportedUbuntuImages,
   UbuntuVersion,
@@ -15,7 +16,7 @@ import {
 import { checkIsValidId } from "../../utils/stringUtils";
 
 export abstract class UbuntuCustomBase extends Construct {
-  protected createdUbuntuConstruct?: Construct;
+  protected createdUbuntuMachine?: Construct;
 
   constructor(
     scope: Construct,
@@ -31,17 +32,13 @@ export abstract class UbuntuCustomBase extends Construct {
     const deployWith: ProviderType = machineProps.providerType;
     const imageIdentifier: string = supportedUbuntuImages[deployWith][version];
 
-    if (!imageIdentifier || imageIdentifier === "") {
-      throw new Error(
-        "This version of the machine doesn't exist for the given provider",
-      );
-    }
+    validateImageExists(imageIdentifier);
 
     SingletonProviderFactory.getProvider(deployWith, this, provider);
     const deployStrategy: IDeployStrategy =
       ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
 
-    this.createdUbuntuConstruct = this.deploy(
+    this.createdUbuntuMachine = this.deploy(
       deployStrategy,
       id,
       machineProps,

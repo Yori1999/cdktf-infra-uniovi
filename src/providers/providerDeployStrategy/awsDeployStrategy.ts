@@ -226,7 +226,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!props.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for basic server.",
@@ -305,6 +305,8 @@ export class AwsDeployStrategy implements IDeployStrategy {
 
     // Register the public IP as a Terraform output
     this.getInstancePublicIp(scope, normalizedId, instance);
+
+    return instance;
   }
 
   deployInsecureServer(
@@ -312,7 +314,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!props.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for the insecure server.",
@@ -391,6 +393,8 @@ export class AwsDeployStrategy implements IDeployStrategy {
 
     // Register the public IP as a Terraform output
     this.getInstancePublicIp(scope, normalizedId, instance);
+
+    return instance;
   }
 
   deployHardenedServer(
@@ -398,7 +402,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
     id: string,
     props: ServerPropsInterface,
     internalMachineComponentProps: InternalMachineComponentPropsInterface,
-  ): void {
+  ): Construct {
     if (!props.awsProps) {
       throw new Error(
         "Server-specific AWS properties are required for basic server.",
@@ -477,6 +481,8 @@ export class AwsDeployStrategy implements IDeployStrategy {
 
     // Register the public IP as a Terraform output
     this.getInstancePublicIp(scope, normalizedId, instance);
+
+    return instance;
   }
 
   // REGION UTILITY METHODS FOR CREATING AND WORKING WITH AWS RESOURCES //

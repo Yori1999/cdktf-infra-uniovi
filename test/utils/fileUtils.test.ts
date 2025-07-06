@@ -1,13 +1,43 @@
 import * as path from "path";
-import { getDockerfilesPath } from "../../src/utils/fileUtils";
+import { getDockerfilePath } from "../../src/utils/fileUtils";
 
-describe("getDockerfilesPath", () => {
-  it("should return the correct path to the dockerfiles directory", () => {
+describe("getDockerfilePath", () => {
+  it("should return the correct path for a given filename", () => {
+    const filename = "Dockerfile";
     const expectedPath = path.resolve(
       __dirname,
-      "../../infrastructure-assets/dockerfiles/",
+      "../../infrastructure-assets/dockerfiles",
+      filename,
     );
-    const result = getDockerfilesPath();
+
+    const result = getDockerfilePath(filename);
+
+    expect(result).toBe(expectedPath);
+  });
+
+  it("should handle filenames with special characters", () => {
+    const filename = "Dockerfile.prod";
+    const expectedPath = path.resolve(
+      __dirname,
+      "../../infrastructure-assets/dockerfiles",
+      filename,
+    );
+
+    const result = getDockerfilePath(filename);
+
+    expect(result).toBe(expectedPath);
+  });
+
+  it("should handle empty filenames", () => {
+    const filename = "";
+    const expectedPath = path.resolve(
+      __dirname,
+      "../../infrastructure-assets/dockerfiles",
+      filename,
+    );
+
+    const result = getDockerfilePath(filename);
+
     expect(result).toBe(expectedPath);
   });
 });

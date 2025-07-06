@@ -3224,7 +3224,7 @@ The `awsProps` property should contain the AWS-specific properties for the machi
 ##### `deployBasicServer` <a name="deployBasicServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer"></a>
 
 ```typescript
-public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployBasicServer.parameter.scope"></a>
@@ -3284,7 +3284,7 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 ##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer"></a>
 
 ```typescript
-public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployHardenedServer.parameter.scope"></a>
@@ -3314,7 +3314,7 @@ public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInte
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
-public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.AwsDeployStrategy.deployInsecureServer.parameter.scope"></a>
@@ -3420,7 +3420,7 @@ An object containing internal properties for the machine component, including Do
 ##### `deployBasicServer` <a name="deployBasicServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployBasicServer"></a>
 
 ```typescript
-public deployBasicServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployBasicServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 Generates a basic Docker server using the provided properties.
@@ -3510,7 +3510,7 @@ An object containing internal properties for the machine component, including Do
 ##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer"></a>
 
 ```typescript
-public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.DockerDeployStrategy.deployHardenedServer.parameter.scope"></a>
@@ -3540,7 +3540,7 @@ public deployHardenedServer(scope: Construct, id: string, serverProps: ServerPro
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.DockerDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
-public deployInsecureServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployInsecureServer(scope: Construct, id: string, serverProps: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 Generates an insecure Docker server using the provided properties.
@@ -3704,7 +3704,7 @@ public deployBasicMachine(scope: Construct, id: string, props: BasicMachineCompo
 ##### `deployBasicServer` <a name="deployBasicServer" id="cdktf-infra-uniovi.IDeployStrategy.deployBasicServer"></a>
 
 ```typescript
-public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployBasicServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployBasicServer.parameter.scope"></a>
@@ -3764,7 +3764,7 @@ public deployCustomMachine(scope: Construct, id: string, props: CustomMachineCom
 ##### `deployHardenedServer` <a name="deployHardenedServer" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer"></a>
 
 ```typescript
-public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployHardenedServer.parameter.scope"></a>
@@ -3794,7 +3794,7 @@ public deployHardenedServer(scope: Construct, id: string, props: ServerPropsInte
 ##### `deployInsecureServer` <a name="deployInsecureServer" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer"></a>
 
 ```typescript
-public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): void
+public deployInsecureServer(scope: Construct, id: string, props: ServerPropsInterface, internalMachineComponentProps: InternalMachineComponentPropsInterface): Construct
 ```
 
 ###### `scope`<sup>Required</sup> <a name="scope" id="cdktf-infra-uniovi.IDeployStrategy.deployInsecureServer.parameter.scope"></a>

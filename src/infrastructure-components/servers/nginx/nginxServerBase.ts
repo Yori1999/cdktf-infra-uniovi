@@ -8,10 +8,13 @@ import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deplo
 import { ProviderDeployStrategyFactory } from "../../../providers/providerDeployStrategy/providerDeployStrategyFactory";
 import { ProviderType } from "../../../providers/providerType";
 import { SingletonProviderFactory } from "../../../providers/singletonProviderFactory";
+import { validateImageExists } from "../../../supported-images/supportedImagesValidator";
 import { NginxVersion } from "../../../supported-images/supportedServerImages";
-import { checkIsValidId, isEmptyString } from "../../../utils/stringUtils";
+import { checkIsValidId } from "../../../utils/stringUtils";
 
 export abstract class NginxServerBase extends Construct {
+  protected createdNginxServer?: Construct;
+
   protected abstract get supportedNginxImagesMap(): Record<
     string,
     Record<string, string>
@@ -36,19 +39,24 @@ export abstract class NginxServerBase extends Construct {
     version: NginxVersion,
     serverProps: ServerPropsInterface,
     provider?: TerraformProvider,
-  ) {
+  ): void {
     const deployWith: ProviderType = serverProps.providerType;
 
     const imagesForProvider: Record<NginxVersion, string> =
       this.supportedNginxImagesMap[deployWith];
     const imageIdentifier: string = imagesForProvider[version];
 
-    if (imageIdentifier && !isEmptyString(imageIdentifier)) {
-      SingletonProviderFactory.getProvider(deployWith, this, provider);
-      const deployStrategy: IDeployStrategy =
-        ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
-      this.deploy(deployStrategy, id, serverProps, imageIdentifier);
-    }
+    validateImageExists(imageIdentifier);
+
+    SingletonProviderFactory.getProvider(deployWith, this, provider);
+    const deployStrategy: IDeployStrategy =
+      ProviderDeployStrategyFactory.getProviderDeployStrategy(deployWith);
+    this.createdNginxServer = this.deploy(
+      deployStrategy,
+      id,
+      serverProps,
+      imageIdentifier,
+    );
   }
 
   protected abstract deploy(
@@ -56,7 +64,7 @@ export abstract class NginxServerBase extends Construct {
     id: string,
     props: ServerPropsInterface,
     imageIdentifier: string,
-  ): void;
+  ): Construct;
 
   protected getAdditionalProps(
     providerType: ProviderType,
