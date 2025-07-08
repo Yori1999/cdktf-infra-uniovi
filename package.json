@@ -36,7 +36,7 @@
   "devDependencies": {
     "@cdktf/provider-aws": "19.0.0",
     "@cdktf/provider-docker": "11.0.0",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.0.1",
     "@typescript-eslint/eslint-plugin": "^8",
     "@typescript-eslint/parser": "^8",
@@ -48,7 +48,7 @@
     "eslint-import-resolver-typescript": "^4.4.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.4.1",
-    "jest": "^30.0.0",
+    "jest": "^30.0.4",
     "jest-junit": "^16",
     "jsii": "~5.8.0",
     "jsii-diff": "^1.112.0",
@@ -79,6 +79,10 @@
   "version": "0.0.0",
   "jest": {
     "coverageProvider": "v8",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.ts"
+    ],
+    "testEnvironment": "node",
     "testMatch": [
       "<rootDir>/@(src|test)/**/*(*.)@(spec|test).ts?(x)",
       "<rootDir>/@(src|test)/**/__tests__/**/*.ts?(x)",

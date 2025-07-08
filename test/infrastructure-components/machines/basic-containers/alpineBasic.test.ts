@@ -17,7 +17,7 @@ class TestStack extends TerraformStack {
 
 // Checks that:
 // - AlpineBasic construct synthesizes without error.
-// - It creates the expected Terraform resources.
+// - It creates the expected Terraform resources with the adequate properties.
 test("creates a Docker container", () => {
   const app = new App();
   const stack = new TestStack(app, "test");
@@ -30,6 +30,9 @@ test("creates a Docker container", () => {
   expect(
     parsed.resource.docker_container["Test_Test-container_72A6054C"].name,
   ).toBe("Test-container");
+  expect(parsed.resource.docker_image["Test_Test-image_5197E2DB"].name).toBe(
+    "alpine:latest",
+  );
 });
 
 /*jest.mock("../../../providers/singletonProviderFactory", () => ({
