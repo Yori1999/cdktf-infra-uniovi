@@ -232,10 +232,30 @@ export interface DockerLempStackProps {
   readonly mySqlPort?: number;
 }
 export interface AWSLampStackProps {
-  //readonly additionalNetworksIds?: string[];
+  /**
+   * Virtual Private Cloud (VPC) ID where the machine will be deployed.
+   * This is an optional property, and if not specified, the default VPC will be used.
+   */
+  readonly vpcId?: string;
+  /**
+   * Subnet ID where the machine will be deployed.
+   * This is an optional property, and if not specified, the default subnet will be used.
+   * If you specify a VPC, you must also specify a subnet within that VPC.
+   */
+  readonly subnetId?: string;
 }
 export interface AWSLempStackProps {
-  //readonly additionalNetworksIds?: string[];
+  /**
+   * Virtual Private Cloud (VPC) ID where the machine will be deployed.
+   * This is an optional property, and if not specified, the default VPC will be used.
+   */
+  readonly vpcId?: string;
+  /**
+   * Subnet ID where the machine will be deployed.
+   * This is an optional property, and if not specified, the default subnet will be used.
+   * If you specify a VPC, you must also specify a subnet within that VPC.
+   */
+  readonly subnetId?: string;
 }
 export interface LampStackPropsInterface
   extends BaseInfrastructureComponentProps,

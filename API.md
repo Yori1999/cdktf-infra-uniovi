@@ -2498,6 +2498,43 @@ import { AWSLampStackProps } from 'cdktf-infra-uniovi'
 const aWSLampStackProps: AWSLampStackProps = { ... }
 ```
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.AWSLampStackProps.property.subnetId">subnetId</a></code> | <code>string</code> | Subnet ID where the machine will be deployed. |
+| <code><a href="#cdktf-infra-uniovi.AWSLampStackProps.property.vpcId">vpcId</a></code> | <code>string</code> | Virtual Private Cloud (VPC) ID where the machine will be deployed. |
+
+---
+
+##### `subnetId`<sup>Optional</sup> <a name="subnetId" id="cdktf-infra-uniovi.AWSLampStackProps.property.subnetId"></a>
+
+```typescript
+public readonly subnetId: string;
+```
+
+- *Type:* string
+
+Subnet ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default subnet will be used.
+If you specify a VPC, you must also specify a subnet within that VPC.
+
+---
+
+##### `vpcId`<sup>Optional</sup> <a name="vpcId" id="cdktf-infra-uniovi.AWSLampStackProps.property.vpcId"></a>
+
+```typescript
+public readonly vpcId: string;
+```
+
+- *Type:* string
+
+Virtual Private Cloud (VPC) ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default VPC will be used.
+
+---
 
 ### AWSLempStackProps <a name="AWSLempStackProps" id="cdktf-infra-uniovi.AWSLempStackProps"></a>
 
@@ -2509,6 +2546,43 @@ import { AWSLempStackProps } from 'cdktf-infra-uniovi'
 const aWSLempStackProps: AWSLempStackProps = { ... }
 ```
 
+#### Properties <a name="Properties" id="Properties"></a>
+
+| **Name** | **Type** | **Description** |
+| --- | --- | --- |
+| <code><a href="#cdktf-infra-uniovi.AWSLempStackProps.property.subnetId">subnetId</a></code> | <code>string</code> | Subnet ID where the machine will be deployed. |
+| <code><a href="#cdktf-infra-uniovi.AWSLempStackProps.property.vpcId">vpcId</a></code> | <code>string</code> | Virtual Private Cloud (VPC) ID where the machine will be deployed. |
+
+---
+
+##### `subnetId`<sup>Optional</sup> <a name="subnetId" id="cdktf-infra-uniovi.AWSLempStackProps.property.subnetId"></a>
+
+```typescript
+public readonly subnetId: string;
+```
+
+- *Type:* string
+
+Subnet ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default subnet will be used.
+If you specify a VPC, you must also specify a subnet within that VPC.
+
+---
+
+##### `vpcId`<sup>Optional</sup> <a name="vpcId" id="cdktf-infra-uniovi.AWSLempStackProps.property.vpcId"></a>
+
+```typescript
+public readonly vpcId: string;
+```
+
+- *Type:* string
+
+Virtual Private Cloud (VPC) ID where the machine will be deployed.
+
+This is an optional property, and if not specified, the default VPC will be used.
+
+---
 
 ### AwsServerProps <a name="AwsServerProps" id="cdktf-infra-uniovi.AwsServerProps"></a>
 

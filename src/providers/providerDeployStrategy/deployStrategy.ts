@@ -50,5 +50,4 @@ export interface IDeployStrategy {
     stackType: StackType,
     props: BaseWebStackProps,
   ): void;
-  //deployHardenedWebStack(scope: Construct, id: string, props: BaseWebStackProps) : void;
 }

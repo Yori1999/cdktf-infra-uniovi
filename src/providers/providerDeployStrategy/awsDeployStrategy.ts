@@ -13,6 +13,8 @@ import { Construct } from "constructs";
 import { IDeployStrategy } from "./deployStrategy";
 import { StackType } from "../../infrastructure-components/stacks/stackType";
 import {
+  AWSLampStackProps,
+  AWSLempStackProps,
   AwsServerProps,
   BaseWebStackProps,
   BasicAWSMachineComponentProps,
@@ -21,10 +23,14 @@ import {
   CustomMachineComponentPropsInterface,
   InternalAWSMachineComponentProps,
   InternalMachineComponentPropsInterface,
+  LampStackPropsInterface,
+  LempStackPropsInterface,
   ServerPropsInterface,
 } from "../../props/props";
 import { generateUserData } from "../../utils/aws/userDataUtils";
 import { normalizeId } from "../../utils/stringUtils";
+import { supportedUbuntuImages, UbuntuVersion } from "../../supported-images/supportedMachineImages";
+import { ProviderType } from "../providerType";
 
 export class AwsDeployStrategy implements IDeployStrategy {
   /**
@@ -221,6 +227,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
             enablePersistence: awsProps.usePersistence ?? false,
             userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
           }),
+      tags: {
+        Name: `${normalizedId}-custom-machine`,
+      },
     });
 
     // Define the EBS volume, that is, persistence
@@ -269,8 +278,6 @@ export class AwsDeployStrategy implements IDeployStrategy {
     const internalAWSProps: InternalAWSMachineComponentProps =
       internalMachineComponentProps.awsProps;
 
-    /* NORMALIZE THE ID FOR USING IT  */
-    // Normalize the ID to ensure it is valid for AWS resources
     const normalizedId = normalizeId(id);
 
     // Define the VPC
@@ -320,6 +327,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
         enablePersistence: awsProps.usePersistence ?? false,
         userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
       }),
+      tags: {
+        Name: `${normalizedId}-basic-server`,
+      },
     });
 
     if (awsProps.usePersistence) {
@@ -420,6 +430,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
         enablePersistence: awsProps.usePersistence ?? false,
         userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
       }),
+      tags: {
+        Name: `${normalizedId}-insecure-server`,
+      },
     });
 
     if (awsProps.usePersistence) {
@@ -509,7 +522,7 @@ export class AwsDeployStrategy implements IDeployStrategy {
       }).id;
 
     // Create the EC2 instance
-    const instance = new Instance(scope, `${normalizedId}-hardened-server `, {
+    const instance = new Instance(scope, `${normalizedId}-hardened-server`, {
       ami: internalAWSProps.ami,
       instanceType: "t2.micro",
       availabilityZone: subnetData.availabilityZone,
@@ -520,6 +533,9 @@ export class AwsDeployStrategy implements IDeployStrategy {
         enablePersistence: awsProps.usePersistence ?? false,
         userDataSetupFileDirectory: internalAWSProps.customInitScriptPath,
       }),
+      tags: {
+        Name: `${normalizedId}-hardened-server`,
+      },
     });
 
     if (awsProps.usePersistence) {
@@ -554,14 +570,120 @@ export class AwsDeployStrategy implements IDeployStrategy {
     props: BaseWebStackProps,
   ): void {
     const normalizedId = normalizeId(id);
-    console.log(scope); // to use it somewhere so that jsii doesn't complain
-    console.log(normalizedId); // to use it somewhere so that jsii doesn't complain
-    console.log(stackType); // to use it somewhere so that jsii doesn't complain
-    if (!props) {
-      throw new Error(
-        "Server-specific AWS properties are required for the insecure server.",
-      );
+    
+    switch(stackType) {
+      case StackType.LAMP: {
+        const lampStackProps: LampStackPropsInterface = props as LampStackPropsInterface;
+        if (!lampStackProps.awsProps) {
+          throw new Error("AWS properties are required for LAMP stack.");
+        }
+        const awsLampStackProps : AWSLampStackProps = lampStackProps.awsProps;
+        return this.deployLampStack(scope, normalizedId, awsLampStackProps);
+      }
+      case StackType.LEMP: {
+        const lempStackProps : LempStackPropsInterface = props as LempStackPropsInterface;
+        if (!lempStackProps.awsProps) {
+          throw new Error("AWS properties are required for LEMP stack.");
+        }
+        const awsLempStackProps : AWSLampStackProps = lempStackProps.awsProps;
+        return this.deployLempStack(scope, normalizedId, awsLempStackProps);
+      }
     }
+  }
+
+  private deployLampStack(scope: Construct, normalizedId: string, props: AWSLampStackProps) : void {
+    const lampStackProps : LampStackPropsInterface = props as LampStackPropsInterface;
+    if (!lampStackProps.awsProps) {
+      throw new Error("AWS properties are required for LAMP stack.");
+    }
+    const awsProps: AWSLampStackProps  = lampStackProps.awsProps;
+    
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    // Security group ingress rules
+    const securityGroupIngressRules: SecurityGroupIngress[] = [
+      this.getDefaultSSHSecurityGroup(),
+      this.getDefaultHTTPSecurityGroup(),
+      this.getDefaultHTTPSSecurityGroup()
+    ];
+    const securityGroup = new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: securityGroupIngressRules,
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    const instance = new Instance(scope, `${normalizedId}-lamp-stack`, {
+      ami: supportedUbuntuImages[ProviderType.AWS][UbuntuVersion.UBUNTU_22],
+      instanceType: "t2.micro",
+      availabilityZone: subnetData.availabilityZone,
+      subnetId,
+      vpcSecurityGroupIds: [securityGroup],
+      associatePublicIpAddress: true,
+      userData: generateUserData({
+        enablePersistence: false,
+        userDataSetupFileDirectory: "lamp-stack",
+      }),
+    });
+
+    this.getInstancePublicIp(scope, normalizedId, instance);
+  }
+
+  private deployLempStack(scope: Construct, normalizedId: string, props: AWSLempStackProps) : void {
+    const lampStackProps : LampStackPropsInterface = props as LampStackPropsInterface;
+    if (!lampStackProps.awsProps) {
+      throw new Error("AWS properties are required for LAMP stack.");
+    }
+    const awsProps: AWSLampStackProps  = lampStackProps.awsProps;
+    
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    const subnetId = this.getOrDefaultSubnetId(
+      scope,
+      normalizedId,
+      vpcId,
+      awsProps.subnetId,
+    );
+    const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
+      id: subnetId,
+    });
+    // Security group ingress rules
+    const securityGroupIngressRules: SecurityGroupIngress[] = [
+      this.getDefaultSSHSecurityGroup(),
+      this.getDefaultHTTPSecurityGroup(),
+      this.getDefaultHTTPSSecurityGroup(),
+    ];
+    const securityGroup = new SecurityGroup(scope, `${normalizedId}-sg`, {
+        vpcId,
+        ingress: securityGroupIngressRules,
+        egress: [
+          { protocol: "-1", fromPort: 0, toPort: 0, cidrBlocks: ["0.0.0.0/0"] },
+        ],
+      }).id;
+
+    // Create the EC2 instance
+    const instance = new Instance(scope, `${normalizedId}-lemp-stack`, {
+      ami: supportedUbuntuImages[ProviderType.AWS][UbuntuVersion.UBUNTU_22],
+      instanceType: "t2.micro",
+      availabilityZone: subnetData.availabilityZone,
+      subnetId,
+      vpcSecurityGroupIds: [securityGroup],
+      associatePublicIpAddress: true,
+      userData: generateUserData({
+        enablePersistence: false,
+        userDataSetupFileDirectory: "lemp-stack",
+      }),
+    });
+
+    this.getInstancePublicIp(scope, normalizedId, instance);
   }
 
   // REGION UTILITY METHODS FOR CREATING AND WORKING WITH AWS RESOURCES //
