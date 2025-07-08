@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`AlpineBasic AWS instance creation creates an AWS instance for { version: 'latest', expectedImage: 'ami-0d2e72039b74fb9d7' } 1`] = `
+{
+  "data": {
+    "aws_subnet": {
+      "Test_Test-subnet-az_B666E42D": {
+        "id": "\${element(data.aws_subnets.Test_Test-subnets_392FFC2D.ids, 0)}",
+      },
+    },
+    "aws_subnets": {
+      "Test_Test-subnets_392FFC2D": {
+        "filter": [
+          {
+            "name": "vpc-id",
+            "values": [
+              "\${data.aws_vpc.Test_Test-default-vpc_7D86FE76.id}",
+            ],
+          },
+        ],
+      },
+    },
+    "aws_vpc": {
+      "Test_Test-default-vpc_7D86FE76": {
+        "default": true,
+      },
+    },
+  },
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${aws_instance.Test_Test-basic-machine_D641CCA5.public_ip}",
+    },
+  },
+  "provider": {
+    "aws": [
+      {
+        "region": "eu-west-1",
+      },
+    ],
+  },
+  "resource": {
+    "aws_instance": {
+      "Test_Test-basic-machine_D641CCA5": {
+        "ami": "ami-0d2e72039b74fb9d7",
+        "associate_public_ip_address": true,
+        "instance_type": "t2.micro",
+        "subnet_id": "\${element(data.aws_subnets.Test_Test-subnets_392FFC2D.ids, 0)}",
+        "tags": {
+          "Name": "Test-basic-machine",
+        },
+        "user_data": "#!/bin/bash
+          apt-get update && apt-get install -y openssh-server
+          systemctl enable ssh
+          systemctl start ssh",
+        "vpc_security_group_ids": [
+          "\${aws_security_group.Test_Test-sg_A79D47F9.id}",
+        ],
+      },
+    },
+    "aws_security_group": {
+      "Test_Test-sg_A79D47F9": {
+        "egress": [
+          {
+            "cidr_blocks": [
+              "0.0.0.0/0",
+            ],
+            "description": null,
+            "from_port": 0,
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": null,
+            "protocol": "-1",
+            "security_groups": null,
+            "self": null,
+            "to_port": 0,
+          },
+        ],
+        "ingress": [
+          {
+            "cidr_blocks": [
+              "0.0.0.0/0",
+            ],
+            "description": null,
+            "from_port": 22,
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": null,
+            "protocol": "tcp",
+            "security_groups": null,
+            "self": null,
+            "to_port": 22,
+          },
+        ],
+        "vpc_id": "\${data.aws_vpc.Test_Test-default-vpc_7D86FE76.id}",
+      },
+    },
+  },
+  "terraform": {
+    "required_providers": {
+      "aws": {
+        "source": "aws",
+        "version": "5.31.0",
+      },
+    },
+  },
+}
+`;
+
+exports[`AlpineBasic AWS instance creation creates an AlpineBasic AWS instance with volume 1`] = `
+{
+  "data": {
+    "aws_subnet": {
+      "Test_Test-subnet-az_B666E42D": {
+        "id": "\${element(data.aws_subnets.Test_Test-subnets_392FFC2D.ids, 0)}",
+      },
+    },
+    "aws_subnets": {
+      "Test_Test-subnets_392FFC2D": {
+        "filter": [
+          {
+            "name": "vpc-id",
+            "values": [
+              "\${data.aws_vpc.Test_Test-default-vpc_7D86FE76.id}",
+            ],
+          },
+        ],
+      },
+    },
+    "aws_vpc": {
+      "Test_Test-default-vpc_7D86FE76": {
+        "default": true,
+      },
+    },
+  },
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${aws_instance.Test_Test-basic-machine_D641CCA5.public_ip}",
+    },
+  },
+  "resource": {
+    "aws_ebs_volume": {
+      "Test_Test-ebs-volume_AABF43EC": {
+        "availability_zone": "\${data.aws_subnet.Test_Test-subnet-az_B666E42D.availability_zone}",
+        "size": 10,
+        "tags": {
+          "Name": "Test-volume",
+        },
+        "type": "gp3",
+      },
+    },
+    "aws_instance": {
+      "Test_Test-basic-machine_D641CCA5": {
+        "ami": "ami-0d2e72039b74fb9d7",
+        "associate_public_ip_address": true,
+        "instance_type": "t2.micro",
+        "subnet_id": "\${element(data.aws_subnets.Test_Test-subnets_392FFC2D.ids, 0)}",
+        "tags": {
+          "Name": "Test-basic-machine",
+        },
+        "user_data": "#!/bin/bash
+          apt-get update && apt-get install -y openssh-server
+          systemctl enable ssh
+          systemctl start ssh
+
+# Volume setup
+(
+  while [ ! -e /dev/xvdf ]; do sleep 1; done
+  mkfs -t ext4 /dev/xvdf
+  mkdir -p /mnt/data
+  mount /dev/xvdf /mnt/data
+) &",
+        "vpc_security_group_ids": [
+          "\${aws_security_group.Test_Test-sg_A79D47F9.id}",
+        ],
+      },
+    },
+    "aws_security_group": {
+      "Test_Test-sg_A79D47F9": {
+        "egress": [
+          {
+            "cidr_blocks": [
+              "0.0.0.0/0",
+            ],
+            "description": null,
+            "from_port": 0,
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": null,
+            "protocol": "-1",
+            "security_groups": null,
+            "self": null,
+            "to_port": 0,
+          },
+        ],
+        "ingress": [
+          {
+            "cidr_blocks": [
+              "0.0.0.0/0",
+            ],
+            "description": null,
+            "from_port": 22,
+            "ipv6_cidr_blocks": null,
+            "prefix_list_ids": null,
+            "protocol": "tcp",
+            "security_groups": null,
+            "self": null,
+            "to_port": 22,
+          },
+        ],
+        "vpc_id": "\${data.aws_vpc.Test_Test-default-vpc_7D86FE76.id}",
+      },
+    },
+    "aws_volume_attachment": {
+      "Test_Test-volume-attachment_6D479879": {
+        "device_name": "/dev/sdf",
+        "instance_id": "\${aws_instance.Test_Test-basic-machine_D641CCA5.id}",
+        "volume_id": "\${aws_ebs_volume.Test_Test-ebs-volume_AABF43EC.id}",
+      },
+    },
+  },
+}
+`;
