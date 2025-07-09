@@ -48,11 +48,11 @@ project.addPeerDeps(
 
 project.addPackageIgnore("!infrastructure-assets/**"); // include this dir
 project.npmignore?.addPatterns("!infrastructure-assets/**"); // override .npmignore default
-project.packageTask.exec(
+/*project.packageTask.exec(
   "cp -r infrastructure-assets dist/infrastructure-assets",
 );
 project.compileTask.exec(
   "cp -r infrastructure-assets lib/infrastructure-assets",
-);
+);*/
 
 project.synth();
