@@ -23,7 +23,6 @@ const project = new cdktf.ConstructLibraryCdktf({
       testEnvironment: "node",
     },
   },
-  
 
   // Release configuration
   releaseToNpm: true,
