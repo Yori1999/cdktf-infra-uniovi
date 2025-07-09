@@ -601,19 +601,12 @@ export class AwsDeployStrategy implements IDeployStrategy {
     normalizedId: string,
     props: AWSLampStackProps,
   ): void {
-    const lampStackProps: LampStackPropsInterface =
-      props as LampStackPropsInterface;
-    if (!lampStackProps.awsProps) {
-      throw new Error("AWS properties are required for LAMP stack.");
-    }
-    const awsProps: AWSLampStackProps = lampStackProps.awsProps;
-
-    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, props.vpcId);
     const subnetId = this.getOrDefaultSubnetId(
       scope,
       normalizedId,
       vpcId,
-      awsProps.subnetId,
+      props.subnetId,
     );
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
@@ -653,19 +646,12 @@ export class AwsDeployStrategy implements IDeployStrategy {
     normalizedId: string,
     props: AWSLempStackProps,
   ): void {
-    const lampStackProps: LampStackPropsInterface =
-      props as LampStackPropsInterface;
-    if (!lampStackProps.awsProps) {
-      throw new Error("AWS properties are required for LAMP stack.");
-    }
-    const awsProps: AWSLampStackProps = lampStackProps.awsProps;
-
-    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, awsProps.vpcId);
+    const vpcId = this.getOrDefaultVPCId(scope, normalizedId, props.vpcId);
     const subnetId = this.getOrDefaultSubnetId(
       scope,
       normalizedId,
       vpcId,
-      awsProps.subnetId,
+      props.subnetId,
     );
     const subnetData = new DataAwsSubnet(scope, `${normalizedId}-subnet-az`, {
       id: subnetId,
