@@ -26,6 +26,6 @@ COPY ../../configs/nano/nanorc /root/.nanorc
 
 EXPOSE 53
 
-COPY container_init.sh container_init.sh
+COPY ../../configs/dns/container_init.sh container_init.sh
 RUN chmod +x container_init.sh
 CMD ["./container_init.sh"]
