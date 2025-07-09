@@ -23,13 +23,6 @@ const project = new cdktf.ConstructLibraryCdktf({
       testEnvironment: "node",
     },
   },
-
-  release: true,
-  autoApproveOptions: {
-    secret: 'GITHUB_TOKEN', // Usa el token automático de GitHub Actions
-    allowedUsernames: ['Yori1999'], // Tu usuario de GitHub
-  },
-  autoMerge: true,
   
 
   // Release configuration
