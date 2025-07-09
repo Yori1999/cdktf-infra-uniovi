@@ -32,7 +32,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   // The PYPI_TOKEN needs to be set in the repository secrets (do not follow CDKTF documentation regarding TWINE_PASSWORD AND TWINE_USERNAME)
   publishToPypi: {
     distName: "cdktf-infra-uniovi",
-    module: "cdktf-infra-uniovi",
+    module: "cdktf_infra_uniovi",
   }
 });
 
