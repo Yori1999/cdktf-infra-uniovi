@@ -26,7 +26,6 @@ const project = new cdktf.ConstructLibraryCdktf({
 
   // Release configuration
   releaseToNpm: true,
-  npmRegistryUrl: "https://npm.pkg.maria-uniovi-25.com",
 
   publishToPypi: {
     distName: "cdktf-infra-uniovi",
