@@ -25,17 +25,15 @@ const project = new cdktf.ConstructLibraryCdktf({
   },
 
   // Release configuration
+  // NPM
   releaseToNpm: true,
 
+  // PyPI
+  // The PYPI_TOKEN needs to be set in the repository secrets (do not follow CDKTF documentation regarding TWINE_PASSWORD AND TWINE_USERNAME)
   publishToPypi: {
     distName: "cdktf-infra-uniovi",
-    module: "cdktf-infra-uniovi",
+    module: "cdktf_infra_uniovi",
   },
-
-  // deps: [],                /* Runtime dependencies of this module. */
-  // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
-  // devDeps: [],             /* Build dependencies for this module. */
-  // packageName: undefined,  /* The "name" in package.json. */
 });
 
 // Add dependencies for the cdktf providers we're going to be supporting
