@@ -24,6 +24,15 @@ const project = new cdktf.ConstructLibraryCdktf({
     },
   },
 
+  // Release configuration
+  releaseToNpm: true,
+  npmRegistryUrl: "https://npm.pkg.maria-uniovi-25.com",
+
+  publishToPypi: {
+    distName: "cdktf-infra-uniovi",
+    module: "cdktf-infra-uniovi"
+  },
+
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
   // devDeps: [],             /* Build dependencies for this module. */
