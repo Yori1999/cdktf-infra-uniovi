@@ -33,7 +33,7 @@ const project = new cdktf.ConstructLibraryCdktf({
   publishToPypi: {
     distName: "cdktf-infra-uniovi",
     module: "cdktf-infra-uniovi",
-  }
+  },
 });
 
 // Add dependencies for the cdktf providers we're going to be supporting
