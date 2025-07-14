@@ -50,7 +50,7 @@ RUN mkdir /var/run/sshd
 # Just tells Docker that we'll be using this port. But then we need to manage it manually
 EXPOSE 22
 
-COPY entrypoint.sh /entrypoint.sh
+COPY ../../configs/ubuntu-pro/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 CMD ["/entrypoint.sh"]

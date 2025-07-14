@@ -1,4 +1,3 @@
-import { TerraformVariable } from "cdktf";
 import { Construct } from "constructs";
 import {
   CustomMachineComponentPropsInterface,
@@ -8,7 +7,7 @@ import { IDeployStrategy } from "../../../providers/providerDeployStrategy/deplo
 import { UbuntuCustomBase } from "../ubuntuCustomBase";
 
 export class UbuntuPro extends UbuntuCustomBase {
-  protected ubuntuProToken?: TerraformVariable;
+  protected ubuntuProToken?: string;
 
   protected deploy(
     strategy: IDeployStrategy,
@@ -16,13 +15,11 @@ export class UbuntuPro extends UbuntuCustomBase {
     machineProps: CustomMachineComponentPropsInterface,
     imageIdentifier: string,
   ): Construct {
-    // Fail fast in case we don't have a token set as param
+    // Fail "fast" in case we don't have a token set as param
     // Important: THIS IS COMMON, so we'll catch it here instead of in the deployCustomMachine (it's the same logic for all providers)
-    this.ubuntuProToken = new TerraformVariable(this, "UBUNTU_PRO_TOKEN", {
-      type: "string",
-      description: "Ubuntu Pro token for attaching to Canonical service",
-      sensitive: true,
-    });
+    this.ubuntuProToken = process.env.UBUNTU_PRO_TOKEN;
+
+    this.checkUbuntuProTokenProvided();
 
     return strategy.deployCustomMachine(
       this,
@@ -35,9 +32,8 @@ export class UbuntuPro extends UbuntuCustomBase {
   protected getDockerProps(
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface {
-    this.checkUbuntuProTokenProvided();
     return {
-      ubuntuProToken: this.ubuntuProToken?.stringValue,
+      ubuntuProToken: this.ubuntuProToken,
       dockerProps: {
         imageName: imageIdentifier,
         dockerfilePath: "ubuntu-pro",
@@ -50,9 +46,8 @@ export class UbuntuPro extends UbuntuCustomBase {
   protected getAWSProps(
     imageIdentifier: string,
   ): InternalMachineComponentPropsInterface {
-    this.checkUbuntuProTokenProvided();
     return {
-      ubuntuProToken: this.ubuntuProToken?.stringValue,
+      ubuntuProToken: this.ubuntuProToken,
       awsProps: {
         ami: imageIdentifier,
         customInitScriptPath: "ubuntu-pro",
