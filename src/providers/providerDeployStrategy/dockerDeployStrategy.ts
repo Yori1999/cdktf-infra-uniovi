@@ -224,7 +224,6 @@ export class DockerDeployStrategy implements IDeployStrategy {
         `${normalizedId}-container`,
         dockerImage,
       ),
-      command: ["sleep", "infinity"], // If not, the container will launch and stop and we won't be able to use it as a "virtual machine"
       ...(machineVolumes.length > 0 ? { volumes: machineVolumes } : {}),
       ...(dockerProps.networks && dockerProps.networks.length > 0
         ? { networksAdvanced: dockerProps.networks }
@@ -279,7 +278,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
     const normalizedId = normalizeId(id);
 
     const imageConf: ImageConfig = this.getDefaultImageConfig(
-      `${dockerInternalProps.imageName}:latest`,
+      `${dockerInternalProps.imageName}`,
     );
     const dockerImage: Image = new Image(
       scope,
@@ -725,6 +724,7 @@ export class DockerDeployStrategy implements IDeployStrategy {
             external: props.dockerProps.nginxPort ?? 8080,
           },
         ],
+        command: ["sleep", "infinity"],
       },
     );
     this.getContainerIp(scope, `${id}-lemp-nginx-container`, container);

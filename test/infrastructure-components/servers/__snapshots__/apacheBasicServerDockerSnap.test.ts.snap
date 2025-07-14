@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`Apache Basic Server Docker container creation creates a Docker container for { version: 'apacheAlpine', expectedImage: 'httpd:alpine' } 1`] = `
+{
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${docker_container.Test_Test-container_72A6054C.network_data[0].ip_address}",
+    },
+  },
+  "resource": {
+    "docker_container": {
+      "Test_Test-container_72A6054C": {
+        "image": "\${docker_image.Test_Test-image_5197E2DB.name}",
+        "name": "Test-container",
+        "ports": [
+          {
+            "external": 8080,
+            "internal": 80,
+          },
+          {
+            "external": 8443,
+            "internal": 443,
+          },
+        ],
+      },
+    },
+    "docker_image": {
+      "Test_Test-image_5197E2DB": {
+        "keep_locally": false,
+        "name": "httpd:alpine",
+      },
+    },
+  },
+}
+`;
+
+exports[`Apache Basic Server Docker container creation creates a Docker container for { version: 'apacheDebian', expectedImage: 'httpd:bookworm' } 1`] = `
+{
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${docker_container.Test_Test-container_72A6054C.network_data[0].ip_address}",
+    },
+  },
+  "resource": {
+    "docker_container": {
+      "Test_Test-container_72A6054C": {
+        "image": "\${docker_image.Test_Test-image_5197E2DB.name}",
+        "name": "Test-container",
+        "ports": [
+          {
+            "external": 8080,
+            "internal": 80,
+          },
+          {
+            "external": 8443,
+            "internal": 443,
+          },
+        ],
+      },
+    },
+    "docker_image": {
+      "Test_Test-image_5197E2DB": {
+        "keep_locally": false,
+        "name": "httpd:bookworm",
+      },
+    },
+  },
+}
+`;
+
+exports[`Apache Basic Server Docker container creation creates a Docker container for { version: 'latest', expectedImage: 'httpd:latest' } 1`] = `
+{
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${docker_container.Test_Test-container_72A6054C.network_data[0].ip_address}",
+    },
+  },
+  "provider": {
+    "docker": [
+      {},
+    ],
+  },
+  "resource": {
+    "docker_container": {
+      "Test_Test-container_72A6054C": {
+        "image": "\${docker_image.Test_Test-image_5197E2DB.name}",
+        "name": "Test-container",
+        "ports": [
+          {
+            "external": 8080,
+            "internal": 80,
+          },
+          {
+            "external": 8443,
+            "internal": 443,
+          },
+        ],
+      },
+    },
+    "docker_image": {
+      "Test_Test-image_5197E2DB": {
+        "keep_locally": false,
+        "name": "httpd:latest",
+      },
+    },
+  },
+  "terraform": {
+    "required_providers": {
+      "docker": {
+        "source": "kreuzwerker/docker",
+        "version": "3.0.2",
+      },
+    },
+  },
+}
+`;
+
+exports[`Apache Basic Server Docker container creation creates a Docker container with volume 1`] = `
+{
+  "output": {
+    "Test_Test-public-ip_348420EB": {
+      "value": "\${docker_container.Test_Test-container_72A6054C.network_data[0].ip_address}",
+    },
+  },
+  "resource": {
+    "docker_container": {
+      "Test_Test-container_72A6054C": {
+        "image": "\${docker_image.Test_Test-image_5197E2DB.name}",
+        "name": "Test-container",
+        "ports": [
+          {
+            "external": 8080,
+            "internal": 80,
+          },
+          {
+            "external": 8443,
+            "internal": 443,
+          },
+        ],
+        "volumes": [
+          {
+            "container_path": "/mnt/data",
+            "volume_name": "\${docker_volume.Test_Test-volume_F1ABD0A9.name}",
+          },
+        ],
+      },
+    },
+    "docker_image": {
+      "Test_Test-image_5197E2DB": {
+        "keep_locally": false,
+        "name": "httpd:latest",
+      },
+    },
+    "docker_volume": {
+      "Test_Test-volume_F1ABD0A9": {
+        "name": "Test-data",
+      },
+    },
+  },
+}
+`;

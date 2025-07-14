@@ -7,6 +7,6 @@ RUN mkdir -p /usr/share/nginx/html/testdir \
   && echo "Index page for testing that this is indeed a very insecure server" > /usr/share/nginx/html/testdir/index.html
 
 # Replace the default nginx.conf with an insecure one
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ../../configs/nginx-insecure/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
