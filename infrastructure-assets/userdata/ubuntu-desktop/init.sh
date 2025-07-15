@@ -14,6 +14,7 @@ apt-get update && apt-get install -y \
     less \
     tmux \
     gpm \
+    lynx \
     mc \
     openssh-server \
     openssl \
