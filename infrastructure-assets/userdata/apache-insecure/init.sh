@@ -35,5 +35,7 @@ chmod -R 777 /var/www/html
 # Add insecure credentials file
 echo "password=admin123" > /var/www/html/creds.txt
 
+echo "<html><body><h1>Index page for testing. Welcome to your insecure Apache server!</h1><p>This has been programmed by María Flórez</p></body></html>" > /var/www/html/index.html
+
 # Restart Apache
 systemctl restart apache2
